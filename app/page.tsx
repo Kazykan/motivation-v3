@@ -1,5 +1,4 @@
 import { ModeToggle } from "@/components/mode-toggle"
-import { SetDemo } from "@/components/test-set"
 import { ToggleGroupCalendar } from "@/components/toggle-calendar"
 import { Button } from "@/components/ui/button"
 import {
@@ -9,8 +8,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
-import { Checkbox } from "@/components/ui/checkbox"
-import Image from "next/image"
 
 export default function Home() {
   return (

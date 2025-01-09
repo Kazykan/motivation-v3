@@ -1,7 +1,5 @@
 "use client"
 
-import { Bold, Italic, Underline } from "lucide-react"
-
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
 import React from "react"
 import { useSet } from "react-use"
