@@ -1,4 +1,26 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Progress Tracker & Motivation App for Kids - Based on Margulan Sesenbaev's System
+
+This application helps children track their progress and stay motivated, leveraging the principles of Margulan Sesenbaev's motivation system. It's designed for use by both children and their parents.
+
+## Technologies
+
+- **Frontend:** React
+- **Backend:** Prisma
+
+## Project Structure
+
+The project:
+
+Handles the user interface, allowing children to track their progress, view rewards, and engage with motivational elements based on Sesenbaev's system. Parents can monitor progress, adjust settings, and interact with the system to support their child's motivation.
+
+## Features (Planned or Implemented)
+
+- **Progress Tracking:** Allows children to track their progress on various tasks and goals. This could include daily/weekly checklists, habit trackers, or progress bars.
+- **Reward System:** Integrates a reward system aligned with Sesenbaev's principles. This might involve points, badges, or virtual rewards redeemable for real-world rewards.
+- **Motivational Elements:** Incorporates motivational elements inspired by Sesenbaev's methods to encourage consistent effort and goal attainment.
+- **Parental Controls:** Provides parental controls allowing parents to set goals, monitor progress, adjust reward systems, and communicate with their children within the app.
+- **Gamification:** Uses game-like elements to make progress tracking engaging and fun.
+- **Reporting/Analytics:** Offers reports and analytics to track progress over time.
 
 ## Getting Started
 
