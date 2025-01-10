@@ -1,13 +1,18 @@
-"use client"
+"use client";
 
-import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
-import React from "react"
-import { useSet } from "react-use"
+import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
+import React from "react";
+import { useSet } from "react-use";
 
-export function ToggleGroupCalendar() {
-  const weekdays = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"]
-  const weekdays_need = ["Пн", "Ср", "Пт"]
-  const [set, { add, has, remove }] = useSet(new Set(["Пн"]))
+interface Props {
+  weekdays_need: IWeekdays[];
+}
+
+export type IWeekdays = "Пн" | "Вт" | "Ср" | "Чт" | "Пт" | "Сб" | "Вс";
+
+export function ToggleGroupCalendar({ weekdays_need }: Props) {
+  const weekdays: IWeekdays[] = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"];
+  const [set, { add, has, remove }] = useSet(new Set(["Пн"]));
 
   return (
     <ToggleGroup
@@ -15,9 +20,9 @@ export function ToggleGroupCalendar() {
       defaultValue={set !== undefined ? Array.from(set) : []}
       onValueChange={(value) => {
         if (!has(String(value))) {
-          add(String(value))
+          add(String(value));
         } else {
-          remove(String(value))
+          remove(String(value));
         }
       }}
     >
@@ -31,11 +36,14 @@ export function ToggleGroupCalendar() {
               variant={weekdays_need.includes(weekday) ? "outline" : "default"}
               disabled={weekdays_need.includes(weekday) ? false : true}
             >
-              {weekday}
+              <div className="relative">
+                <div className="relative -top-5">{weekday}</div>
+                <div className="relative -top-2.5">{index + 15}</div>
+              </div>
             </ToggleGroupItem>
           </>
-        )
+        );
       })}
     </ToggleGroup>
-  )
+  );
 }

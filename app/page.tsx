@@ -1,32 +1,38 @@
 import { Header } from "@/components/header"
-import { ToggleGroupCalendar } from "@/components/toggle-calendar"
-import { Button } from "@/components/ui/button"
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
+import { TestCard } from "@/components/test-card"
+
 
 export default function Home() {
   return (
-      <main>
-        <Header />
-          <Button>Hi</Button>
+    <main>
+      <Header />
 
-          <Card className="w-[330px] ml-2">
-            <CardHeader>
-              <CardTitle>Notifications</CardTitle>
-              <CardDescription>You have 3 unread messages.</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="m-2">
-                <ToggleGroupCalendar />
-              </div>
-            </CardContent>
-          </Card>
-
-      </main>
+      <div className="grid gap-4 mt-5">
+        <TestCard
+          title="Уборка"
+          description="Уборка комнаты..."
+          weekdays_need={["Пн", "Вт", "Ср"]}
+          sum="34"
+        />
+        <TestCard
+          title="Тренировка"
+          description="You have 3 unread messages."
+          weekdays_need={["Пн", "Ср", "Чт", "Сб", "Вс"]}
+          sum="34"
+        />
+        <TestCard
+          title="Duolingo"
+          description="Уборка комнаты..."
+          weekdays_need={["Чт", "Пт", "Сб", "Вс"]}
+          sum="144"
+        />
+        <TestCard
+          title="Уборка"
+          description="Уборка комнаты..."
+          weekdays_need={["Пн", "Вт", "Ср", "Вс"]}
+          sum="74"
+        />
+      </div>
+    </main>
   )
 }
