@@ -1,6 +1,7 @@
 import React from "react"
-import { cn } from "@/lib/utils"
 import { ModeToggle } from "./mode-toggle"
+import { cn } from "@/lib/utils"
+import Link from "next/link"
 
 interface Props {
   className?: string
@@ -8,11 +9,16 @@ interface Props {
 
 export const Header: React.FC<Props> = ({ className }) => {
   return (
-    <header className="border-grid sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+    <header
+      className={cn(
+        className,
+        '"border-grid sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60"'
+      )}
+    >
       <div className="container-wrapper">
         <div className="container flex h-14 items-center">
           <div className="mr-2 flex">
-            <a className="mr-2 ml-2 flex items-center gap-2" href="/">
+            <Link className="mr-2 ml-2 flex items-center gap-2" href="/">
               <svg
                 className="fill-black/85 dark:fill-white/75"
                 xmlns="http://www.w3.org/2000/svg"
@@ -29,33 +35,33 @@ export const Header: React.FC<Props> = ({ className }) => {
                 <path d="M278.439 258.434l21.138-7.991a3.277 3.277 0 002.109-2.951 3.267 3.267 0 00-1.912-3.082l-90.251-41.06a3.272 3.272 0 00-3.624.625 3.266 3.266 0 00-.752 3.597l37.815 91.657a3.26 3.26 0 003.011 2.022 3.27 3.27 0 003.024-2.005l8.741-20.84 32.472 33.649a3.266 3.266 0 004.621.082l15.995-15.435a3.266 3.266 0 00.081-4.621l-32.468-33.647z"></path>
               </svg>
               <span className="font-bold inline-block">motivation</span>
-            </a>
+            </Link>
             <nav className="flex items-center gap-4 text-sm xl:gap-6">
-              <a
+              <Link
                 className="transition-colors hover:text-foreground/80 text-foreground/80"
                 href="/docs"
               >
                 Docs
-              </a>
-              <a
+              </Link>
+              <Link
                 className="transition-colors hover:text-foreground/80 text-foreground"
                 href="/docs/components"
               >
                 Components
-              </a>
-              <a
+              </Link>
+              <Link
                 className="transition-colors hover:text-foreground/80 text-foreground/80"
                 href="/blocks"
               >
                 Blocks
-              </a>
+              </Link>
             </nav>
           </div>
 
           <div className="flex flex-1 items-center justify-end gap-2 md:justify-end">
             <nav className="flex items-center gap-0.5 mr-2">
               <button className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 hover:bg-accent hover:text-accent-foreground h-8 w-8 px-0">
-                <a
+                <Link
                   target="_blank"
                   rel="noreferrer"
                   href="https://github.com/shadcn-ui/ui"
@@ -67,7 +73,7 @@ export const Header: React.FC<Props> = ({ className }) => {
                     ></path>
                   </svg>
                   <span className="sr-only">GitHub</span>
-                </a>
+                </Link>
               </button>
               <ModeToggle />
             </nav>

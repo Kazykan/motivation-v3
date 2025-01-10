@@ -1,5 +1,4 @@
 import { Header } from "@/components/header"
-import { ModeToggle } from "@/components/mode-toggle"
 import { ToggleGroupCalendar } from "@/components/toggle-calendar"
 import { Button } from "@/components/ui/button"
 import {
