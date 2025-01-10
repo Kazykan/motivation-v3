@@ -36,7 +36,7 @@ export const Header: React.FC<Props> = ({ className }) => {
               </svg>
               <span className="font-bold inline-block">motivation</span>
             </Link>
-            <nav className="flex items-center gap-4 text-sm xl:gap-6">
+            <nav className="flex items-center gap-2 text-sm xl:gap-6">
               <Link
                 className="transition-colors hover:text-foreground/80 text-foreground/80"
                 href="/docs"
@@ -45,9 +45,15 @@ export const Header: React.FC<Props> = ({ className }) => {
               </Link>
               <Link
                 className="transition-colors hover:text-foreground/80 text-foreground"
-                href="/docs/components"
+                href="/child"
               >
-                Components
+                Child
+              </Link>
+              <Link
+                className="transition-colors hover:text-foreground/80 text-foreground"
+                href="/register"
+              >
+                Parent
               </Link>
             </nav>
           </div>
