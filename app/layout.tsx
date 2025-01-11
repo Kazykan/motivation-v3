@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Jost } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
+import Script from "next/script";
 
 const jost = Jost({
   subsets: ["cyrillic"],
@@ -18,7 +19,7 @@ export default function RootLayout({ children }: React.PropsWithChildren<unknown
   return (
     <html lang="en" className="dark" style={{ colorScheme: "dark" }}>
       <head>
-        <script src="https://telegram.org/js/telegram-web-app.js?56"></script>
+        <Script src="https://telegram.org/js/telegram-web-app.js?56" />
       </head>
       <body className={jost.variable}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
