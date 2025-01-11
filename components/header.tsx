@@ -1,10 +1,10 @@
-import React from "react"
-import { ModeToggle } from "./mode-toggle"
-import { cn } from "@/lib/utils"
-import Link from "next/link"
+import React from "react";
+import { ModeToggle } from "./mode-toggle";
+import { cn } from "@/lib/utils";
+import Link from "next/link";
 
 interface Props {
-  className?: string
+  className?: string;
 }
 
 export const Header: React.FC<Props> = ({ className }) => {
@@ -37,28 +37,16 @@ export const Header: React.FC<Props> = ({ className }) => {
               <span className="font-bold inline-block">motivation</span>
             </Link>
             <nav className="flex items-center gap-2 text-sm xl:gap-6">
-              <Link
-                className="transition-colors hover:text-foreground/80 text-foreground/80"
-                href="/docs"
-              >
+              <Link className="transition-colors hover:text-foreground/80 text-foreground/80" href="/docs">
                 Docs
               </Link>
-              <Link
-                className="transition-colors hover:text-foreground/80 text-foreground"
-                href="/child"
-              >
+              <Link className="transition-colors hover:text-foreground/80 text-foreground" href="/child">
                 Child
               </Link>
-              <Link
-                className="transition-colors hover:text-foreground/80 text-foreground"
-                href="/register"
-              >
+              <Link className="transition-colors hover:text-foreground/80 text-foreground" href="/register">
                 Parent
               </Link>
-              <Link
-                className="transition-colors hover:text-foreground/80 text-foreground"
-                href="/register"
-              >
+              <Link className="transition-colors hover:text-foreground/80 text-foreground" href="/user">
                 User
               </Link>
             </nav>
@@ -66,12 +54,11 @@ export const Header: React.FC<Props> = ({ className }) => {
 
           <div className="flex flex-1 items-center justify-end gap-2 md:justify-end">
             <nav className="flex items-center gap-0.5 mr-2">
-
               <ModeToggle />
             </nav>
           </div>
         </div>
       </div>
     </header>
-  )
-}
+  );
+};
