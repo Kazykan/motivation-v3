@@ -1,17 +1,18 @@
 import { prisma } from "@/prisma/prisma-client";
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 
-export async function GET(req: NextRequest, { params }: { params: { id: string } }) {
+
+
+export async function GET(request: Request, { params }: {
+  params: Promise<{ id: string }>
+}) {
   try {
-    console.log("Received params:", params);
-    if (!params) {
-      return NextResponse.json({ error: "Params object is missing" }, { status: 400 });
-    }
-    const id = Number(params.id);
+    const telegram_id =(await params).id
+    const parsedId = parseInt(telegram_id);
 
     const user = await prisma.user.findFirst({
       where: {
-        telegram_id: id,
+        telegram_id: parsedId,
       },
     });
 
@@ -24,10 +25,10 @@ export async function GET(req: NextRequest, { params }: { params: { id: string }
       };
     }
 
-    return NextResponse.json(user);
+    return NextResponse.json(user, { status: 200 });
   } catch (error) {
     console.error("[GET /api/user/[id]]", error);
-    return NextResponse.json({ message: "Internal server error" }, { status: 500 });
+    return NextResponse.json({ message: `Internal server error` }, { status: 500 });
   }
 }
 
