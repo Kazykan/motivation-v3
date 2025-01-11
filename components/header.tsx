@@ -55,6 +55,12 @@ export const Header: React.FC<Props> = ({ className }) => {
               >
                 Parent
               </Link>
+              <Link
+                className="transition-colors hover:text-foreground/80 text-foreground"
+                href="/register"
+              >
+                User
+              </Link>
             </nav>
           </div>
 
