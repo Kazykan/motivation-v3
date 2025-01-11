@@ -19,7 +19,7 @@ export default function RootLayout({ children }: React.PropsWithChildren<unknown
   return (
     <html lang="en" className="dark" style={{ colorScheme: "dark" }}>
       <head>
-        <Script src="https://telegram.org/js/telegram-web-app.js?56" />
+        <Script src="https://telegram.org/js/telegram-web-app.js?56" strategy="beforeInteractive" />
       </head>
       <body className={jost.variable}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
