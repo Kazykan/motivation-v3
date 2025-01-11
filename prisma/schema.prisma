@@ -1,0 +1,95 @@
+// schema.prisma
+
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider = "postgresql"
+    url      = env("POSTGRES_URL")
+    directUrl = env("POSTGRES_URL_NON_POOLING")
+}
+
+// Модель для пользователей (родителей и детей)
+model User {
+    id              Int              @id @default(autoincrement())
+    telegram_id     Int              @unique // Телеграм id для идентификации пользователя
+    name            String // Имя пользователя
+    isParent        Boolean // Флаг, является ли пользователь родителем
+    children        ChildUser[]      @relation("ParentToChild") // Дети, связанные с родителем (если это родитель)
+    parentUsers     ParentUser[]     @relation("ParentToChild") // Связь с моделью ParentUser
+    parents         ParentUser[]     @relation("ChildToParent") // Родители, связанные с ребенком (если это ребенок)
+    childrenAsChild ChildUser[]      @relation("ChildToParent") // Дети, связанные с родителем (если это родитель)
+    tasks           Task[]           @relation("TaskToUser") // Задания, назначенные пользователю
+    taskCompletions TaskCompletion[] // История выполнения заданий пользователем
+
+    @@map("users")
+}
+
+// Модель для связывания родителей и детей (многие ко многим)
+model ChildUser {
+    id       Int @id @default(autoincrement())
+    parentId Int
+    childId  Int
+
+    parent User @relation("ParentToChild", fields: [parentId], references: [id])
+    child  User @relation("ChildToParent", fields: [childId], references: [id])
+
+    @@map("children_users")
+}
+
+model ParentUser {
+    id       Int @id @default(autoincrement())
+    parentId Int
+    childId  Int
+
+    parent User @relation("ParentToChild", fields: [parentId], references: [id])
+    child  User @relation("ChildToParent", fields: [childId], references: [id])
+
+    @@map("parent_users")
+}
+
+// Модель для заданий
+model Task {
+    id              Int              @id @default(autoincrement())
+    title           String // Название задания
+    description     String? // Описание задания (может быть null)
+    type            TaskType // Тип задания (ежедневное или гибкое)
+    dayOfWeek       DayOfWeek? // День недели для типа "ежедневное" (может быть null)
+    frequency       Int? // Количество раз которое надо выполнить
+    reward          Int // Общая стоимость за выполнение
+    users           User[]           @relation("TaskToUser") // Пользователи, которым назначено задание
+    taskCompletions TaskCompletion[] // История выполнения задания
+
+    @@map("tasks")
+}
+
+// Enum для типа задания
+enum TaskType {
+    DAILY // Задание на конкретный день недели
+    FLEXIBLE // Задание в любой день недели
+}
+
+// Enum для дня недели
+enum DayOfWeek {
+    MONDAY
+    TUESDAY
+    WEDNESDAY
+    THURSDAY
+    FRIDAY
+    SATURDAY
+    SUNDAY
+}
+
+// Модель для отслеживания выполнения задания
+model TaskCompletion {
+    id             Int      @id @default(autoincrement())
+    taskId         Int
+    userId         Int
+    completionDate DateTime @default(now()) // Дата выполнения задания
+    isCompleted    Boolean // Флаг, было ли задание выполнено полностью
+    task           Task     @relation(fields: [taskId], references: [id])
+    user           User     @relation(fields: [userId], references: [id])
+
+    @@map("task_completions")
+}
