@@ -30,22 +30,3 @@ export async function GET(
   }
 }
 
-export async function PUT({ params, body }: { params: { id: string }; body: { name: string } }) {
-  try {
-    const id = Number(params.id);
-
-    const user = await prisma.parent.update({
-      where: {
-        telegram_id: id,
-      },
-      data: {
-        name: body.name,
-      },
-    });
-
-    return NextResponse.json(user);
-  } catch (error) {
-    console.error("[PUT /api/user/[id]]", error);
-    return NextResponse.json({ message: "Internal server error" }, { status: 500 });
-  }
-}
