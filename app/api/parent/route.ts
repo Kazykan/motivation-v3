@@ -1,33 +1,31 @@
 import { prisma } from "@/prisma/prisma-client";
 import { NextResponse } from "next/server";
 
-
-
-export async function GET(request: Request, { params }: {
-  params: Promise<{ id: string }>
-}) {
+export async function GET(
+  request: Request,
+  {
+    params,
+  }: {
+    params: Promise<{ id: string }>;
+  }
+) {
   try {
-    const telegram_id =(await params).id
+    const telegram_id = (await params).id;
     const parsedId = parseInt(telegram_id);
 
-    const user = await prisma.user.findFirst({
+    const parent = await prisma.parent.findFirst({
       where: {
         telegram_id: parsedId,
       },
     });
 
-    if (!user) {
-      return {
-        status: 404,
-        body: {
-          error: "User not found",
-        },
-      };
+    if (!parent) {
+      return NextResponse.json({ error: "Parent not found" }, { status: 404 });
     }
 
-    return NextResponse.json(user, { status: 200 });
+    return NextResponse.json(parent, { status: 200 });
   } catch (error) {
-    console.error("[GET /api/user/[id]]", error);
+    console.error("[GET /api/parent/[id]]", error);
     return NextResponse.json({ message: `Internal server error` }, { status: 500 });
   }
 }
@@ -36,7 +34,7 @@ export async function PUT({ params, body }: { params: { id: string }; body: { na
   try {
     const id = Number(params.id);
 
-    const user = await prisma.user.update({
+    const user = await prisma.parent.update({
       where: {
         telegram_id: id,
       },
