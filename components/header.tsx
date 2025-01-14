@@ -40,10 +40,10 @@ export const Header: React.FC<Props> = ({ className }) => {
               <Link className="transition-colors hover:text-foreground/80 text-foreground/80" href="/docs">
                 Docs
               </Link>
-              <Link className="transition-colors hover:text-foreground/80 text-foreground" href="/child">
+              <Link className="transition-colors hover:text-foreground/80 text-foreground" href="/docs/child">
                 Child
               </Link>
-              <Link className="transition-colors hover:text-foreground/80 text-foreground" href="/register">
+              <Link className="transition-colors hover:text-foreground/80 text-foreground" href="/docs/parent">
                 Parent
               </Link>
               <Link className="transition-colors hover:text-foreground/80 text-foreground" href="/user">

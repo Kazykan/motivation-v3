@@ -11,7 +11,7 @@ function useUserCheckAndNavigation(telegramUser: number | null) {
       const checkUser = async () => {
         setIsLoading(true);
         try {
-          const response = await axios.get(`/api/checkUser?telegramId=${telegramUser}`);
+          const response = await axios.get(`/api/checkChild?telegramId=${telegramUser}`);
           const userExists = response.data.exists;
 
           if (userExists) {
