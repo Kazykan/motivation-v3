@@ -1,52 +1,50 @@
-// schema.prisma
-
 generator client {
     provider = "prisma-client-js"
 }
 
 datasource db {
-    provider = "postgresql"
-    url      = env("POSTGRES_URL")
+    provider  = "postgresql"
+    url       = env("POSTGRES_URL")
     directUrl = env("POSTGRES_URL_NON_POOLING")
 }
 
-// Модель для пользователей (родителей и детей)
-model User {
-    id              Int              @id @default(autoincrement())
-    telegram_id     Int              @unique // Телеграм id для идентификации пользователя
-    name            String // Имя пользователя
-    isParent        Boolean // Флаг, является ли пользователь родителем
-    children        ChildUser[]      @relation("ParentToChild") // Дети, связанные с родителем (если это родитель)
-    parentUsers     ParentUser[]     @relation("ParentToChild") // Связь с моделью ParentUser
-    parents         ParentUser[]     @relation("ChildToParent") // Родители, связанные с ребенком (если это ребенок)
-    childrenAsChild ChildUser[]      @relation("ChildToParent") // Дети, связанные с родителем (если это родитель)
-    tasks           Task[]           @relation("TaskToUser") // Задания, назначенные пользователю
-    taskCompletions TaskCompletion[] // История выполнения заданий пользователем
+// Модель для родителей
+model ParentUser {
+    id           Int           @id @default(autoincrement())
+    telegram_id  Int           @unique
+    name         String
+    children     ParentChild[] @relation("ParentToChild") // Связь с промежуточной моделью
+    updatedTasks Task[]        @relation("LastTaskUpdater")
+    createdAt    DateTime      @default(now())
+    updatedAt    DateTime      @updatedAt
 
-    @@map("users")
+    @@map("parent_users")
 }
 
-// Модель для связывания родителей и детей (многие ко многим)
+// Модель для детей
 model ChildUser {
-    id       Int @id @default(autoincrement())
-    parentId Int
-    childId  Int
-
-    parent User @relation("ParentToChild", fields: [parentId], references: [id])
-    child  User @relation("ChildToParent", fields: [childId], references: [id])
+    id              Int              @id @default(autoincrement())
+    telegram_id     Int              @unique
+    name            String
+    parents         ParentChild[]    @relation("ParentToChild") // Связь с промежуточной моделью
+    tasks           Task[]           @relation("TaskToUser") // Задания, назначенные ребенку
+    taskCompletions TaskCompletion[] // История выполнения заданий ребенком
+    createdAt       DateTime         @default(now())
+    updatedAt       DateTime         @updatedAt
 
     @@map("children_users")
 }
 
-model ParentUser {
+// Промежуточная модель для связи родитель-ребенок (многие ко многим)
+model ParentChild {
     id       Int @id @default(autoincrement())
     parentId Int
     childId  Int
 
-    parent User @relation("ParentToChild", fields: [parentId], references: [id])
-    child  User @relation("ChildToParent", fields: [childId], references: [id])
+    parent ParentUser @relation("ParentToChild", fields: [parentId], references: [id])
+    child  ChildUser  @relation("ParentToChild", fields: [childId], references: [id])
 
-    @@map("parent_users")
+    @@map("parent_children")
 }
 
 // Модель для заданий
@@ -55,11 +53,14 @@ model Task {
     title           String // Название задания
     description     String? // Описание задания (может быть null)
     type            TaskType // Тип задания (ежедневное или гибкое)
-    dayOfWeek       DayOfWeek? // День недели для типа "ежедневное" (может быть null)
+    dayOfWeek       DayOfWeek[] // День недели для типа "ежедневное" (может быть несколько)
     frequency       Int? // Количество раз которое надо выполнить
     reward          Int // Общая стоимость за выполнение
-    users           User[]           @relation("TaskToUser") // Пользователи, которым назначено задание
+    users           ChildUser[]      @relation("TaskToUser") // Пользователи, которым назначено задание
     taskCompletions TaskCompletion[] // История выполнения задания
+    createdAt       DateTime         @default(now())
+    updatedByUserId Int?
+    updatedBy       ParentUser?      @relation("LastTaskUpdater", fields: [updatedByUserId], references: [id])
 
     @@map("tasks")
 }
@@ -83,13 +84,13 @@ enum DayOfWeek {
 
 // Модель для отслеживания выполнения задания
 model TaskCompletion {
-    id             Int      @id @default(autoincrement())
+    id             Int       @id @default(autoincrement())
     taskId         Int
     userId         Int
-    completionDate DateTime @default(now()) // Дата выполнения задания
-    isCompleted    Boolean // Флаг, было ли задание выполнено полностью
-    task           Task     @relation(fields: [taskId], references: [id])
-    user           User     @relation(fields: [userId], references: [id])
+    completionDate DateTime  @default(now()) // Дата выполнения задания
+    isCompleted    Boolean   @default(true) // Флаг, было ли задание выполнено полностью
+    task           Task      @relation(fields: [taskId], references: [id])
+    user           ChildUser @relation(fields: [userId], references: [id])
 
     @@map("task_completions")
 }
