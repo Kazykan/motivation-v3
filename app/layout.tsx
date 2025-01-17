@@ -15,6 +15,7 @@ export const metadata: Metadata = {
   description: "Motivation for Morgulan Sesenbaev",
 };
 
+
 export default function RootLayout({ children }: React.PropsWithChildren<unknown>) {
   return (
     <html lang="en" className="dark" style={{ colorScheme: "dark" }}>
@@ -22,9 +23,9 @@ export default function RootLayout({ children }: React.PropsWithChildren<unknown
         <Script src="https://telegram.org/js/telegram-web-app.js?56" strategy="beforeInteractive" />
       </head>
       <body className={jost.variable}>
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
-          {children}
-        </ThemeProvider>
+          <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+            {children}
+          </ThemeProvider>
       </body>
     </html>
   );

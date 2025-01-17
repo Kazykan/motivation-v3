@@ -2,21 +2,22 @@
 
 import React from "react";
 import useTelegramUser from "@/hooks/useTelegramUser";
-// import useUserCheckAndNavigation from "@/hooks/useUserCheckAndNavigation";
+import CheckTelegramId from "@/components/checkTelegramId";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
-const MyComponent: React.FC = () => {
+const queryClient = new QueryClient();
+
+const CheckTelegramUser: React.FC = () => {
   const telegramUser = useTelegramUser();
-  // const isLoading = useUserCheckAndNavigation(telegramUser?.id || null);
-
-  // if (isLoading) {
-  //   return <p>Загрузка...</p>;
-  // }
 
   if (!telegramUser) {
     return <p>Ошибка: Не удалось получить данные пользователя Telegram.</p>;
   }
-
-  return <div>{telegramUser.first_name}</div>;
+  return (
+    <QueryClientProvider client={queryClient}>
+      <CheckTelegramId telegramId={telegramUser.id} />;
+    </QueryClientProvider>
+  );
 };
 
-export default MyComponent;
+export default CheckTelegramUser;

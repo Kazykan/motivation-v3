@@ -1,8 +1,8 @@
-import { ParentCheckResponse } from "@/lib/api/api-types";
+import { ChildCheckResponse } from "@/lib/api/api-types";
 import { prisma } from "@/prisma/prisma-client";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(request: NextRequest): Promise<NextResponse<ParentCheckResponse>> {
+export async function GET(request: NextRequest): Promise<NextResponse<ChildCheckResponse>> {
   try {
     const searchParams = request.nextUrl.searchParams;
     const telegram_id = searchParams.get("telegram_id");
@@ -11,14 +11,14 @@ export async function GET(request: NextRequest): Promise<NextResponse<ParentChec
       return NextResponse.json({ exists: false, message: "Invalid telegramId", status: 400 });
     }
 
-    const parentUser = await prisma.parentUser.findUnique({
+    const childUser = await prisma.childUser.findUnique({
       where: {
         telegram_id: parseInt(telegram_id),
       },
     });
 
-    if (parentUser) {
-      return NextResponse.json({ exists: true, parentUser: parentUser, status: 200 });
+    if (childUser) {
+      return NextResponse.json({ exists: true, childUser: childUser, status: 200 });
     } else {
       return NextResponse.json({ exists: false, status: 200 });
     }
