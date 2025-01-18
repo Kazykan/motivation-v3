@@ -1,8 +1,7 @@
 "use client";
 
 import { useAuthCheck } from "@/hooks/useAuthCheck";
-import { Payload, payloadRole, verifyToken } from "@/lib/jwt";
-import { useRouter } from "next/navigation";
+import { payloadRole } from "@/lib/jwt";
 import React from "react";
 
 const ParentDashboard: React.FC = () => {
