@@ -1,4 +1,4 @@
-import { ChildUser, ParentUser } from "@prisma/client";
+import { ChildUser, ParentUser, Task, TaskCompletion } from "@prisma/client";
 
 export interface ChildCheckResponse {
   exists: boolean;
@@ -10,6 +10,17 @@ export interface ChildCheckResponse {
 export interface ParentCheckResponse {
   exists: boolean;
   parentUser?: ParentUser | null;
+  message?: string;
+  status?: number;
+}
+
+export interface TaskResponse extends Task {
+  taskCompletions: TaskCompletion[];
+}
+
+export interface TaskWithCompletions {
+  exists: boolean;
+  task?: TaskResponse[];
   message?: string;
   status?: number;
 }
