@@ -1,4 +1,5 @@
 import { Header } from "@/components/header";
+import { PaginationWeeks } from "@/components/paginator-week";
 import { TestCard } from "@/components/test-card";
 import { TaskType } from "@prisma/client";
 
@@ -6,7 +7,7 @@ export default function Home() {
   return (
     <main>
       <Header />
-
+      <PaginationWeeks />
       <div className="grid gap-4 mt-5">
         <TestCard task_id={1} frequency={3} taskType={TaskType.DAILY} title="Уборка" description="Уборка комнаты..." sum={34} />
         <TestCard
