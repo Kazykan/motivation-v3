@@ -36,13 +36,13 @@ export const TasksWithCompletions: React.FC<Props> = ({ telegramId, startDate, e
   }
 
   const dayOfWeekMap: Record<DayOfWeek, IWeekdays> = {
-    MONDAY: 'Пн',
-    TUESDAY: 'Вт',
-    WEDNESDAY: 'Ср',
-    THURSDAY: 'Чт',
-    FRIDAY: 'Пт',
-    SATURDAY: 'Сб',
-    SUNDAY: 'Вс',
+    MONDAY: "Пн",
+    TUESDAY: "Вт",
+    WEDNESDAY: "Ср",
+    THURSDAY: "Чт",
+    FRIDAY: "Пт",
+    SATURDAY: "Сб",
+    SUNDAY: "Вс",
   };
 
   function convertDaysOfWeekToShortRu(task: TaskData): IWeekdays[] {
@@ -51,27 +51,29 @@ export const TasksWithCompletions: React.FC<Props> = ({ telegramId, startDate, e
       return Object.values(dayOfWeekMap);
     }
 
-    return task.dayOfWeek.map(day => dayOfWeekMap[day]);
+    return task.dayOfWeek.map((day) => dayOfWeekMap[day]);
   }
 
   return (
-    <div className="grid gap-4 mt-5">
-      {data.task.length > 0 && (
-        data.task.map((oneTask) => {
-          return (
-            <TestCard
-              key={oneTask.id}
-              task_id={oneTask.id}
-              taskType={oneTask.type}
-              title={oneTask.title}
-              description={oneTask.description !== null ? oneTask.description : ""}
-              weekdays_need={convertDaysOfWeekToShortRu(oneTask)}
-              sum={oneTask.reward}
-              frequency={oneTask.frequency ?? undefined}
-            />
-          );
-        })
-      )}
-    </div>
+    <>
+      <pre>{JSON.stringify(data, null, 2)}</pre>
+      <div className="grid gap-4 mt-5">
+        {data.task.length > 0 &&
+          data.task.map((oneTask) => {
+            return (
+              <TestCard
+                key={oneTask.id}
+                task_id={oneTask.id}
+                taskType={oneTask.type}
+                title={oneTask.title}
+                description={oneTask.description !== null ? oneTask.description : ""}
+                weekdays_need={convertDaysOfWeekToShortRu(oneTask)}
+                sum={oneTask.reward}
+                frequency={oneTask.frequency ?? undefined}
+              />
+            );
+          })}
+      </div>
+    </>
   );
 };

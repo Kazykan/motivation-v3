@@ -56,7 +56,8 @@ model Task {
     dayOfWeek       DayOfWeek[] // День недели для типа "ежедневное" (может быть несколько)
     frequency       Int? // Количество раз которое надо выполнить
     reward          Int // Общая стоимость за выполнение
-    users           ChildUser[]      @relation("TaskToUser") // Пользователи, которым назначено задание
+    childUserId     Int // ID ребенка, которому назначено задание
+    user            ChildUser        @relation("TaskToUser", fields: [childUserId], references: [id])
     taskCompletions TaskCompletion[] // История выполнения задания
     createdAt       DateTime         @default(now())
     updatedByUserId Int?
