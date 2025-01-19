@@ -7,16 +7,18 @@ import { TaskType } from "@prisma/client";
 
 interface Props {
   className?: string;
+  task_id: number;
   title: string;
   description: string;
   weekdays_need?: IWeekdays[];
   taskType: TaskType;
   frequency?: number;
-  sum?: string;
+  sum: number;
 }
 
 export const TestCard: React.FC<Props> = ({
   className,
+  task_id,
   title,
   description,
   weekdays_need,
@@ -40,6 +42,7 @@ export const TestCard: React.FC<Props> = ({
         </div>
       </div>
       <TaskCard
+      task_id={task_id}
         title={title}
         description={description}
         sum={sum}

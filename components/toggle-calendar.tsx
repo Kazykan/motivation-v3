@@ -5,16 +5,17 @@ import React from "react";
 import { useSet } from "react-use";
 
 interface Props {
+  task_id: number;
   weekdays_need?: IWeekdays[];
 }
 
 export type IWeekdays = "Пн" | "Вт" | "Ср" | "Чт" | "Пт" | "Сб" | "Вс";
 
-export function ToggleGroupCalendar({ weekdays_need }: Props) {
+export function ToggleGroupCalendar({ weekdays_need, task_id }: Props) {
   const weekdays: IWeekdays[] = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"];
   const [set, { add, has, remove }] = useSet(new Set(["Пн"]));
 
-  const weekdaysToUse = weekdays_need || weekdays
+  const weekdaysToUse = weekdays_need || weekdays;
 
   return (
     <ToggleGroup

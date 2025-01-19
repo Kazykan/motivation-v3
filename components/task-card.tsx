@@ -7,16 +7,18 @@ import { TaskType } from "@prisma/client";
 
 interface Props {
   className?: string;
+  task_id: number;
   title: string;
   description: string;
   weekdays_need?: IWeekdays[];
   taskType: TaskType;
   frequency?: number;
-  sum?: string;
+  sum: number;
 }
 
 export const TaskCard: React.FC<Props> = ({
   className,
+  task_id,
   title,
   description,
   weekdays_need,
@@ -47,7 +49,7 @@ export const TaskCard: React.FC<Props> = ({
       </CardHeader>
       <CardContent>
         <div className="m-0 mt-4 justify-start">
-          <ToggleGroupCalendar weekdays_need={weekdays_need} />
+          <ToggleGroupCalendar task_id={task_id} weekdays_need={weekdays_need} />
         </div>
       </CardContent>
     </Card>

@@ -2,13 +2,8 @@
 
 import { useTasksWithCompletions } from "@/hooks/useTasksWithCompletions";
 import { TestCard } from "./test-card";
-import { TaskType } from "@prisma/client";
+import { DayOfWeek, Task, TaskType } from "@prisma/client";
 import { IWeekdays } from "./toggle-calendar";
-
-// import React from "react";
-// import { useTasksWithCompletions } from "@/hooks/useTasksWithCompletions";
-// import { useParentCheck } from "@/hooks/useParentCheck";
-// import { useChildCheck } from "@/hooks/useChildCheck";
 
 interface Props {
   telegramId: string;
@@ -16,22 +11,16 @@ interface Props {
   endDate: string;
 }
 
-// export const TasksWithCompletions: React.FC<Props> = ({ telegramId, startDate, endDate }) => {
-//   try {
-//     const telegram_id = parseInt(telegramId);
+interface TaskData {
+  id: number;
+  type: TaskType;
+  title: string;
+  description: string | null;
+  dayOfWeek: DayOfWeek[];
+  reward: number;
+  frequency?: number | null;
+}
 
-//     const { data, isLoading, error } = useChildCheck(telegram_id);
-//     if (isLoading) {
-//       return <div>Loading...</div>;
-//     }
-//     if (error) {
-//       return <div>Error</div>;
-//     }
-//     return <div>{data?.childUser?.name} {startDate} {endDate}</div>;
-//   } catch (error) {
-//     console.error("Error generating token: (parent)", error);
-//   }
-// };
 export const TasksWithCompletions: React.FC<Props> = ({ telegramId, startDate, endDate }) => {
   const { data, isLoading, error } = useTasksWithCompletions(telegramId, startDate, endDate);
 
@@ -42,45 +31,47 @@ export const TasksWithCompletions: React.FC<Props> = ({ telegramId, startDate, e
     return <div>Error</div>;
   }
 
-  const taskCards = data?.task?.map((task) => {
-    let weekdays: IWeekdays[] = [];
+  if (!data || !data.exists || !data.task) {
+    return <div>No tasks available</div>;
+  }
 
-    if (task.dayOfWeek && task.dayOfWeek.length > 0) {
-      weekdays = task.dayOfWeek.map((day) => {
-        switch (day) {
-          case "MONDAY":
-            return "Пн";
-          case "TUESDAY":
-            return "Вт";
-          case "WEDNESDAY":
-            return "Ср";
-          case "THURSDAY":
-            return "Чт";
-          case "FRIDAY":
-            return "Пт";
-          case "SATURDAY":
-            return "Сб";
-          case "SUNDAY":
-            return "Вс";
-          default:
-            return day;
-        }
-      });
+  const dayOfWeekMap: Record<DayOfWeek, IWeekdays> = {
+    MONDAY: 'Пн',
+    TUESDAY: 'Вт',
+    WEDNESDAY: 'Ср',
+    THURSDAY: 'Чт',
+    FRIDAY: 'Пт',
+    SATURDAY: 'Сб',
+    SUNDAY: 'Вс',
+  };
+
+  function convertDaysOfWeekToShortRu(task: TaskData): IWeekdays[] {
+    // Если список пустой и тип FLEXIBLE то отправляем все дни недели
+    if (task.type === TaskType.FLEXIBLE && (!task.dayOfWeek || task.dayOfWeek.length === 0)) {
+      return Object.values(dayOfWeekMap);
     }
-  });
+
+    return task.dayOfWeek.map(day => dayOfWeekMap[day]);
+  }
 
   return (
-    <div>
-      sdfsdafds
-      <pre>{JSON.stringify(data, null, 2)}</pre>
-      {data?.task?.map((task) => (
-        <div key={task.id}>
-          {task.title}. {task} Completions:
-          {task.taskCompletions?.map((completion) => (
-            <div key={completion.id}>{completion.completionDate.toString()}</div>
-          ))}
-        </div>
-      ))}
+    <div className="grid gap-4 mt-5">
+      {data.task.length > 0 && (
+        data.task.map((oneTask) => {
+          return (
+            <TestCard
+              key={oneTask.id}
+              task_id={oneTask.id}
+              taskType={oneTask.type}
+              title={oneTask.title}
+              description={oneTask.description !== null ? oneTask.description : ""}
+              weekdays_need={convertDaysOfWeekToShortRu(oneTask)}
+              sum={oneTask.reward}
+              frequency={oneTask.frequency ?? undefined}
+            />
+          );
+        })
+      )}
     </div>
   );
 };
