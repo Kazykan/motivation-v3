@@ -3,16 +3,27 @@ import { cn } from "@/lib/utils";
 import { FilePenLine, Minus, Trash2 } from "lucide-react";
 import { TaskCard } from "./task-card";
 import { IWeekdays } from "./toggle-calendar";
+import { TaskType } from "@prisma/client";
 
 interface Props {
   className?: string;
   title: string;
   description: string;
-  weekdays_need: IWeekdays[];
+  weekdays_need?: IWeekdays[];
+  taskType: TaskType;
+  frequency?: number;
   sum?: string;
 }
 
-export const TestCard: React.FC<Props> = ({ className, title, description, weekdays_need, sum }) => {
+export const TestCard: React.FC<Props> = ({
+  className,
+  title,
+  description,
+  weekdays_need,
+  sum,
+  taskType,
+  frequency,
+}) => {
   return (
     <div className={cn(className, "mr-14")}>
       <div className="relative top-[159px] mt-[-159px] h-[158px] left-[50px] -z-10 rounded-3xl w-full shadow-sm bg-primary/80 space-y-2 ">
@@ -33,6 +44,8 @@ export const TestCard: React.FC<Props> = ({ className, title, description, weekd
         description={description}
         sum={sum}
         weekdays_need={weekdays_need}
+        taskType={taskType}
+        frequency={frequency}
       />
     </div>
   );

@@ -5,7 +5,7 @@ import React from "react";
 import { useSet } from "react-use";
 
 interface Props {
-  weekdays_need: IWeekdays[];
+  weekdays_need?: IWeekdays[];
 }
 
 export type IWeekdays = "Пн" | "Вт" | "Ср" | "Чт" | "Пт" | "Сб" | "Вс";
@@ -13,6 +13,8 @@ export type IWeekdays = "Пн" | "Вт" | "Ср" | "Чт" | "Пт" | "Сб" | "�
 export function ToggleGroupCalendar({ weekdays_need }: Props) {
   const weekdays: IWeekdays[] = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"];
   const [set, { add, has, remove }] = useSet(new Set(["Пн"]));
+
+  const weekdaysToUse = weekdays_need || weekdays
 
   return (
     <ToggleGroup
@@ -32,8 +34,8 @@ export function ToggleGroupCalendar({ weekdays_need }: Props) {
             key={weekday}
             value={weekday}
             aria-label={weekday}
-            variant={weekdays_need.includes(weekday) ? "outline" : "default"}
-            disabled={weekdays_need.includes(weekday) ? false : true}
+            variant={weekdaysToUse.includes(weekday) ? "outline" : "default"}
+            disabled={weekdaysToUse.includes(weekday) ? false : true}
           >
             <div className="relative">
               <div className="relative -top-5">{weekday}</div>

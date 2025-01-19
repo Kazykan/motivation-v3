@@ -1,10 +1,10 @@
-import { TaskWithCompletions } from "@/lib/api/api-types";
+import { TaskWithCompletionsResponse } from "@/lib/api/api-types";
 import { verifyToken } from "@/lib/jwt";
 import { prisma } from "@/prisma/prisma-client";
 import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(request: NextRequest): Promise<NextResponse<TaskWithCompletions>> {
+export async function GET(request: NextRequest): Promise<NextResponse<TaskWithCompletionsResponse>> {
   try {
     const searchParams = request.nextUrl.searchParams;
     const telegram_id = searchParams.get("telegram_id");
@@ -15,24 +15,24 @@ export async function GET(request: NextRequest): Promise<NextResponse<TaskWithCo
       return NextResponse.json({ exists: false, message: "Invalid data: telegram_id, start, end", status: 400 });
     }
 
-    const cookieStore = cookies();
-    const token = (await cookieStore).get("token")?.value;
+    // const cookieStore = cookies();
+    // const token = (await cookieStore).get("token")?.value;
 
-    if (!token) {
-      return NextResponse.json({ exists: false, message: "Unauthorized", status: 401 });
-    } else {
-      try {
-        await verifyToken(token);
-      } catch (error) {
-        return NextResponse.json({ exists: false, message: "Unauthorized", status: 401 });
-      }
-    }
+    // if (!token) {
+    //   return NextResponse.json({ exists: false, message: "Unauthorized", status: 401 });
+    // } else {
+    //   try {
+    //     await verifyToken(token);
+    //   } catch (error) {
+    //     return NextResponse.json({ exists: false, message: `Unauthorized ${error}`, status: 401 });
+    //   }
+    // }
 
     const childTasks = await prisma.childUser.findUnique({
       where: {
         telegram_id: parseInt(telegram_id),
       },
-      include: {
+      select: {
         tasks: true,
         taskCompletions: {
           where: {
@@ -46,7 +46,11 @@ export async function GET(request: NextRequest): Promise<NextResponse<TaskWithCo
     });
 
     if (childTasks) {
-      return NextResponse.json({ exists: true, TaskWithCompletions: childTasks, status: 200 });
+      const tasksWithCompletions = childTasks?.tasks.map(task => ({
+        ...task,
+        taskCompletions: childTasks.taskCompletions.filter(completion => completion.taskId === task.id)
+      })) ?? [];
+      return NextResponse.json({ exists: true, task: tasksWithCompletions, status: 200 });
     } else {
       return NextResponse.json({ exists: false, status: 200 });
     }

@@ -18,7 +18,7 @@ export interface TaskResponse extends Task {
   taskCompletions: TaskCompletion[];
 }
 
-export interface TaskWithCompletions {
+export interface TaskWithCompletionsResponse {
   exists: boolean;
   task?: TaskResponse[];
   message?: string;

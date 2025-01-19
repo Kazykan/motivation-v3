@@ -1,3 +1,5 @@
+"use client"
+
 import { CarouselCard } from "@/components/carousel-card";
 import { Button } from "@/components/ui/button";
 import { Rocket } from "lucide-react";
