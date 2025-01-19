@@ -1,6 +1,8 @@
 "use client";
 
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
+import { useWeek } from "@/lib/store/week";
+import { eachDayOfInterval, format } from "date-fns";
 import React from "react";
 import { useSet } from "react-use";
 
@@ -12,6 +14,17 @@ interface Props {
 export type IWeekdays = "Пн" | "Вт" | "Ср" | "Чт" | "Пт" | "Сб" | "Вс";
 
 export function ToggleGroupCalendar({ weekdays_need, task_id }: Props) {
+  const startOfDate = useWeek((state) => state.start_of_date);
+  const endOfWeek = useWeek((state) => state.end_of_week);
+
+  const month_days =
+    startOfDate && endOfWeek
+      ? eachDayOfInterval({
+          start: startOfDate,
+          end: endOfWeek,
+        })
+      : [];
+
   const weekdays: IWeekdays[] = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"];
   const [set, { add, has, remove }] = useSet(new Set(["Пн"]));
 
@@ -30,6 +43,8 @@ export function ToggleGroupCalendar({ weekdays_need, task_id }: Props) {
       }}
     >
       {weekdays.map((weekday, index) => {
+        const date = month_days[index];
+        const formattedDay = date ? format(date, "d") : "";
         return (
           <ToggleGroupItem
             key={weekday}
@@ -40,7 +55,7 @@ export function ToggleGroupCalendar({ weekdays_need, task_id }: Props) {
           >
             <div className="relative">
               <div className="relative -top-5">{weekday}</div>
-              <div className="relative -top-2.5">{index + 15}</div>
+              <div className="relative -top-2.5">{formattedDay}</div>
             </div>
           </ToggleGroupItem>
         );

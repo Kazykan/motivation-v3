@@ -2,7 +2,7 @@
 
 import { useTasksWithCompletions } from "@/hooks/useTasksWithCompletions";
 import { TestCard } from "./test-card";
-import { DayOfWeek, Task, TaskType } from "@prisma/client";
+import { DayOfWeek, TaskType } from "@prisma/client";
 import { IWeekdays } from "./toggle-calendar";
 
 interface Props {

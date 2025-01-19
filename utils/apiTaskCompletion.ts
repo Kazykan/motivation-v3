@@ -8,11 +8,11 @@ export const getTaskCompletions = async (
   endDate: string
 ): Promise<TaskCompletionResponse> => {
   try {
-    const telegram_id = parseInt(task_id);
+    const taskId = parseInt(task_id);
 
     // const axiosInstance = await createServerAxiosInstance();
     const task = await axiosInstanceWithoutAuth.get<TaskCompletionResponse>(
-      `/child/task-completion?task_id=${telegram_id}&start=${startDate}&end=${endDate}`
+      `/child/task-completion?task_id=${taskId}&start=${startDate}&end=${endDate}`
     );
 
     return task.data;
@@ -25,9 +25,14 @@ export const getTaskCompletions = async (
   }
 };
 
-export const createTaskCompletion = async (taskId: number, userId: number): Promise<TaskCompletionResponse> => {
+export const createTaskCompletion = async (
+  completionDate: string,
+  taskId: number,
+  userId: number
+): Promise<TaskCompletionResponse> => {
   try {
     const taskCompletion = await axiosInstanceWithoutAuth.post<TaskCompletionResponse>(`/child/task-completion`, {
+      completionDate,
       taskId,
       userId,
     });

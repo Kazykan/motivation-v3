@@ -38,9 +38,9 @@ export async function GET(request: NextRequest): Promise<NextResponse<TaskComple
 
 export async function POST(request: NextRequest): Promise<NextResponse<TaskCompletionResponse>> {
   try {
-    const { taskId, userId } = await request.json();
+    const { taskId, userId, completionDate } = await request.json();
 
-    if (!taskId || !userId) {
+    if (!taskId || !userId || !completionDate) {
       return NextResponse.json({
         exists: false,
         message: "Invalid taskId, userId, isCompleted are required",
@@ -48,8 +48,11 @@ export async function POST(request: NextRequest): Promise<NextResponse<TaskCompl
       });
     }
 
+    const parsedCompletionDate = new Date(completionDate);
+
     const newTaskCompletion = await prisma.taskCompletion.create({
       data: {
+        completionDate: parsedCompletionDate,
         taskId: parseInt(taskId),
         userId: parseInt(userId),
       },
