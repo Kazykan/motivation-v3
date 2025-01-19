@@ -24,3 +24,10 @@ export interface TaskWithCompletionsResponse {
   message?: string;
   status?: number;
 }
+
+export interface TaskCompletionResponse {
+  exists: boolean;
+  TaskCompletion?: TaskCompletion[];
+  message?: string;
+  status?: number;
+}
