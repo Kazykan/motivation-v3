@@ -34,7 +34,7 @@ export const WeekDay = {
   },
 };
 
-export function ConvertDate(date: Date): string {
+export function formatDateToYYYYMMDD(date: Date): string {
   const convertDate = lightFormat(date, "yyyy-MM-dd");
   return convertDate;
 }
