@@ -58,7 +58,7 @@ export async function POST(request: NextRequest): Promise<NextResponse<TaskCompl
       },
     });
 
-    return NextResponse.json({ exists: true, taskCompletion: newTaskCompletion, status: 201 });
+    return NextResponse.json({ exists: true, taskCompletion: [newTaskCompletion], status: 201 });
   } catch (error) {
     console.error("Error creating task completion:", error);
     return NextResponse.json({ exists: false, message: "Internal server error", status: 500 });
