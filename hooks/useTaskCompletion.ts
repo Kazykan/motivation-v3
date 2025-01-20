@@ -3,13 +3,11 @@ import { TaskCompletionResponse } from "@/lib/api/api-types";
 import { createTaskCompletion, deleteTaskCompletion, getTaskCompletions } from "@/utils/apiTaskCompletion";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
-const queryClient = useQueryClient();
-
-export const useTaskCompletions = (task_id: string, startDate: string, endDate: string) => {
+export const useTaskCompletions = (task_id: string, firstDayOfWeek: Date | null, lastDayOfWeek: Date | null) => {
   return useQuery<TaskCompletionResponse>({
-    queryKey: ["TaskCompletions", task_id, startDate, endDate],
-    queryFn: () => getTaskCompletions(task_id, startDate, endDate),
-    enabled: !!task_id && !!startDate && !!endDate,
+    queryKey: ["TaskCompletions", task_id, firstDayOfWeek, lastDayOfWeek],
+    queryFn: () => getTaskCompletions(task_id, firstDayOfWeek!, lastDayOfWeek!),
+    enabled: !!task_id && !!firstDayOfWeek && !!lastDayOfWeek,
   });
 };
 
@@ -28,8 +26,9 @@ interface DeleteTaskCompletionVariables {
   endDate: string;
 }
 
-export const useCreateTaskCompletion = (data: CreateTaskCompletionVariables) =>
-  useMutation({
+export function useCreateTaskCompletion(data: CreateTaskCompletionVariables) {
+  const queryClient = useQueryClient();
+  return useMutation({
     mutationFn: () => createTaskCompletion(data.completionDate, data.taskId, data.userId),
     onSuccess: () => {
       queryClient.invalidateQueries({
@@ -37,8 +36,10 @@ export const useCreateTaskCompletion = (data: CreateTaskCompletionVariables) =>
       });
     },
   });
+}
 
-export const useDeleteTaskCompletion = (data: DeleteTaskCompletionVariables) => {
+export function useDeleteTaskCompletion(data: DeleteTaskCompletionVariables) {
+  const queryClient = useQueryClient();
   return useMutation({
     mutationFn: () => deleteTaskCompletion(data.id),
     onSuccess: () => {
@@ -50,4 +51,4 @@ export const useDeleteTaskCompletion = (data: DeleteTaskCompletionVariables) => 
       console.error("Error deleting task completion:", error);
     },
   });
-};
+}

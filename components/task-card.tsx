@@ -28,7 +28,7 @@ export const TaskCard: React.FC<Props> = ({
   frequency,
   taskType,
 }) => {
-  const taskTypeToRu = taskType === TaskType.DAILY ? "Колич." : "Распис.";
+  const taskTypeToRu = taskType === TaskType.FLEXIBLE ? "гибкие" : "регулярные";
 
   return (
     <Card className={cn(className, "ml-1.5  w-full h-[160px]  shadow-sm  rounded-3xl")}>
@@ -44,7 +44,7 @@ export const TaskCard: React.FC<Props> = ({
         <CardDescription>
           <span className="truncate inline-flex items-center">
             <span className="hidden md:block mr-1.5">{description}</span>
-            <span>{taskType === TaskType.DAILY ? "daily" : "flexible"}</span>
+            <span>{taskTypeToRu}</span>
             {frequency && <span> {frequency} раз в неделю</span>} <span className="font-bold">·</span>{" "}
             <span className="font-bold">{sum} ₽ </span>
             <span className="text-opacity-20">/150 ₽</span>

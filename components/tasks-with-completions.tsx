@@ -1,7 +1,6 @@
 "use client";
 
 import { useTasksWithCompletions } from "@/hooks/useTasksWithCompletions";
-import { TestCard } from "./test-card";
 import { DayOfWeek, TaskType } from "@prisma/client";
 import { IWeekdays } from "./toggle-calendar";
 import { useWeek } from "@/lib/store/week";

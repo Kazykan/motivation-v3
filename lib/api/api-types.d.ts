@@ -27,7 +27,7 @@ export interface TaskWithCompletionsResponse {
 
 export interface TaskCompletionResponse {
   exists: boolean;
-  TaskCompletion?: TaskCompletion[];
+  taskCompletion?: TaskCompletion[];
   message?: string;
   status?: number;
 }

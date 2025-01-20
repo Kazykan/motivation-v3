@@ -1,18 +1,21 @@
 import { TaskCompletionResponse } from "@/lib/api/api-types";
 import axios from "axios";
 import { axiosInstanceWithoutAuth } from "./instance";
+import { formatDateToYYYYMMDD } from "@/lib/service/date";
 
 export const getTaskCompletions = async (
   task_id: string,
-  startDate: string,
-  endDate: string
+  firstDayOfWeek: Date,
+  lastDayOfWeek: Date
 ): Promise<TaskCompletionResponse> => {
   try {
     const taskId = parseInt(task_id);
+    const formattedFirstDay = formatDateToYYYYMMDD(firstDayOfWeek);
+    const formattedLastDay = formatDateToYYYYMMDD(lastDayOfWeek);
 
     // const axiosInstance = await createServerAxiosInstance();
     const task = await axiosInstanceWithoutAuth.get<TaskCompletionResponse>(
-      `/child/task-completion?task_id=${taskId}&start=${startDate}&end=${endDate}`
+      `/child/task-completion?task_id=${taskId}&start=${formattedFirstDay}&end=${formattedLastDay}`
     );
 
     return task.data;
