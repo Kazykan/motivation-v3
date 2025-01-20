@@ -7,6 +7,7 @@ import { TaskType } from "@prisma/client";
 
 interface Props {
   className?: string;
+  child_id: number;
   task_id: number;
   title: string;
   description: string;
@@ -18,6 +19,7 @@ interface Props {
 
 export const TaskCard: React.FC<Props> = ({
   className,
+  child_id,
   task_id,
   title,
   description,
@@ -26,6 +28,8 @@ export const TaskCard: React.FC<Props> = ({
   frequency,
   taskType,
 }) => {
+  const taskTypeToRu = taskType === TaskType.DAILY ? "Колич." : "Распис.";
+
   return (
     <Card className={cn(className, "ml-1.5  w-full h-[160px]  shadow-sm  rounded-3xl")}>
       <CardHeader>
@@ -38,18 +42,18 @@ export const TaskCard: React.FC<Props> = ({
           </div>
         </CardTitle>
         <CardDescription>
-          <span className="truncate">
-            {description}
-            {taskType === TaskType.DAILY ? "daily" : "flexible"}
-            {frequency && <span>{frequency} раз в неделю</span>}
-          </span>{" "}
-          <span className="font-bold">·</span> <span className="font-bold">{sum} ₽ </span>
-          <span className="text-opacity-20">/150 ₽</span>
+          <span className="truncate inline-flex items-center">
+            <span className="hidden md:block mr-1.5">{description}</span>
+            <span>{taskType === TaskType.DAILY ? "daily" : "flexible"}</span>
+            {frequency && <span> {frequency} раз в неделю</span>} <span className="font-bold">·</span>{" "}
+            <span className="font-bold">{sum} ₽ </span>
+            <span className="text-opacity-20">/150 ₽</span>
+          </span>
         </CardDescription>
       </CardHeader>
       <CardContent>
         <div className="m-0 mt-4 justify-start">
-          <ToggleGroupCalendar task_id={task_id} weekdays_need={weekdays_need} />
+          <ToggleGroupCalendar child_id={child_id} task_id={task_id} weekdays_need={weekdays_need} />
         </div>
       </CardContent>
     </Card>
