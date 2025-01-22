@@ -2,10 +2,10 @@
 
 import { useTasksWithCompletions } from "@/hooks/useTasksWithCompletions";
 import { DayOfWeek, TaskType } from "@prisma/client";
-import { IWeekdays } from "./toggle-calendar";
 import { useWeek } from "@/lib/store/week";
 import { FilePenLine, Minus, Trash2 } from "lucide-react";
 import { TaskCard } from "./task-card";
+import { IWeekdays } from "@/lib/types";
 
 interface Props {
   telegramId: string;

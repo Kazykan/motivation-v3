@@ -1,9 +1,10 @@
 "use client";
 
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
-import { useTaskCompletions } from "@/hooks/useTaskCompletion";
-import { useWeek } from "@/lib/store/week";
-import { eachDayOfInterval, format, getDay } from "date-fns";
+import { useCreateTaskCompletion, useDeleteTaskCompletion, useTaskCompletions } from "@/hooks/useTaskCompletion";
+import { formatDateToYYYYMMDD, getWeekdayFromCompletion, IWeekdays, useWeek, weekdays } from "@/lib";
+import { useQueryClient } from "@tanstack/react-query";
+import { format } from "date-fns";
 import React from "react";
 
 interface Props {
@@ -12,46 +13,86 @@ interface Props {
   weekdays_need?: IWeekdays[];
 }
 
-export type IWeekdays = "Пн" | "Вт" | "Ср" | "Чт" | "Пт" | "Сб" | "Вс";
-const weekdays: IWeekdays[] = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"];
-
 export function ToggleGroupCalendar({ weekdays_need, task_id, child_id }: Props) {
+  const queryClient = useQueryClient();
   const firstDayOfWeek = useWeek((state) => state.start_of_date);
   const lastDayOfWeek = useWeek((state) => state.end_of_week);
+  const weekMonthDays = useWeek((state) => state.weekDays);
   const [selectedDays, setSelectedDays] = React.useState<IWeekdays[]>([]);
+  const [isMutating, setIsMutating] = React.useState(false);
 
-  // получаем все дни выбранной недели
-  const month_days =
-    firstDayOfWeek && lastDayOfWeek
-      ? eachDayOfInterval({
-          start: firstDayOfWeek,
-          end: lastDayOfWeek,
-        })
-      : [];
-
+  const month_days = weekMonthDays ? weekMonthDays : [];
   const weekdaysToUse = weekdays_need || weekdays;
 
   const { data: taskCompletions, isLoading } = useTaskCompletions(String(task_id), firstDayOfWeek, lastDayOfWeek);
 
-  const handleValueChange = (value: IWeekdays[]) => {
-    // Здесь вызывайте мутацию для сохранения изменения
-    console.log("Selected Days:", value);
-    setSelectedDays(value);
+  const createTaskCompletionMutation = useCreateTaskCompletion({
+    taskId: task_id,
+    userId: child_id,
+  });
+
+  const deleteTaskCompletionMutation = useDeleteTaskCompletion({
+    taskId: task_id,
+  });
+
+  const handleValueChange = async (value: IWeekdays[]) => {
+    setIsMutating(true);
+    try {
+      const previousSelectedDays = selectedDays;
+      setSelectedDays(value);
+
+      const addedDays = value.filter((day) => !previousSelectedDays.includes(day));
+      const removedDays = previousSelectedDays.filter((day) => !value.includes(day));
+
+      for (const addedDay of addedDays) {
+        const index = weekdays.indexOf(addedDay);
+        if (index !== -1 && month_days[index]) {
+          const completionDate = formatDateToYYYYMMDD(month_days[index]);
+          await createTaskCompletionMutation.mutateAsync(completionDate);
+        }
+      }
+
+      for (const removedDay of removedDays) {
+        const index = weekdays.indexOf(removedDay);
+        if (index !== -1 && month_days[index]) {
+          const completionToDelete = taskCompletions?.taskCompletion?.find((completion) => {
+            return getWeekdayFromCompletion(completion.completionDate) === removedDay;
+          });
+
+          if (completionToDelete) await deleteTaskCompletionMutation.mutateAsync(completionToDelete.id);
+        }
+      }
+      queryClient.invalidateQueries({
+        queryKey: [
+          "TaskCompletions",
+          task_id.toString(),
+          firstDayOfWeek ? formatDateToYYYYMMDD(firstDayOfWeek) : "",
+          lastDayOfWeek ? formatDateToYYYYMMDD(lastDayOfWeek) : "",
+        ],
+      });
+    } catch (error) {
+      console.error("Error during mutation:", error);
+    } finally {
+      setIsMutating(false);
+    }
   };
 
   React.useEffect(() => {
     if (taskCompletions?.taskCompletion && !isLoading) {
       const completedDays = taskCompletions.taskCompletion.map((completion) => {
-        const completionDate = new Date(completion.completionDate);
-        const dayOfWeek = getDay(completionDate);
-        return weekdays[dayOfWeek === 0 ? 6 : dayOfWeek - 1];
+        return getWeekdayFromCompletion(completion.completionDate);
       });
       setSelectedDays(completedDays);
     }
-  }, [taskCompletions, isLoading, weekdays]);
+  }, [taskCompletions, isLoading]);
 
   return (
-    <ToggleGroup type="multiple" value={selectedDays} onValueChange={handleValueChange}>
+    <ToggleGroup
+      disabled={isLoading || isMutating}
+      type="multiple"
+      value={selectedDays}
+      onValueChange={handleValueChange}
+    >
       {weekdays.map((weekday, index) => {
         const date = month_days[index];
         const formattedDay = date ? format(date, "d") : "";
@@ -61,7 +102,7 @@ export function ToggleGroupCalendar({ weekdays_need, task_id, child_id }: Props)
             value={weekday}
             aria-label={weekday}
             variant={weekdaysToUse.includes(weekday) ? "outline" : "default"}
-            disabled={!weekdaysToUse.includes(weekday)}
+            disabled={!weekdaysToUse.includes(weekday) || isLoading || isMutating}
           >
             <div className="relative">
               <div className="relative -top-5">{weekday}</div>

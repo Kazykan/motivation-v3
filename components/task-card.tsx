@@ -1,9 +1,10 @@
 import React from "react";
 import { cn } from "@/lib/utils";
-import { IWeekdays, ToggleGroupCalendar } from "./toggle-calendar";
+import { ToggleGroupCalendar } from "./toggle-calendar";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card";
-import { CalendarCheck } from "lucide-react";
+import { CalendarCheck, Move } from "lucide-react";
 import { TaskType } from "@prisma/client";
+import { IWeekdays } from "@/lib/types";
 
 interface Props {
   className?: string;
@@ -36,15 +37,19 @@ export const TaskCard: React.FC<Props> = ({
         <CardTitle>
           <div className="flex justify-between items-center">
             <div className="text-lg truncate mr-7">{title}</div>
-            <div>
-              <CalendarCheck className="text-muted-foreground w-5 h-5" />
+            <div className="flex items-center">
+              <span className="hidden md:block font-normal mr-2">{taskTypeToRu}</span>
+              {taskType === TaskType.FLEXIBLE ? (
+                <Move className="text-muted-foreground w-5 h-5" />
+              ) : (
+                <CalendarCheck className="text-muted-foreground w-5 h-5" />
+              )}
             </div>
           </div>
         </CardTitle>
         <CardDescription>
           <span className="truncate inline-flex items-center">
             <span className="hidden md:block mr-1.5">{description}</span>
-            <span>{taskTypeToRu}</span>
             {frequency && <span> {frequency} раз в неделю</span>} <span className="font-bold">·</span>{" "}
             <span className="font-bold">{sum} ₽ </span>
             <span className="text-opacity-20">/150 ₽</span>

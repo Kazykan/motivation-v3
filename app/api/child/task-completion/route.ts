@@ -86,13 +86,24 @@ export async function DELETE(request: NextRequest): Promise<NextResponse> {
       },
     });
 
-    return NextResponse.json(null, { status: 204 });
-  } catch (error) {
-    console.error("Error deleting task completion:", error);
-    if (error instanceof Error && error.message.includes("Record to delete does not exist")) {
-      return NextResponse.json({ error: "Task completion not found" }, { status: 404 });
+    // Return 204 with an empty body
+    return new NextResponse(null, { status: 204 });
+  } catch (error: any) {
+    // Обрабатываем ошибку Prisma, если запись не найдена
+    if (error.code === "P2025") {
+      console.error("Ошибка удаления записи о выполнении задачи: Запись не найдена", error);
+      return NextResponse.json({ error: "Запись о выполнении задачи не найдена" }, { status: 404 });
+    } else if (
+      error instanceof Error &&
+      error.message.includes("The payload argument must be of type object. Received null")
+    ) {
+      // Обрабатываем ошибку с `null` payload, указывающую на проблему с запросом к базе данных.
+      console.error("Ошибка удаления записи о выполнении задачи из-за неверных данных:", error);
+      return NextResponse.json({ error: "Запись о выполнении задачи не найдена" }, { status: 404 });
+    } else {
+      console.error("Ошибка удаления записи о выполнении задачи:", error);
+      return NextResponse.json({ error: "Внутренняя ошибка сервера" }, { status: 500 });
     }
-    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
   } finally {
     await prisma.$disconnect();
   }
