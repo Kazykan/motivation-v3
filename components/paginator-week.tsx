@@ -23,10 +23,12 @@ export function PaginationWeeks() {
   const isSwitch = useSwitchEdit((state) => state.isEdit);
   const setStartOfWeek = useWeek((state) => state.setStartOfWeek);
   const setEndOfWeek = useWeek((state) => state.setEndOfWeek);
+  const setWeekDays = useWeek((state) => state.setWeekDays);
 
   React.useEffect(() => {
     setStartOfWeek(currentWeek);
     setEndOfWeek(currentWeek);
+    setWeekDays()
   }, [currentWeek, setStartOfWeek, setEndOfWeek]);
 
   function setCurrentDay(set: boolean) {
