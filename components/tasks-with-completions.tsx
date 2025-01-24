@@ -10,6 +10,7 @@ import { calculateTaskReward, calculateTotalReward, currencyFormatMoney } from "
 import React from "react";
 import { useChildProfile } from "@/lib/store/child";
 import { Progress } from "./ui/progress";
+import { calculateCompletionPercentage } from "@/lib/service/calculate_sum";
 
 interface Props {
   telegramId: string;
@@ -27,6 +28,8 @@ interface TaskData {
 
 export const TasksWithCompletions: React.FC<Props> = ({ telegramId }) => {
   const [totalReward, setTotalReward] = React.useState(0);
+  const [totalMaxReward, setTotalMaxReward] = React.useState(0);
+  const [completionPercentage, setCompletionPercentage] = React.useState(0);
   const firstDayOfWeek = useWeek((state) => state.start_of_date);
   const lastDayOfWeek = useWeek((state) => state.end_of_week);
   const setChildTelegramId = useChildProfile((state) => state.setChildTelegramId);
@@ -37,7 +40,9 @@ export const TasksWithCompletions: React.FC<Props> = ({ telegramId }) => {
 
   React.useEffect(() => {
     if (data) {
-      setTotalReward(calculateTotalReward(data));
+      setTotalReward(calculateTotalReward(data).earnedReward);
+      setTotalMaxReward(calculateTotalReward(data).maxReward);
+      setCompletionPercentage(calculateCompletionPercentage(calculateTotalReward(data)));
     }
   }, [data]);
 
@@ -73,9 +78,9 @@ export const TasksWithCompletions: React.FC<Props> = ({ telegramId }) => {
 
   return (
     <div>
-      <div className="m-3">
-        {currencyFormatMoney(totalReward)}
-        <Progress value={33} />
+      <div className="m-3 font-bold text-lg">
+        {currencyFormatMoney(totalReward)}<span className="text-muted-foreground font-normal text-sm">/{currencyFormatMoney(totalMaxReward)}</span>
+        <Progress value={completionPercentage} />
       </div>
       <div className="grid gap-4 mt-5">
         {/* <pre>{JSON.stringify(data, null, 2)}</pre> */}
@@ -103,9 +108,10 @@ export const TasksWithCompletions: React.FC<Props> = ({ telegramId }) => {
                   description={oneTask.description !== null ? oneTask.description : ""}
                   sum={oneTask.reward}
                   weekdays_need={convertDaysOfWeekToShortRu(oneTask)}
-                  totalEarn={calculateTaskReward(oneTask)}
+                  totalEarn={calculateTaskReward(oneTask).earnedReward}
                   taskType={oneTask.type}
-                  frequency={oneTask.frequency ?? undefined}
+                  frequency={oneTask.frequency ?? oneTask.dayOfWeek.length}
+                  countTaskCompletionDone={oneTask.taskCompletions.length}
                 />
               </div>
             );

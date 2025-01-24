@@ -16,12 +16,15 @@ interface Props {
   description: string;
   weekdays_need?: IWeekdays[];
   taskType: TaskType;
+  countTaskCompletionDone: number
   frequency?: number;
   sum: number;
 }
 
 export const TaskCard: React.FC<Props> = ({
   className,
+  countTaskCompletionDone,
+  frequency,
   totalEarn,
   child_id,
   task_id,
@@ -49,14 +52,16 @@ export const TaskCard: React.FC<Props> = ({
             </div>
           </div>
         </CardTitle>
-        <CardDescription>
+        <CardDescription className="flex justify-between">
+
           <span className="truncate inline-flex items-center">
             <span className="hidden md:block mr-1.5">
               {description} <span className="font-bold">·</span>
             </span>
-            <span className="font-bold">{currencyFormatMoney(totalEarn)}</span>
-            <span className="text-opacity-20">/{currencyFormatMoney(sum)}</span>
+            <span className="font-bold text-base">{currencyFormatMoney(totalEarn)}</span>
+            <span className="text-opacity-20 text-xs">/{currencyFormatMoney(sum)}</span>
           </span>
+          <span>{countTaskCompletionDone}/{frequency}</span>
         </CardDescription>
       </CardHeader>
       <CardContent>
