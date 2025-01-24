@@ -29,7 +29,6 @@ export const TaskCard: React.FC<Props> = ({
   description,
   weekdays_need,
   sum,
-  frequency,
   taskType,
 }) => {
   const taskTypeToRu = taskType === TaskType.FLEXIBLE ? "гибкие" : "регулярные";

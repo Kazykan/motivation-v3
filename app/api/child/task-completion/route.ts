@@ -90,7 +90,7 @@ export async function DELETE(request: NextRequest): Promise<NextResponse> {
     return new NextResponse(null, { status: 204 });
   } catch (error) {
     // Обрабатываем ошибку Prisma, если запись не найдена
-    if (error instanceof Error && (error as any).code === "P2025") {
+    if (error instanceof Error && (error as any).code === "P2025") { // eslint-disable-line @typescript-eslint/no-explicit-any
       console.error("Ошибка удаления записи о выполнении задачи: Запись не найдена", error);
       return NextResponse.json({ error: "Запись о выполнении задачи не найдена" }, { status: 404 });
     } else if (
