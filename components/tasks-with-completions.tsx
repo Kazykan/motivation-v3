@@ -6,6 +6,10 @@ import { useWeek } from "@/lib/store/week";
 import { FilePenLine, Minus, Trash2 } from "lucide-react";
 import { TaskCard } from "./task-card";
 import { IWeekdays } from "@/lib/types";
+import { calculateTaskReward, calculateTotalReward, currencyFormatMoney } from "@/lib";
+import React from "react";
+import { useChildProfile } from "@/lib/store/child";
+import { Progress } from "./ui/progress";
 
 interface Props {
   telegramId: string;
@@ -22,10 +26,20 @@ interface TaskData {
 }
 
 export const TasksWithCompletions: React.FC<Props> = ({ telegramId }) => {
+  const [totalReward, setTotalReward] = React.useState(0);
   const firstDayOfWeek = useWeek((state) => state.start_of_date);
   const lastDayOfWeek = useWeek((state) => state.end_of_week);
+  const setChildTelegramId = useChildProfile((state) => state.setChildTelegramId);
 
   const { data, isLoading, error } = useTasksWithCompletions(telegramId, firstDayOfWeek, lastDayOfWeek);
+
+  setChildTelegramId(Number(telegramId));
+
+  React.useEffect(() => {
+    if (data) {
+      setTotalReward(calculateTotalReward(data));
+    }
+  }, [data]);
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -58,37 +72,45 @@ export const TasksWithCompletions: React.FC<Props> = ({ telegramId }) => {
   }
 
   return (
-    <div className="grid gap-4 mt-5">
-      {data.task.length > 0 &&
-        data.task.map((oneTask) => {
-          return (
-            <div key={oneTask.id} className="mr-14">
-            <div className="relative top-[159px] mt-[-159px] h-[158px] left-[50px] -z-10 rounded-3xl w-full shadow-sm bg-primary/80 space-y-2 ">
-              <div className="w-full h-full flex flex-col items-end justify-center space-y-5">
-                <div className="mr-3.5">
-                  <FilePenLine className="w-5 h-5" />
+    <div>
+      <div className="m-3">
+        {currencyFormatMoney(totalReward)}
+        <Progress value={33} />
+      </div>
+      <div className="grid gap-4 mt-5">
+        {/* <pre>{JSON.stringify(data, null, 2)}</pre> */}
+        {data.task.length > 0 &&
+          data.task.map((oneTask) => {
+            return (
+              <div key={oneTask.id} className="mr-14">
+                <div className="relative top-[159px] mt-[-159px] h-[158px] left-[50px] -z-10 rounded-3xl w-full shadow-sm bg-primary/80 space-y-2 ">
+                  <div className="w-full h-full flex flex-col items-end justify-center space-y-5">
+                    <div className="mr-3.5">
+                      <FilePenLine className="w-5 h-5" />
+                    </div>
+                    <div className="mr-3.5">
+                      <Minus className="w-5 h-5 text-muted" />
+                    </div>
+                    <div className="mr-3.5">
+                      <Trash2 className="w-5 h-5" />
+                    </div>
+                  </div>
                 </div>
-                <div className="mr-3.5">
-                  <Minus className="w-5 h-5 text-muted" />
-                </div>
-                <div className="mr-3.5">
-                  <Trash2 className="w-5 h-5" />
-                </div>
+                <TaskCard
+                  child_id={oneTask.childUserId}
+                  task_id={oneTask.id}
+                  title={oneTask.title}
+                  description={oneTask.description !== null ? oneTask.description : ""}
+                  sum={oneTask.reward}
+                  weekdays_need={convertDaysOfWeekToShortRu(oneTask)}
+                  totalEarn={calculateTaskReward(oneTask)}
+                  taskType={oneTask.type}
+                  frequency={oneTask.frequency ?? undefined}
+                />
               </div>
-            </div>
-            <TaskCard
-              child_id={oneTask.childUserId}
-              task_id={oneTask.id}
-              title={oneTask.title}
-              description={oneTask.description !== null ? oneTask.description : ""}
-              sum={oneTask.reward}
-              weekdays_need={convertDaysOfWeekToShortRu(oneTask)}
-              taskType={oneTask.type}
-              frequency={oneTask.frequency ?? undefined}
-            />
-          </div>
-          );
-        })}
+            );
+          })}
+      </div>
     </div>
   );
 };

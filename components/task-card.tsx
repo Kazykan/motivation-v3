@@ -5,9 +5,11 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/
 import { CalendarCheck, Move } from "lucide-react";
 import { TaskType } from "@prisma/client";
 import { IWeekdays } from "@/lib/types";
+import { currencyFormatMoney } from "@/lib";
 
 interface Props {
   className?: string;
+  totalEarn: number;
   child_id: number;
   task_id: number;
   title: string;
@@ -20,6 +22,7 @@ interface Props {
 
 export const TaskCard: React.FC<Props> = ({
   className,
+  totalEarn,
   child_id,
   task_id,
   title,
@@ -49,10 +52,12 @@ export const TaskCard: React.FC<Props> = ({
         </CardTitle>
         <CardDescription>
           <span className="truncate inline-flex items-center">
-            <span className="hidden md:block mr-1.5">{description}</span>
-            {frequency && <span> {frequency} раз в неделю</span>} <span className="font-bold">·</span>{" "}
-            <span className="font-bold">{sum} ₽ </span>
-            <span className="text-opacity-20">/150 ₽</span>
+            <span className="hidden md:block mr-1.5">
+              {description}{" "}
+              <span className="font-bold">·</span>
+            </span>
+            <span className="font-bold">{currencyFormatMoney(totalEarn)}</span>
+            <span className="text-opacity-20">/{currencyFormatMoney(sum)}</span>
           </span>
         </CardDescription>
       </CardHeader>

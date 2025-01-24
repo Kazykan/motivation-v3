@@ -3,6 +3,7 @@
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { useCreateTaskCompletion, useDeleteTaskCompletion, useTaskCompletions } from "@/hooks/useTaskCompletion";
 import { formatDateToYYYYMMDD, getWeekdayFromCompletion, IWeekdays, useWeek, weekdays } from "@/lib";
+import { useChildProfile } from "@/lib/store/child";
 import { useQueryClient } from "@tanstack/react-query";
 import { format } from "date-fns";
 import React from "react";
@@ -20,6 +21,7 @@ export function ToggleGroupCalendar({ weekdays_need, task_id, child_id }: Props)
   const weekMonthDays = useWeek((state) => state.weekDays);
   const [selectedDays, setSelectedDays] = React.useState<IWeekdays[]>([]);
   const [isMutating, setIsMutating] = React.useState(false);
+  const childTelegramId = useChildProfile((state) => state.child_telegram_id);
 
   const month_days = weekMonthDays ? weekMonthDays : [];
   const weekdaysToUse = weekdays_need || weekdays;
@@ -66,6 +68,14 @@ export function ToggleGroupCalendar({ weekdays_need, task_id, child_id }: Props)
         queryKey: [
           "TaskCompletions",
           task_id.toString(),
+          firstDayOfWeek ? formatDateToYYYYMMDD(firstDayOfWeek) : "",
+          lastDayOfWeek ? formatDateToYYYYMMDD(lastDayOfWeek) : "",
+        ],
+      });
+      queryClient.invalidateQueries({
+        queryKey: [
+          "TaskWithCompletions",
+          String(childTelegramId),
           firstDayOfWeek ? formatDateToYYYYMMDD(firstDayOfWeek) : "",
           lastDayOfWeek ? formatDateToYYYYMMDD(lastDayOfWeek) : "",
         ],
