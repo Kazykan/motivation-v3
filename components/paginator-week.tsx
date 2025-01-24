@@ -29,7 +29,7 @@ export function PaginationWeeks() {
     setStartOfWeek(currentWeek);
     setEndOfWeek(currentWeek);
     setWeekDays()
-  }, [currentWeek, setStartOfWeek, setEndOfWeek]);
+  }, [currentWeek, setStartOfWeek, setEndOfWeek, setWeekDays]);
 
   function setCurrentDay(set: boolean) {
     let day: Date;
