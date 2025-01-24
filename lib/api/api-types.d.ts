@@ -1,4 +1,4 @@
-import { ChildUser, ParentUser, Task, TaskCompletion } from "@prisma/client";
+import { ChildUser, ParentUser, Task, TaskCompletion } from "@/prisma/prisma/client";
 
 export interface ChildCheckResponse {
   exists: boolean;

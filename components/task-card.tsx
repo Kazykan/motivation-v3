@@ -3,9 +3,9 @@ import { cn } from "@/lib/utils";
 import { ToggleGroupCalendar } from "./toggle-calendar";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card";
 import { CalendarCheck, Move } from "lucide-react";
-import { TaskType } from "@prisma/client";
 import { IWeekdays } from "@/lib/types";
 import { currencyFormatMoney } from "@/lib";
+import { TaskType } from "@/prisma/prisma/client";
 
 interface Props {
   className?: string;
@@ -52,8 +52,7 @@ export const TaskCard: React.FC<Props> = ({
         <CardDescription>
           <span className="truncate inline-flex items-center">
             <span className="hidden md:block mr-1.5">
-              {description}{" "}
-              <span className="font-bold">·</span>
+              {description} <span className="font-bold">·</span>
             </span>
             <span className="font-bold">{currencyFormatMoney(totalEarn)}</span>
             <span className="text-opacity-20">/{currencyFormatMoney(sum)}</span>

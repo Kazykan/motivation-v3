@@ -1,7 +1,7 @@
 "use client";
 
 import { useTasksWithCompletions } from "@/hooks/useTasksWithCompletions";
-import { DayOfWeek, TaskType } from "@prisma/client";
+import { DayOfWeek, TaskType } from "@/prisma/prisma/client";
 import { useWeek } from "@/lib/store/week";
 import { FilePenLine, Minus, Trash2 } from "lucide-react";
 import { TaskCard } from "./task-card";

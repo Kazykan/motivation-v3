@@ -1,6 +1,6 @@
 import { TaskWithCompletionsResponse } from "@/lib/api/api-types";
 import { prisma } from "@/prisma/prisma-client";
-import { Task } from "@prisma/client";
+import { Task, TaskCompletion } from "@/prisma/prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 
 // Функция для проверки и преобразования параметров
@@ -74,7 +74,9 @@ export async function GET(request: NextRequest): Promise<NextResponse<TaskWithCo
     const tasksWithCompletions =
       childTasks?.tasks.map((task: Task) => ({
         ...task,
-        taskCompletions: childTasks.taskCompletions.filter((completion) => completion.taskId === task.id),
+        taskCompletions: childTasks.taskCompletions.filter(
+          (completion: TaskCompletion) => completion.taskId === task.id
+        ),
       })) ?? [];
     return NextResponse.json({ exists: true, task: tasksWithCompletions, status: 200 });
   } catch (error) {
