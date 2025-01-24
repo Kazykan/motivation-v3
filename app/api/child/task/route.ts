@@ -1,20 +1,41 @@
 import { TaskWithCompletionsResponse } from "@/lib/api/api-types";
-import { verifyToken } from "@/lib/jwt";
 import { prisma } from "@/prisma/prisma-client";
-import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
+
+// Функция для проверки и преобразования параметров
+const validateAndParseParams = (searchParams: URLSearchParams) => {
+  const telegram_id_str = searchParams.get("telegram_id");
+  const startStr = searchParams.get("start");
+  const endStr = searchParams.get("end");
+
+  if (!telegram_id_str || !startStr || !endStr) {
+    return { error: "Invalid telegram_id, start, end", status: 400 };
+  }
+
+  const telegram_id = parseInt(telegram_id_str);
+  if (isNaN(telegram_id)) {
+    return { error: "Invalid telegram_id: telegram_id must be a number", status: 400 };
+  }
+
+  const start = new Date(startStr);
+  const end = new Date(endStr);
+
+  if (isNaN(start.getTime()) || isNaN(end.getTime())) {
+    return { error: "Invalid date format for start or end", status: 400 };
+  }
+
+  return { telegram_id, start, end };
+};
 
 export async function GET(request: NextRequest): Promise<NextResponse<TaskWithCompletionsResponse>> {
   try {
     const searchParams = request.nextUrl.searchParams;
-    const telegram_id = searchParams.get("telegram_id");
-    const start = new Date(searchParams.get("start") as string);
-    const end = new Date(searchParams.get("end") as string);
+    const params = validateAndParseParams(searchParams);
 
-    if (!telegram_id || !start || !end) {
-      return NextResponse.json({ exists: false, message: "Invalid data: telegram_id, start, end", status: 400 });
+    if ("error" in params) {
+      return NextResponse.json({ exists: false, message: params.error, status: params.status });
     }
-
+    const { telegram_id, start, end } = params;
     // const cookieStore = cookies();
     // const token = (await cookieStore).get("token")?.value;
 
@@ -30,7 +51,7 @@ export async function GET(request: NextRequest): Promise<NextResponse<TaskWithCo
 
     const childTasks = await prisma.childUser.findUnique({
       where: {
-        telegram_id: parseInt(telegram_id),
+        telegram_id: telegram_id,
       },
       select: {
         tasks: true,
@@ -45,15 +66,16 @@ export async function GET(request: NextRequest): Promise<NextResponse<TaskWithCo
       },
     });
 
-    if (childTasks) {
-      const tasksWithCompletions = childTasks?.tasks.map(task => ({
-        ...task,
-        taskCompletions: childTasks.taskCompletions.filter(completion => completion.taskId === task.id)
-      })) ?? [];
-      return NextResponse.json({ exists: true, task: tasksWithCompletions, status: 200 });
-    } else {
-      return NextResponse.json({ exists: false, status: 200 });
+    if (!childTasks) {
+      return NextResponse.json({ exists: false, message: "User not found", status: 404 });
     }
+
+    const tasksWithCompletions =
+      childTasks?.tasks.map((task) => ({
+        ...task,
+        taskCompletions: childTasks.taskCompletions.filter((completion) => completion.taskId === task.id),
+      })) ?? [];
+    return NextResponse.json({ exists: true, task: tasksWithCompletions, status: 200 });
   } catch (error) {
     console.error("Error checking parent:", error);
     return NextResponse.json({ exists: false, message: "Internal server error", status: 500 });

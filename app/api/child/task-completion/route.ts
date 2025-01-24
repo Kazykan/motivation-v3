@@ -88,9 +88,9 @@ export async function DELETE(request: NextRequest): Promise<NextResponse> {
 
     // Return 204 with an empty body
     return new NextResponse(null, { status: 204 });
-  } catch (error: any) {
+  } catch (error) {
     // Обрабатываем ошибку Prisma, если запись не найдена
-    if (error.code === "P2025") {
+    if (error instanceof Error && (error as any).code === "P2025") {
       console.error("Ошибка удаления записи о выполнении задачи: Запись не найдена", error);
       return NextResponse.json({ error: "Запись о выполнении задачи не найдена" }, { status: 404 });
     } else if (
