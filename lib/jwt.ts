@@ -10,6 +10,17 @@ export interface Payload {
   role: payloadRole;
 }
 
+export function getRoleName(role: payloadRole | null): string {
+  switch (role) {
+    case payloadRole.child:
+      return "child";
+    case payloadRole.parent:
+      return "parent";
+    default:
+      return "unknown"; // Handle unexpected cases
+  }
+}
+
 const secretKey = process.env.JWT_SECRET_KEY;
 if (!secretKey) {
   throw new Error("JWT secret key is not defined");
