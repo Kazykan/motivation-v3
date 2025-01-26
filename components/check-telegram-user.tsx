@@ -13,7 +13,7 @@ const CheckTelegramUser: React.FC = () => {
   const [showRegistration, setShowRegistration] = React.useState(false);
 
   React.useEffect(() => {
-    const telegramStartParams = searchParams.get("telegram");
+    const telegramStartParams = searchParams.get("telegramStartParams");
 
     if (telegramStartParams) {
       try {

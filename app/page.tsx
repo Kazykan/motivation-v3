@@ -21,7 +21,7 @@ const CheckTelegramUser: React.FC = () => {
         <AvatarImage src={telegramUser.photo_url} alt="@shadcn" />
         <AvatarFallback>{telegramUser.first_name?.toUpperCase().slice(0, 2)}</AvatarFallback>
       </Avatar>
-      {/* <CheckTelegramId telegramStartParams={telegramStartParams} telegramId={telegramUser.id} /> */}
+      <CheckTelegramId telegramStartParams={telegramStartParams} telegramId={telegramUser.id} />
     </div>
   );
 };
