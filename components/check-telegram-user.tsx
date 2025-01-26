@@ -3,6 +3,7 @@
 import { getRoleName, payloadRole } from "@/lib/jwt";
 import { useSearchParams } from "next/navigation";
 import React from "react";
+import { AddParentForm } from "./form/add-parent-form";
 
 const CheckTelegramUser: React.FC = () => {
   const searchParams = useSearchParams();
@@ -36,6 +37,7 @@ const CheckTelegramUser: React.FC = () => {
       {showRegistration ? (
         <div>
           Вас пригласил {inviterTelegramId} на роль {getRoleName(role)}
+          <AddParentForm tgParentId={15613131} tgUserName={"Леха"} tgInviteId={inviterTelegramId} />
         </div>
       ) : (
         <div>Вас никто не приглашал</div>

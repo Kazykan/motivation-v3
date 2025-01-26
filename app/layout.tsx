@@ -4,6 +4,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import Script from "next/script";
 import { QueryProvider } from "./queryProvider";
+import { Toaster } from "@/components/ui/toaster";
 
 const jost = Jost({
   subsets: ["cyrillic"],
@@ -26,6 +27,7 @@ export default function RootLayout({ children }: React.PropsWithChildren<unknown
         <QueryProvider>
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
             {children}
+            <Toaster />
           </ThemeProvider>
         </QueryProvider>
       </body>

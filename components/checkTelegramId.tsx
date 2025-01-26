@@ -1,5 +1,5 @@
-import { useChildCheck } from "@/hooks/useChildCheck";
-import { useParentCheck } from "@/hooks/useParentCheck";
+import { useChildCheck } from "@/hooks/useChild";
+import { useParentCheck } from "@/hooks/useParent";
 import { generateToken, payloadRole } from "@/lib/jwt";
 import { useRouter } from "next/navigation";
 import React from "react";

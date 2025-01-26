@@ -9,3 +9,4 @@ export const useParentCheck = (telegramId: number) => {
     enabled: !!telegramId,
   });
 };
+
