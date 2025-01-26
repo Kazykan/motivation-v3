@@ -43,7 +43,15 @@ export type TaskCompletion = $Result.DefaultSelection<Prisma.$TaskCompletionPayl
  * Enums
  */
 export namespace $Enums {
-  export const TaskType: {
+  export const Gender: {
+  MALE: 'MALE',
+  FEMALE: 'FEMALE'
+};
+
+export type Gender = (typeof Gender)[keyof typeof Gender]
+
+
+export const TaskType: {
   DAILY: 'DAILY',
   FLEXIBLE: 'FLEXIBLE'
 };
@@ -64,6 +72,10 @@ export const DayOfWeek: {
 export type DayOfWeek = (typeof DayOfWeek)[keyof typeof DayOfWeek]
 
 }
+
+export type Gender = $Enums.Gender
+
+export const Gender: typeof $Enums.Gender
 
 export type TaskType = $Enums.TaskType
 
@@ -1409,6 +1421,8 @@ export namespace Prisma {
     id: number | null
     telegram_id: number | null
     name: string | null
+    gender: $Enums.Gender | null
+    photo_url: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -1417,6 +1431,8 @@ export namespace Prisma {
     id: number | null
     telegram_id: number | null
     name: string | null
+    gender: $Enums.Gender | null
+    photo_url: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -1425,6 +1441,8 @@ export namespace Prisma {
     id: number
     telegram_id: number
     name: number
+    gender: number
+    photo_url: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -1445,6 +1463,8 @@ export namespace Prisma {
     id?: true
     telegram_id?: true
     name?: true
+    gender?: true
+    photo_url?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -1453,6 +1473,8 @@ export namespace Prisma {
     id?: true
     telegram_id?: true
     name?: true
+    gender?: true
+    photo_url?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -1461,6 +1483,8 @@ export namespace Prisma {
     id?: true
     telegram_id?: true
     name?: true
+    gender?: true
+    photo_url?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -1556,6 +1580,8 @@ export namespace Prisma {
     id: number
     telegram_id: number
     name: string
+    gender: $Enums.Gender
+    photo_url: string | null
     createdAt: Date
     updatedAt: Date
     _count: ParentUserCountAggregateOutputType | null
@@ -1583,6 +1609,8 @@ export namespace Prisma {
     id?: boolean
     telegram_id?: boolean
     name?: boolean
+    gender?: boolean
+    photo_url?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     children?: boolean | ParentUser$childrenArgs<ExtArgs>
@@ -1594,6 +1622,8 @@ export namespace Prisma {
     id?: boolean
     telegram_id?: boolean
     name?: boolean
+    gender?: boolean
+    photo_url?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["parentUser"]>
@@ -1602,6 +1632,8 @@ export namespace Prisma {
     id?: boolean
     telegram_id?: boolean
     name?: boolean
+    gender?: boolean
+    photo_url?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["parentUser"]>
@@ -1610,11 +1642,13 @@ export namespace Prisma {
     id?: boolean
     telegram_id?: boolean
     name?: boolean
+    gender?: boolean
+    photo_url?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type ParentUserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "telegram_id" | "name" | "createdAt" | "updatedAt", ExtArgs["result"]["parentUser"]>
+  export type ParentUserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "telegram_id" | "name" | "gender" | "photo_url" | "createdAt" | "updatedAt", ExtArgs["result"]["parentUser"]>
   export type ParentUserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     children?: boolean | ParentUser$childrenArgs<ExtArgs>
     updatedTasks?: boolean | ParentUser$updatedTasksArgs<ExtArgs>
@@ -1633,6 +1667,8 @@ export namespace Prisma {
       id: number
       telegram_id: number
       name: string
+      gender: $Enums.Gender
+      photo_url: string | null
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["parentUser"]>
@@ -2063,6 +2099,8 @@ export namespace Prisma {
     readonly id: FieldRef<"ParentUser", 'Int'>
     readonly telegram_id: FieldRef<"ParentUser", 'Int'>
     readonly name: FieldRef<"ParentUser", 'String'>
+    readonly gender: FieldRef<"ParentUser", 'Gender'>
+    readonly photo_url: FieldRef<"ParentUser", 'String'>
     readonly createdAt: FieldRef<"ParentUser", 'DateTime'>
     readonly updatedAt: FieldRef<"ParentUser", 'DateTime'>
   }
@@ -2533,6 +2571,8 @@ export namespace Prisma {
     id: number | null
     telegram_id: number | null
     name: string | null
+    gender: $Enums.Gender | null
+    photo_url: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -2541,6 +2581,8 @@ export namespace Prisma {
     id: number | null
     telegram_id: number | null
     name: string | null
+    gender: $Enums.Gender | null
+    photo_url: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -2549,6 +2591,8 @@ export namespace Prisma {
     id: number
     telegram_id: number
     name: number
+    gender: number
+    photo_url: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -2569,6 +2613,8 @@ export namespace Prisma {
     id?: true
     telegram_id?: true
     name?: true
+    gender?: true
+    photo_url?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -2577,6 +2623,8 @@ export namespace Prisma {
     id?: true
     telegram_id?: true
     name?: true
+    gender?: true
+    photo_url?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -2585,6 +2633,8 @@ export namespace Prisma {
     id?: true
     telegram_id?: true
     name?: true
+    gender?: true
+    photo_url?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -2680,6 +2730,8 @@ export namespace Prisma {
     id: number
     telegram_id: number
     name: string
+    gender: $Enums.Gender
+    photo_url: string | null
     createdAt: Date
     updatedAt: Date
     _count: ChildUserCountAggregateOutputType | null
@@ -2707,6 +2759,8 @@ export namespace Prisma {
     id?: boolean
     telegram_id?: boolean
     name?: boolean
+    gender?: boolean
+    photo_url?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     parents?: boolean | ChildUser$parentsArgs<ExtArgs>
@@ -2719,6 +2773,8 @@ export namespace Prisma {
     id?: boolean
     telegram_id?: boolean
     name?: boolean
+    gender?: boolean
+    photo_url?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["childUser"]>
@@ -2727,6 +2783,8 @@ export namespace Prisma {
     id?: boolean
     telegram_id?: boolean
     name?: boolean
+    gender?: boolean
+    photo_url?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["childUser"]>
@@ -2735,11 +2793,13 @@ export namespace Prisma {
     id?: boolean
     telegram_id?: boolean
     name?: boolean
+    gender?: boolean
+    photo_url?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type ChildUserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "telegram_id" | "name" | "createdAt" | "updatedAt", ExtArgs["result"]["childUser"]>
+  export type ChildUserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "telegram_id" | "name" | "gender" | "photo_url" | "createdAt" | "updatedAt", ExtArgs["result"]["childUser"]>
   export type ChildUserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     parents?: boolean | ChildUser$parentsArgs<ExtArgs>
     tasks?: boolean | ChildUser$tasksArgs<ExtArgs>
@@ -2760,6 +2820,8 @@ export namespace Prisma {
       id: number
       telegram_id: number
       name: string
+      gender: $Enums.Gender
+      photo_url: string | null
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["childUser"]>
@@ -3191,6 +3253,8 @@ export namespace Prisma {
     readonly id: FieldRef<"ChildUser", 'Int'>
     readonly telegram_id: FieldRef<"ChildUser", 'Int'>
     readonly name: FieldRef<"ChildUser", 'String'>
+    readonly gender: FieldRef<"ChildUser", 'Gender'>
+    readonly photo_url: FieldRef<"ChildUser", 'String'>
     readonly createdAt: FieldRef<"ChildUser", 'DateTime'>
     readonly updatedAt: FieldRef<"ChildUser", 'DateTime'>
   }
@@ -7057,6 +7121,8 @@ export namespace Prisma {
     id: 'id',
     telegram_id: 'telegram_id',
     name: 'name',
+    gender: 'gender',
+    photo_url: 'photo_url',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -7068,6 +7134,8 @@ export namespace Prisma {
     id: 'id',
     telegram_id: 'telegram_id',
     name: 'name',
+    gender: 'gender',
+    photo_url: 'photo_url',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -7169,6 +7237,20 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'Gender'
+   */
+  export type EnumGenderFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Gender'>
+    
+
+
+  /**
+   * Reference to a field of type 'Gender[]'
+   */
+  export type ListEnumGenderFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Gender[]'>
+    
+
+
+  /**
    * Reference to a field of type 'DateTime'
    */
   export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
@@ -7241,6 +7323,8 @@ export namespace Prisma {
     id?: IntFilter<"ParentUser"> | number
     telegram_id?: IntFilter<"ParentUser"> | number
     name?: StringFilter<"ParentUser"> | string
+    gender?: EnumGenderFilter<"ParentUser"> | $Enums.Gender
+    photo_url?: StringNullableFilter<"ParentUser"> | string | null
     createdAt?: DateTimeFilter<"ParentUser"> | Date | string
     updatedAt?: DateTimeFilter<"ParentUser"> | Date | string
     children?: ParentChildListRelationFilter
@@ -7251,6 +7335,8 @@ export namespace Prisma {
     id?: SortOrder
     telegram_id?: SortOrder
     name?: SortOrder
+    gender?: SortOrder
+    photo_url?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     children?: ParentChildOrderByRelationAggregateInput
@@ -7264,6 +7350,8 @@ export namespace Prisma {
     OR?: ParentUserWhereInput[]
     NOT?: ParentUserWhereInput | ParentUserWhereInput[]
     name?: StringFilter<"ParentUser"> | string
+    gender?: EnumGenderFilter<"ParentUser"> | $Enums.Gender
+    photo_url?: StringNullableFilter<"ParentUser"> | string | null
     createdAt?: DateTimeFilter<"ParentUser"> | Date | string
     updatedAt?: DateTimeFilter<"ParentUser"> | Date | string
     children?: ParentChildListRelationFilter
@@ -7274,6 +7362,8 @@ export namespace Prisma {
     id?: SortOrder
     telegram_id?: SortOrder
     name?: SortOrder
+    gender?: SortOrder
+    photo_url?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: ParentUserCountOrderByAggregateInput
@@ -7290,6 +7380,8 @@ export namespace Prisma {
     id?: IntWithAggregatesFilter<"ParentUser"> | number
     telegram_id?: IntWithAggregatesFilter<"ParentUser"> | number
     name?: StringWithAggregatesFilter<"ParentUser"> | string
+    gender?: EnumGenderWithAggregatesFilter<"ParentUser"> | $Enums.Gender
+    photo_url?: StringNullableWithAggregatesFilter<"ParentUser"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"ParentUser"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"ParentUser"> | Date | string
   }
@@ -7301,6 +7393,8 @@ export namespace Prisma {
     id?: IntFilter<"ChildUser"> | number
     telegram_id?: IntFilter<"ChildUser"> | number
     name?: StringFilter<"ChildUser"> | string
+    gender?: EnumGenderFilter<"ChildUser"> | $Enums.Gender
+    photo_url?: StringNullableFilter<"ChildUser"> | string | null
     createdAt?: DateTimeFilter<"ChildUser"> | Date | string
     updatedAt?: DateTimeFilter<"ChildUser"> | Date | string
     parents?: ParentChildListRelationFilter
@@ -7312,6 +7406,8 @@ export namespace Prisma {
     id?: SortOrder
     telegram_id?: SortOrder
     name?: SortOrder
+    gender?: SortOrder
+    photo_url?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     parents?: ParentChildOrderByRelationAggregateInput
@@ -7326,6 +7422,8 @@ export namespace Prisma {
     OR?: ChildUserWhereInput[]
     NOT?: ChildUserWhereInput | ChildUserWhereInput[]
     name?: StringFilter<"ChildUser"> | string
+    gender?: EnumGenderFilter<"ChildUser"> | $Enums.Gender
+    photo_url?: StringNullableFilter<"ChildUser"> | string | null
     createdAt?: DateTimeFilter<"ChildUser"> | Date | string
     updatedAt?: DateTimeFilter<"ChildUser"> | Date | string
     parents?: ParentChildListRelationFilter
@@ -7337,6 +7435,8 @@ export namespace Prisma {
     id?: SortOrder
     telegram_id?: SortOrder
     name?: SortOrder
+    gender?: SortOrder
+    photo_url?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: ChildUserCountOrderByAggregateInput
@@ -7353,6 +7453,8 @@ export namespace Prisma {
     id?: IntWithAggregatesFilter<"ChildUser"> | number
     telegram_id?: IntWithAggregatesFilter<"ChildUser"> | number
     name?: StringWithAggregatesFilter<"ChildUser"> | string
+    gender?: EnumGenderWithAggregatesFilter<"ChildUser"> | $Enums.Gender
+    photo_url?: StringNullableWithAggregatesFilter<"ChildUser"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"ChildUser"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"ChildUser"> | Date | string
   }
@@ -7558,6 +7660,8 @@ export namespace Prisma {
   export type ParentUserCreateInput = {
     telegram_id: number
     name: string
+    gender: $Enums.Gender
+    photo_url?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     children?: ParentChildCreateNestedManyWithoutParentInput
@@ -7568,6 +7672,8 @@ export namespace Prisma {
     id?: number
     telegram_id: number
     name: string
+    gender: $Enums.Gender
+    photo_url?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     children?: ParentChildUncheckedCreateNestedManyWithoutParentInput
@@ -7577,6 +7683,8 @@ export namespace Prisma {
   export type ParentUserUpdateInput = {
     telegram_id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
+    gender?: EnumGenderFieldUpdateOperationsInput | $Enums.Gender
+    photo_url?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     children?: ParentChildUpdateManyWithoutParentNestedInput
@@ -7587,6 +7695,8 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     telegram_id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
+    gender?: EnumGenderFieldUpdateOperationsInput | $Enums.Gender
+    photo_url?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     children?: ParentChildUncheckedUpdateManyWithoutParentNestedInput
@@ -7597,6 +7707,8 @@ export namespace Prisma {
     id?: number
     telegram_id: number
     name: string
+    gender: $Enums.Gender
+    photo_url?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -7604,6 +7716,8 @@ export namespace Prisma {
   export type ParentUserUpdateManyMutationInput = {
     telegram_id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
+    gender?: EnumGenderFieldUpdateOperationsInput | $Enums.Gender
+    photo_url?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -7612,6 +7726,8 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     telegram_id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
+    gender?: EnumGenderFieldUpdateOperationsInput | $Enums.Gender
+    photo_url?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -7619,6 +7735,8 @@ export namespace Prisma {
   export type ChildUserCreateInput = {
     telegram_id: number
     name: string
+    gender: $Enums.Gender
+    photo_url?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     parents?: ParentChildCreateNestedManyWithoutChildInput
@@ -7630,6 +7748,8 @@ export namespace Prisma {
     id?: number
     telegram_id: number
     name: string
+    gender: $Enums.Gender
+    photo_url?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     parents?: ParentChildUncheckedCreateNestedManyWithoutChildInput
@@ -7640,6 +7760,8 @@ export namespace Prisma {
   export type ChildUserUpdateInput = {
     telegram_id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
+    gender?: EnumGenderFieldUpdateOperationsInput | $Enums.Gender
+    photo_url?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     parents?: ParentChildUpdateManyWithoutChildNestedInput
@@ -7651,6 +7773,8 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     telegram_id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
+    gender?: EnumGenderFieldUpdateOperationsInput | $Enums.Gender
+    photo_url?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     parents?: ParentChildUncheckedUpdateManyWithoutChildNestedInput
@@ -7662,6 +7786,8 @@ export namespace Prisma {
     id?: number
     telegram_id: number
     name: string
+    gender: $Enums.Gender
+    photo_url?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -7669,6 +7795,8 @@ export namespace Prisma {
   export type ChildUserUpdateManyMutationInput = {
     telegram_id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
+    gender?: EnumGenderFieldUpdateOperationsInput | $Enums.Gender
+    photo_url?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -7677,6 +7805,8 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     telegram_id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
+    gender?: EnumGenderFieldUpdateOperationsInput | $Enums.Gender
+    photo_url?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -7886,6 +8016,28 @@ export namespace Prisma {
     not?: NestedStringFilter<$PrismaModel> | string
   }
 
+  export type EnumGenderFilter<$PrismaModel = never> = {
+    equals?: $Enums.Gender | EnumGenderFieldRefInput<$PrismaModel>
+    in?: $Enums.Gender[] | ListEnumGenderFieldRefInput<$PrismaModel>
+    notIn?: $Enums.Gender[] | ListEnumGenderFieldRefInput<$PrismaModel>
+    not?: NestedEnumGenderFilter<$PrismaModel> | $Enums.Gender
+  }
+
+  export type StringNullableFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedStringNullableFilter<$PrismaModel> | string | null
+  }
+
   export type DateTimeFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
@@ -7909,6 +8061,11 @@ export namespace Prisma {
     none?: TaskWhereInput
   }
 
+  export type SortOrderInput = {
+    sort: SortOrder
+    nulls?: NullsOrder
+  }
+
   export type ParentChildOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
@@ -7921,6 +8078,8 @@ export namespace Prisma {
     id?: SortOrder
     telegram_id?: SortOrder
     name?: SortOrder
+    gender?: SortOrder
+    photo_url?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -7934,6 +8093,8 @@ export namespace Prisma {
     id?: SortOrder
     telegram_id?: SortOrder
     name?: SortOrder
+    gender?: SortOrder
+    photo_url?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -7942,6 +8103,8 @@ export namespace Prisma {
     id?: SortOrder
     telegram_id?: SortOrder
     name?: SortOrder
+    gender?: SortOrder
+    photo_url?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -7985,6 +8148,34 @@ export namespace Prisma {
     _max?: NestedStringFilter<$PrismaModel>
   }
 
+  export type EnumGenderWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.Gender | EnumGenderFieldRefInput<$PrismaModel>
+    in?: $Enums.Gender[] | ListEnumGenderFieldRefInput<$PrismaModel>
+    notIn?: $Enums.Gender[] | ListEnumGenderFieldRefInput<$PrismaModel>
+    not?: NestedEnumGenderWithAggregatesFilter<$PrismaModel> | $Enums.Gender
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumGenderFilter<$PrismaModel>
+    _max?: NestedEnumGenderFilter<$PrismaModel>
+  }
+
+  export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedStringNullableFilter<$PrismaModel>
+    _max?: NestedStringNullableFilter<$PrismaModel>
+  }
+
   export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
@@ -8013,6 +8204,8 @@ export namespace Prisma {
     id?: SortOrder
     telegram_id?: SortOrder
     name?: SortOrder
+    gender?: SortOrder
+    photo_url?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -8026,6 +8219,8 @@ export namespace Prisma {
     id?: SortOrder
     telegram_id?: SortOrder
     name?: SortOrder
+    gender?: SortOrder
+    photo_url?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -8034,6 +8229,8 @@ export namespace Prisma {
     id?: SortOrder
     telegram_id?: SortOrder
     name?: SortOrder
+    gender?: SortOrder
+    photo_url?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -8083,21 +8280,6 @@ export namespace Prisma {
     childId?: SortOrder
   }
 
-  export type StringNullableFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    mode?: QueryMode
-    not?: NestedStringNullableFilter<$PrismaModel> | string | null
-  }
-
   export type EnumTaskTypeFilter<$PrismaModel = never> = {
     equals?: $Enums.TaskType | EnumTaskTypeFieldRefInput<$PrismaModel>
     in?: $Enums.TaskType[] | ListEnumTaskTypeFieldRefInput<$PrismaModel>
@@ -8127,11 +8309,6 @@ export namespace Prisma {
   export type ParentUserNullableScalarRelationFilter = {
     is?: ParentUserWhereInput | null
     isNot?: ParentUserWhereInput | null
-  }
-
-  export type SortOrderInput = {
-    sort: SortOrder
-    nulls?: NullsOrder
   }
 
   export type TaskCountOrderByAggregateInput = {
@@ -8185,24 +8362,6 @@ export namespace Prisma {
     reward?: SortOrder
     childUserId?: SortOrder
     updatedByUserId?: SortOrder
-  }
-
-  export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    mode?: QueryMode
-    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedStringNullableFilter<$PrismaModel>
-    _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
   export type EnumTaskTypeWithAggregatesFilter<$PrismaModel = never> = {
@@ -8323,6 +8482,14 @@ export namespace Prisma {
 
   export type StringFieldUpdateOperationsInput = {
     set?: string
+  }
+
+  export type EnumGenderFieldUpdateOperationsInput = {
+    set?: $Enums.Gender
+  }
+
+  export type NullableStringFieldUpdateOperationsInput = {
+    set?: string | null
   }
 
   export type DateTimeFieldUpdateOperationsInput = {
@@ -8569,10 +8736,6 @@ export namespace Prisma {
     connect?: TaskCompletionWhereUniqueInput | TaskCompletionWhereUniqueInput[]
   }
 
-  export type NullableStringFieldUpdateOperationsInput = {
-    set?: string | null
-  }
-
   export type EnumTaskTypeFieldUpdateOperationsInput = {
     set?: $Enums.TaskType
   }
@@ -8693,6 +8856,27 @@ export namespace Prisma {
     not?: NestedStringFilter<$PrismaModel> | string
   }
 
+  export type NestedEnumGenderFilter<$PrismaModel = never> = {
+    equals?: $Enums.Gender | EnumGenderFieldRefInput<$PrismaModel>
+    in?: $Enums.Gender[] | ListEnumGenderFieldRefInput<$PrismaModel>
+    notIn?: $Enums.Gender[] | ListEnumGenderFieldRefInput<$PrismaModel>
+    not?: NestedEnumGenderFilter<$PrismaModel> | $Enums.Gender
+  }
+
+  export type NestedStringNullableFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringNullableFilter<$PrismaModel> | string | null
+  }
+
   export type NestedDateTimeFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
@@ -8748,50 +8932,14 @@ export namespace Prisma {
     _max?: NestedStringFilter<$PrismaModel>
   }
 
-  export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
+  export type NestedEnumGenderWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.Gender | EnumGenderFieldRefInput<$PrismaModel>
+    in?: $Enums.Gender[] | ListEnumGenderFieldRefInput<$PrismaModel>
+    notIn?: $Enums.Gender[] | ListEnumGenderFieldRefInput<$PrismaModel>
+    not?: NestedEnumGenderWithAggregatesFilter<$PrismaModel> | $Enums.Gender
     _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedDateTimeFilter<$PrismaModel>
-    _max?: NestedDateTimeFilter<$PrismaModel>
-  }
-
-  export type NestedStringNullableFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    not?: NestedStringNullableFilter<$PrismaModel> | string | null
-  }
-
-  export type NestedEnumTaskTypeFilter<$PrismaModel = never> = {
-    equals?: $Enums.TaskType | EnumTaskTypeFieldRefInput<$PrismaModel>
-    in?: $Enums.TaskType[] | ListEnumTaskTypeFieldRefInput<$PrismaModel>
-    notIn?: $Enums.TaskType[] | ListEnumTaskTypeFieldRefInput<$PrismaModel>
-    not?: NestedEnumTaskTypeFilter<$PrismaModel> | $Enums.TaskType
-  }
-
-  export type NestedIntNullableFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel> | null
-    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntNullableFilter<$PrismaModel> | number | null
+    _min?: NestedEnumGenderFilter<$PrismaModel>
+    _max?: NestedEnumGenderFilter<$PrismaModel>
   }
 
   export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -8809,6 +8957,38 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedStringNullableFilter<$PrismaModel>
     _max?: NestedStringNullableFilter<$PrismaModel>
+  }
+
+  export type NestedIntNullableFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null
+  }
+
+  export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedDateTimeFilter<$PrismaModel>
+    _max?: NestedDateTimeFilter<$PrismaModel>
+  }
+
+  export type NestedEnumTaskTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.TaskType | EnumTaskTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.TaskType[] | ListEnumTaskTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.TaskType[] | ListEnumTaskTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumTaskTypeFilter<$PrismaModel> | $Enums.TaskType
   }
 
   export type NestedEnumTaskTypeWithAggregatesFilter<$PrismaModel = never> = {
@@ -9111,6 +9291,8 @@ export namespace Prisma {
   export type ParentUserCreateWithoutChildrenInput = {
     telegram_id: number
     name: string
+    gender: $Enums.Gender
+    photo_url?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     updatedTasks?: TaskCreateNestedManyWithoutUpdatedByInput
@@ -9120,6 +9302,8 @@ export namespace Prisma {
     id?: number
     telegram_id: number
     name: string
+    gender: $Enums.Gender
+    photo_url?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     updatedTasks?: TaskUncheckedCreateNestedManyWithoutUpdatedByInput
@@ -9133,6 +9317,8 @@ export namespace Prisma {
   export type ChildUserCreateWithoutParentsInput = {
     telegram_id: number
     name: string
+    gender: $Enums.Gender
+    photo_url?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     tasks?: TaskCreateNestedManyWithoutUserInput
@@ -9143,6 +9329,8 @@ export namespace Prisma {
     id?: number
     telegram_id: number
     name: string
+    gender: $Enums.Gender
+    photo_url?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     tasks?: TaskUncheckedCreateNestedManyWithoutUserInput
@@ -9168,6 +9356,8 @@ export namespace Prisma {
   export type ParentUserUpdateWithoutChildrenInput = {
     telegram_id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
+    gender?: EnumGenderFieldUpdateOperationsInput | $Enums.Gender
+    photo_url?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedTasks?: TaskUpdateManyWithoutUpdatedByNestedInput
@@ -9177,6 +9367,8 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     telegram_id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
+    gender?: EnumGenderFieldUpdateOperationsInput | $Enums.Gender
+    photo_url?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedTasks?: TaskUncheckedUpdateManyWithoutUpdatedByNestedInput
@@ -9196,6 +9388,8 @@ export namespace Prisma {
   export type ChildUserUpdateWithoutParentsInput = {
     telegram_id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
+    gender?: EnumGenderFieldUpdateOperationsInput | $Enums.Gender
+    photo_url?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     tasks?: TaskUpdateManyWithoutUserNestedInput
@@ -9206,6 +9400,8 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     telegram_id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
+    gender?: EnumGenderFieldUpdateOperationsInput | $Enums.Gender
+    photo_url?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     tasks?: TaskUncheckedUpdateManyWithoutUserNestedInput
@@ -9215,6 +9411,8 @@ export namespace Prisma {
   export type ChildUserCreateWithoutTasksInput = {
     telegram_id: number
     name: string
+    gender: $Enums.Gender
+    photo_url?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     parents?: ParentChildCreateNestedManyWithoutChildInput
@@ -9225,6 +9423,8 @@ export namespace Prisma {
     id?: number
     telegram_id: number
     name: string
+    gender: $Enums.Gender
+    photo_url?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     parents?: ParentChildUncheckedCreateNestedManyWithoutChildInput
@@ -9262,6 +9462,8 @@ export namespace Prisma {
   export type ParentUserCreateWithoutUpdatedTasksInput = {
     telegram_id: number
     name: string
+    gender: $Enums.Gender
+    photo_url?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     children?: ParentChildCreateNestedManyWithoutParentInput
@@ -9271,6 +9473,8 @@ export namespace Prisma {
     id?: number
     telegram_id: number
     name: string
+    gender: $Enums.Gender
+    photo_url?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     children?: ParentChildUncheckedCreateNestedManyWithoutParentInput
@@ -9295,6 +9499,8 @@ export namespace Prisma {
   export type ChildUserUpdateWithoutTasksInput = {
     telegram_id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
+    gender?: EnumGenderFieldUpdateOperationsInput | $Enums.Gender
+    photo_url?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     parents?: ParentChildUpdateManyWithoutChildNestedInput
@@ -9305,6 +9511,8 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     telegram_id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
+    gender?: EnumGenderFieldUpdateOperationsInput | $Enums.Gender
+    photo_url?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     parents?: ParentChildUncheckedUpdateManyWithoutChildNestedInput
@@ -9341,6 +9549,8 @@ export namespace Prisma {
   export type ParentUserUpdateWithoutUpdatedTasksInput = {
     telegram_id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
+    gender?: EnumGenderFieldUpdateOperationsInput | $Enums.Gender
+    photo_url?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     children?: ParentChildUpdateManyWithoutParentNestedInput
@@ -9350,6 +9560,8 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     telegram_id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
+    gender?: EnumGenderFieldUpdateOperationsInput | $Enums.Gender
+    photo_url?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     children?: ParentChildUncheckedUpdateManyWithoutParentNestedInput
@@ -9388,6 +9600,8 @@ export namespace Prisma {
   export type ChildUserCreateWithoutTaskCompletionsInput = {
     telegram_id: number
     name: string
+    gender: $Enums.Gender
+    photo_url?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     parents?: ParentChildCreateNestedManyWithoutChildInput
@@ -9398,6 +9612,8 @@ export namespace Prisma {
     id?: number
     telegram_id: number
     name: string
+    gender: $Enums.Gender
+    photo_url?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     parents?: ParentChildUncheckedCreateNestedManyWithoutChildInput
@@ -9459,6 +9675,8 @@ export namespace Prisma {
   export type ChildUserUpdateWithoutTaskCompletionsInput = {
     telegram_id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
+    gender?: EnumGenderFieldUpdateOperationsInput | $Enums.Gender
+    photo_url?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     parents?: ParentChildUpdateManyWithoutChildNestedInput
@@ -9469,6 +9687,8 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     telegram_id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
+    gender?: EnumGenderFieldUpdateOperationsInput | $Enums.Gender
+    photo_url?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     parents?: ParentChildUncheckedUpdateManyWithoutChildNestedInput

@@ -1,6 +1,6 @@
 generator client {
     provider = "prisma-client-js"
-    output = "./prisma/client"
+    output   = "./prisma/client"
 }
 
 datasource db {
@@ -14,6 +14,8 @@ model ParentUser {
     id           Int           @id @default(autoincrement())
     telegram_id  Int           @unique
     name         String
+    gender       Gender
+    photo_url    String?
     children     ParentChild[] @relation("ParentToChild") // Связь с промежуточной моделью
     updatedTasks Task[]        @relation("LastTaskUpdater")
     createdAt    DateTime      @default(now())
@@ -27,6 +29,8 @@ model ChildUser {
     id              Int              @id @default(autoincrement())
     telegram_id     Int              @unique
     name            String
+    gender          Gender // Пол ребенка
+    photo_url       String? // Ссылка на фото (опционально)
     parents         ParentChild[]    @relation("ParentToChild") // Связь с промежуточной моделью
     tasks           Task[]           @relation("TaskToUser") // Задания, назначенные ребенку
     taskCompletions TaskCompletion[] // История выполнения заданий ребенком
@@ -67,6 +71,25 @@ model Task {
     @@map("tasks")
 }
 
+// Модель для отслеживания выполнения задания
+model TaskCompletion {
+    id             Int       @id @default(autoincrement())
+    taskId         Int
+    userId         Int
+    completionDate DateTime  @default(now()) // Дата выполнения задания
+    isCompleted    Boolean   @default(true) // Флаг, было ли задание выполнено полностью
+    task           Task      @relation(fields: [taskId], references: [id])
+    user           ChildUser @relation(fields: [userId], references: [id])
+
+    @@map("task_completions")
+}
+
+// Enum для пола
+enum Gender {
+    MALE
+    FEMALE
+}
+
 // Enum для типа задания
 enum TaskType {
     DAILY // Задание на конкретный день недели
@@ -82,17 +105,4 @@ enum DayOfWeek {
     FRIDAY
     SATURDAY
     SUNDAY
-}
-
-// Модель для отслеживания выполнения задания
-model TaskCompletion {
-    id             Int       @id @default(autoincrement())
-    taskId         Int
-    userId         Int
-    completionDate DateTime  @default(now()) // Дата выполнения задания
-    isCompleted    Boolean   @default(true) // Флаг, было ли задание выполнено полностью
-    task           Task      @relation(fields: [taskId], references: [id])
-    user           ChildUser @relation(fields: [userId], references: [id])
-
-    @@map("task_completions")
 }

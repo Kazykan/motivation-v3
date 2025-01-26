@@ -121,6 +121,8 @@ exports.Prisma.ParentUserScalarFieldEnum = {
   id: 'id',
   telegram_id: 'telegram_id',
   name: 'name',
+  gender: 'gender',
+  photo_url: 'photo_url',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -129,6 +131,8 @@ exports.Prisma.ChildUserScalarFieldEnum = {
   id: 'id',
   telegram_id: 'telegram_id',
   name: 'name',
+  gender: 'gender',
+  photo_url: 'photo_url',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -174,6 +178,11 @@ exports.Prisma.NullsOrder = {
   first: 'first',
   last: 'last'
 };
+exports.Gender = exports.$Enums.Gender = {
+  MALE: 'MALE',
+  FEMALE: 'FEMALE'
+};
+
 exports.TaskType = exports.$Enums.TaskType = {
   DAILY: 'DAILY',
   FLEXIBLE: 'FLEXIBLE'

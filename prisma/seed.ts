@@ -26,6 +26,7 @@ async function seed() {
       create: {
         telegram_id: 123456789,
         name: "Родитель 1",
+        gender: "MALE",
       },
     });
     const parent2 = await prisma.parentUser.upsert({
@@ -34,6 +35,7 @@ async function seed() {
       create: {
         telegram_id: 987654321,
         name: "Родитель 2",
+        gender: "FEMALE",
       },
     });
 
@@ -44,6 +46,7 @@ async function seed() {
       create: {
         telegram_id: 111111111,
         name: "Ребенок 1",
+        gender: "MALE",
       },
     });
     const child2 = await prisma.childUser.upsert({
@@ -52,6 +55,7 @@ async function seed() {
       create: {
         telegram_id: 222222222,
         name: "Ребенок 2",
+        gender: "FEMALE",
       },
     });
 
