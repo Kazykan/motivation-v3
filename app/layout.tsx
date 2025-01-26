@@ -3,6 +3,7 @@ import { Jost } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import Script from "next/script";
+import { QueryProvider } from "./queryProvider";
 
 const jost = Jost({
   subsets: ["cyrillic"],
@@ -15,7 +16,6 @@ export const metadata: Metadata = {
   description: "Motivation for Morgulan Sesenbaev",
 };
 
-
 export default function RootLayout({ children }: React.PropsWithChildren<unknown>) {
   return (
     <html lang="en" className="dark" style={{ colorScheme: "dark" }}>
@@ -23,9 +23,11 @@ export default function RootLayout({ children }: React.PropsWithChildren<unknown
         <Script src="https://telegram.org/js/telegram-web-app.js?56" strategy="beforeInteractive" />
       </head>
       <body className={jost.variable}>
+        <QueryProvider>
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
             {children}
           </ThemeProvider>
+        </QueryProvider>
       </body>
     </html>
   );

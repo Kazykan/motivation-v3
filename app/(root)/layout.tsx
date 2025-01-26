@@ -2,18 +2,16 @@
 
 import { Header } from "@/components/header";
 import { PaginationWeeks } from "@/components/paginator-week";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { QueryProvider } from "../queryProvider";
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
-  const queryClient = new QueryClient();
-
   return (
     <main>
-      <QueryClientProvider client={queryClient}>
-        <Header />
+      <Header />
+      <QueryProvider>
         <PaginationWeeks />
         {children}
-      </QueryClientProvider>
+      </QueryProvider>
     </main>
   );
 }

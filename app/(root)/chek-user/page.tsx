@@ -12,6 +12,8 @@ const CheckTelegramUser: React.FC = () => {
     return <p>Ошибка: Не удалось получить данные пользователя Telegram.</p>;
   }
 
+
+  
   return (
     <div>
       <pre>{JSON.stringify(telegramStartParams)}</pre>
@@ -25,6 +27,7 @@ const CheckTelegramUser: React.FC = () => {
 };
 
 export default CheckTelegramUser;
+
 
 // import CheckTelegramUser from "@/components/check-telegram-user";
 // import { Header } from "@/components/header";
