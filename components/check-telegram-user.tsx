@@ -4,14 +4,20 @@ import { getRoleName, payloadRole } from "@/lib/jwt";
 import { useSearchParams } from "next/navigation";
 import React from "react";
 import { AddParentForm } from "./form/add-parent-form";
+import { AddChildForm } from "./form/add-child-form";
+import { RadioGroup, RadioGroupItem } from "./ui/radio-group";
+import { Label } from "./ui/label";
+import { useTelegramUserState } from "@/lib/store/telegram-user";
 
 const CheckTelegramUser: React.FC = () => {
   const searchParams = useSearchParams();
-  const telegramStartParams = searchParams.get("telegram");
-
   const [role, setRole] = React.useState<payloadRole | null>(null);
+  const [useRole, setUseRole] = React.useState<payloadRole | null>(null);
   const [inviterTelegramId, setInviterTelegramId] = React.useState<number | null>(null);
   const [showRegistration, setShowRegistration] = React.useState(false);
+  const telegramId = useTelegramUserState((state) => state.telegram_id);
+  const name = useTelegramUserState((state) => state.name);
+  const photoUrl = useTelegramUserState((state) => state.photo_url);
 
   React.useEffect(() => {
     const telegramStartParams = searchParams.get("telegramStartParams");
@@ -31,18 +37,58 @@ const CheckTelegramUser: React.FC = () => {
     }
   }, [searchParams]);
 
+  const handleRoleChange = (value: string) => {
+    setUseRole(value === "parent" ? payloadRole.parent : payloadRole.child);
+  };
+
   return (
-    <div>
-      <pre>{telegramStartParams}</pre>
-      {showRegistration ? (
-        <div>
-          Вас пригласил {inviterTelegramId} на роль {getRoleName(role)}
-          <AddParentForm tgParentId={15613131} tgUserName={"Леха"} tgInviteId={inviterTelegramId} />
-        </div>
-      ) : (
-        <div>Вас никто не приглашал</div>
-      )}
-    </div>
+    telegramId !== undefined &&
+    name !== undefined && (
+      <div className="m-5">
+        <h2 className="mb-5">регистрация</h2>
+        {showRegistration && inviterTelegramId ? (
+          role === payloadRole.parent ? (
+            <div>
+              Вас пригласил {inviterTelegramId} на роль {getRoleName(role)}
+              <AddParentForm
+                photo_url={photoUrl}
+                tgParentId={telegramId}
+                tgUserName={name}
+                tgInviteId={inviterTelegramId}
+              />
+            </div>
+          ) : (
+            <div>
+              <AddChildForm
+                photo_url={photoUrl}
+                tgParentId={telegramId}
+                tgUserName={name}
+                tgInviteId={inviterTelegramId}
+              />
+            </div>
+          )
+        ) : (
+          <div>
+            <RadioGroup onValueChange={handleRoleChange}>
+              <div className="flex items-center space-x-2">
+                <RadioGroupItem value="parent" id="parent" />
+                <Label htmlFor="parent">Родитель</Label>
+              </div>
+              <div className="flex items-center space-x-2">
+                <RadioGroupItem value="child" id="child" />
+                <Label htmlFor="child">Ребенок</Label>
+              </div>
+            </RadioGroup>
+            {useRole === payloadRole.parent && (
+              <AddParentForm photo_url={photoUrl} tgParentId={telegramId} tgUserName={name} />
+            )}
+            {useRole === payloadRole.child && (
+              <AddChildForm photo_url={photoUrl} tgParentId={telegramId} tgUserName={name} />
+            )}
+          </div>
+        )}
+      </div>
+    )
   );
 };
 

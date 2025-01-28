@@ -1,22 +1,14 @@
 "use client";
 
-import { useAuthCheck } from "@/hooks/useAuthCheck";
+import { AuthLayout } from "@/components/AuthLayout";
 import { payloadRole } from "@/lib/jwt";
-import React from "react";
 
-const ParentDashboard: React.FC = () => {
-  const { isAuthorized, isLoading, payload } = useAuthCheck({ requiredRole: payloadRole.parent });
-
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
-  if (!isAuthorized) {
-    return null;
-  }
-
-  
-
-  return <div>ParentDashboard - {payload?.role}</div>;
+const ParentDashboard = () => {
+  return (
+    <AuthLayout requiredRole={payloadRole.parent}>
+      <div>ParentDashboard </div>
+    </AuthLayout>
+  );
 };
 
 export default ParentDashboard;

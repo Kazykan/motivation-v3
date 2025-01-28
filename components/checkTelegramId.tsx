@@ -7,7 +7,7 @@ import React from "react";
 interface Props {
   telegramId: number;
   telegramStartParams: string | null;
-}
+} 
 
 const CheckTelegramId = ({ telegramId, telegramStartParams }: Props) => {
   const { data: childData, isLoading: childLoading, error: childError } = useChildCheck(telegramId);

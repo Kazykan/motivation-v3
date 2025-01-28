@@ -1,24 +1,28 @@
 "use client";
 
 import React from "react";
-import useTelegramUser from "@/hooks/useTelegramUser";
 import CheckTelegramId from "@/components/checkTelegramId";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { useTelegramUserState } from "@/lib/store/telegram-user";
+import useTelegramUser from "@/hooks/useTelegramUser";
+import { getDisplayName } from "@/lib";
 
 const CheckTelegramUser: React.FC = () => {
+  const setTelegramId = useTelegramUserState((state) => state.setTelegramId);
+  const setName = useTelegramUserState((state) => state.setName);
+  const setPhotoUrl = useTelegramUserState((state) => state.setPhotoUrl);
+
   const { telegramUser, telegramStartParams } = useTelegramUser();
 
   if (!telegramUser) {
     return <p>Ошибка: Не удалось получить данные пользователя Telegram.</p>;
   }
 
+  setTelegramId(telegramUser.id);
+  setName(getDisplayName(telegramUser));
+  setPhotoUrl(telegramUser.photo_url);
+
   return (
     <div>
-      <pre>{JSON.stringify(telegramStartParams)}</pre>
-      <Avatar className="h-8 w-8">
-        <AvatarImage src={telegramUser.photo_url} alt="@shadcn" />
-        <AvatarFallback>{telegramUser.first_name?.toUpperCase().slice(0, 2)}</AvatarFallback>
-      </Avatar>
       <CheckTelegramId telegramStartParams={telegramStartParams} telegramId={telegramUser.id} />
     </div>
   );

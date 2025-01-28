@@ -7,7 +7,7 @@ interface UseAuthCheckProps {
   redirectPath?: string;
 }
 
-export const useAuthCheck = ({ requiredRole, redirectPath = "/user" }: UseAuthCheckProps) => {
+export const useAuthCheck = ({ requiredRole, redirectPath = "/register" }: UseAuthCheckProps) => {
   const [isLoading, setIsLoading] = React.useState(true);
   const [isAuthorized, setIsAuthorized] = React.useState(false);
   const [payload, setPayload] = React.useState<Payload | null>(null);
@@ -20,7 +20,7 @@ export const useAuthCheck = ({ requiredRole, redirectPath = "/user" }: UseAuthCh
         setIsLoading(false);
         setIsAuthorized(false);
         router.push(redirectPath);
-        return;
+        return null;
       }
       const token = localStorage.getItem("token");
 
@@ -28,17 +28,23 @@ export const useAuthCheck = ({ requiredRole, redirectPath = "/user" }: UseAuthCh
         setIsLoading(false);
         setIsAuthorized(false);
         router.push(redirectPath);
-        return;
+        return null;
       }
       try {
         const decodedPayload = await verifyToken(token);
-        if (decodedPayload && decodedPayload.role === payloadRole.parent) {
+        if (decodedPayload && decodedPayload.role === requiredRole) {
           setPayload(decodedPayload);
           setIsAuthorized(true);
         } else {
           setIsAuthorized(false);
           router.push(redirectPath);
         }
+      } catch (error) {
+        console.error("Ошибка верификации токена", error);
+        localStorage.removeItem("token"); // Очищаем невалидный токен
+        setIsAuthorized(false);
+        router.push(redirectPath);
+        return null;
       } finally {
         setIsLoading(false);
       }

@@ -17,7 +17,7 @@ interface Props {
   className?: string;
 }
 
-export const AddParentForm: React.FC<Props> = ({ tgParentId, tgUserName, photo_url, tgInviteId, className }) => {
+export const AddChildForm: React.FC<Props> = ({ tgParentId, tgUserName, photo_url, tgInviteId, className }) => {
   const form = useForm<z.infer<typeof ParentCreateSchema>>({
     resolver: zodResolver(ParentCreateSchema),
     defaultValues: {
@@ -31,7 +31,7 @@ export const AddParentForm: React.FC<Props> = ({ tgParentId, tgUserName, photo_u
 
   function onSubmit(values: z.infer<typeof ParentCreateSchema>) {
     toast({
-      title: "Create parent",
+      title: "Create child",
       description: JSON.stringify(values, null, 2),
     });
     console.log(JSON.stringify(values));
