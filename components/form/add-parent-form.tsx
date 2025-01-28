@@ -40,12 +40,13 @@ export const AddParentForm: React.FC<Props> = ({ tgParentId, tgUserName, photo_u
   return (
     <FormProvider {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
-        <FormInput name="name" className="text-base" placeholder="Имя" />
-        <FormInput name="telegram_id" className="text-base" placeholder="Telegram ID" type="number" />
-        <FormSelect name="gender" label="Пол" />
-        <Button type="submit" className={cn("w-full py-3", className)}>
-          Зарегистрироваться
-        </Button>
+        <div className="flex flex-col gap-5 m-5">
+          <FormInput name="name" className="text-base" placeholder="Имя" />
+          <FormSelect name="gender" label="Пол" />
+          <Button type="submit" className={cn("w-full py-3", className)}>
+            Зарегистрироваться
+          </Button>
+        </div>
       </form>
     </FormProvider>
   );
