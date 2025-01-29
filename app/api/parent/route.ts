@@ -1,4 +1,5 @@
 import { ParentCheckResponse } from "@/lib/api/api-types";
+import { handleInvite } from "@/lib/api/parent";
 import { ParentCreateSchema } from "@/lib/types";
 import { prisma } from "@/prisma/prisma-client";
 import { NextRequest, NextResponse } from "next/server";
@@ -14,7 +15,7 @@ export async function GET(request: NextRequest): Promise<NextResponse<ParentChec
 
     const parentUser = await prisma.parentUser.findUnique({
       where: {
-        telegram_id: parseInt(telegram_id),
+        telegram_id: telegram_id,
       },
     });
 
@@ -35,7 +36,7 @@ export async function GET(request: NextRequest): Promise<NextResponse<ParentChec
  * Создает нового родителя и связывает его с существующими детьми, если есть приглашение.
  * @param data - Данные для создания родителя, включая invite_id.
  * @returns - Созданный родитель с его связями.
- * @throws - Ошибку, если родитель с таким telegram_id уже существует или invite_id не найден.
+ * @throws - Ошибку, если родитель с таким telegram_id уже существует или invite_id не верный.
  */
 export async function POST(req: NextRequest) {
   const body = await req.json();
@@ -56,7 +57,9 @@ export async function POST(req: NextRequest) {
 
   try {
     // Проверка на уникальность telegram_id
-    const existingParent = await prisma.parentUser.findUnique({ where: { telegram_id: parentDate.telegram_id } });
+    const existingParent = await prisma.parentUser.findUnique({
+      where: { telegram_id: String(parentDate.telegram_id) },
+    });
     if (existingParent) {
       return NextResponse.json({
         exists: false,
@@ -68,91 +71,18 @@ export async function POST(req: NextRequest) {
     const parent = await prisma.parentUser.create({
       data: {
         name: parentDate.name,
-        telegram_id: parentDate.telegram_id,
+        telegram_id: String(parentDate.telegram_id),
         photo_url: parentDate.photo_url,
         gender: parentDate.gender,
       },
     });
 
-    if (parentDate.invite_id) {
-      // Проверяем, существует родитель с invite_id
-      const inviteParent = await prisma.parentUser.findUnique({
-        where: { telegram_id: parentDate.invite_id },
-        include: {
-          children: true,
-        },
+    if (parentDate.invite_id !== undefined && parentDate.invite_id !== null) {
+      await prisma.$transaction(async (tx) => {
+        await handleInvite(tx, parent.id, parentDate.invite_id!);
       });
-
-      // Проверяем, существует ребенок с invite_id
-      const inviteChild = await prisma.childUser.findUnique({
-        where: { telegram_id: parentDate.invite_id },
-        include: { parents: true },
-      });
-
-      // Если родитель есть находим все его связи с детьми и добавляем новому пользователю
-      if (inviteParent) {
-        await prisma.$transaction(async (tx) => {
-          const parentChildren = inviteParent.children.map((pc) => ({
-            parentId: parent.id,
-            childId: pc.childId,
-          }));
-
-          if (parentChildren.length > 0) {
-            await Promise.all(
-              parentChildren.map(async (data) => {
-                const existingRelation = await tx.parentChild.findFirst({
-                  where: {
-                    parentId: data.parentId,
-                    childId: data.childId,
-                  },
-                });
-                if (!existingRelation) {
-                  await prisma.parentChild.create({
-                    data,
-                  });
-                }
-              })
-            );
-          }
-        });
-      }
-      // Если у ребенка пригласившего его есть родитель берем первого родителя
-      // находим все его связи с детьми и добавляем новому пользователю
-      if (inviteChild && inviteChild.parents.length > 0) {
-        const firstParent = await prisma.parentUser.findUnique({
-          where: { id: inviteChild.parents[0].parentId },
-          include: {
-            children: true,
-          },
-        });
-
-        if (firstParent) {
-          await prisma.$transaction(async (tx) => {
-            const parentChildren = firstParent.children.map((pc) => ({
-              parentId: parent.id,
-              childId: pc.childId,
-            }));
-            if (parentChildren.length > 0) {
-              await Promise.all(
-                parentChildren.map(async (data) => {
-                  const existingRelation = await tx.parentChild.findFirst({
-                    where: {
-                      parentId: data.parentId,
-                      childId: data.childId,
-                    },
-                  });
-                  if (!existingRelation) {
-                    await prisma.parentChild.create({
-                      data,
-                    });
-                  }
-                })
-              );
-            }
-          });
-        }
-      }
     }
+
     return NextResponse.json({ exists: true, message: "Учетная запись создана", parent, status: 201 });
   } catch (error) {
     console.error("Error checking parent:", error);

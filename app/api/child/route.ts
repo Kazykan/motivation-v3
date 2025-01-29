@@ -13,7 +13,7 @@ export async function GET(request: NextRequest): Promise<NextResponse<ChildCheck
 
     const childUser = await prisma.childUser.findUnique({
       where: {
-        telegram_id: parseInt(telegram_id),
+        telegram_id: telegram_id,
       },
     });
 

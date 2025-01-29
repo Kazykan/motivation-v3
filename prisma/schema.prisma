@@ -12,7 +12,7 @@ datasource db {
 // Модель для родителей
 model ParentUser {
     id           Int           @id @default(autoincrement())
-    telegram_id  Int           @unique
+    telegram_id  String        @unique
     name         String
     gender       Gender
     photo_url    String?
@@ -27,7 +27,7 @@ model ParentUser {
 // Модель для детей
 model ChildUser {
     id              Int              @id @default(autoincrement())
-    telegram_id     Int              @unique
+    telegram_id     String           @unique
     name            String
     gender          Gender // Пол ребенка
     photo_url       String? // Ссылка на фото (опционально)

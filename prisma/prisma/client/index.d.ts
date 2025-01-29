@@ -1409,17 +1409,15 @@ export namespace Prisma {
 
   export type ParentUserAvgAggregateOutputType = {
     id: number | null
-    telegram_id: number | null
   }
 
   export type ParentUserSumAggregateOutputType = {
     id: number | null
-    telegram_id: number | null
   }
 
   export type ParentUserMinAggregateOutputType = {
     id: number | null
-    telegram_id: number | null
+    telegram_id: string | null
     name: string | null
     gender: $Enums.Gender | null
     photo_url: string | null
@@ -1429,7 +1427,7 @@ export namespace Prisma {
 
   export type ParentUserMaxAggregateOutputType = {
     id: number | null
-    telegram_id: number | null
+    telegram_id: string | null
     name: string | null
     gender: $Enums.Gender | null
     photo_url: string | null
@@ -1451,12 +1449,10 @@ export namespace Prisma {
 
   export type ParentUserAvgAggregateInputType = {
     id?: true
-    telegram_id?: true
   }
 
   export type ParentUserSumAggregateInputType = {
     id?: true
-    telegram_id?: true
   }
 
   export type ParentUserMinAggregateInputType = {
@@ -1578,7 +1574,7 @@ export namespace Prisma {
 
   export type ParentUserGroupByOutputType = {
     id: number
-    telegram_id: number
+    telegram_id: string
     name: string
     gender: $Enums.Gender
     photo_url: string | null
@@ -1665,7 +1661,7 @@ export namespace Prisma {
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
-      telegram_id: number
+      telegram_id: string
       name: string
       gender: $Enums.Gender
       photo_url: string | null
@@ -2097,7 +2093,7 @@ export namespace Prisma {
    */ 
   interface ParentUserFieldRefs {
     readonly id: FieldRef<"ParentUser", 'Int'>
-    readonly telegram_id: FieldRef<"ParentUser", 'Int'>
+    readonly telegram_id: FieldRef<"ParentUser", 'String'>
     readonly name: FieldRef<"ParentUser", 'String'>
     readonly gender: FieldRef<"ParentUser", 'Gender'>
     readonly photo_url: FieldRef<"ParentUser", 'String'>
@@ -2559,17 +2555,15 @@ export namespace Prisma {
 
   export type ChildUserAvgAggregateOutputType = {
     id: number | null
-    telegram_id: number | null
   }
 
   export type ChildUserSumAggregateOutputType = {
     id: number | null
-    telegram_id: number | null
   }
 
   export type ChildUserMinAggregateOutputType = {
     id: number | null
-    telegram_id: number | null
+    telegram_id: string | null
     name: string | null
     gender: $Enums.Gender | null
     photo_url: string | null
@@ -2579,7 +2573,7 @@ export namespace Prisma {
 
   export type ChildUserMaxAggregateOutputType = {
     id: number | null
-    telegram_id: number | null
+    telegram_id: string | null
     name: string | null
     gender: $Enums.Gender | null
     photo_url: string | null
@@ -2601,12 +2595,10 @@ export namespace Prisma {
 
   export type ChildUserAvgAggregateInputType = {
     id?: true
-    telegram_id?: true
   }
 
   export type ChildUserSumAggregateInputType = {
     id?: true
-    telegram_id?: true
   }
 
   export type ChildUserMinAggregateInputType = {
@@ -2728,7 +2720,7 @@ export namespace Prisma {
 
   export type ChildUserGroupByOutputType = {
     id: number
-    telegram_id: number
+    telegram_id: string
     name: string
     gender: $Enums.Gender
     photo_url: string | null
@@ -2818,7 +2810,7 @@ export namespace Prisma {
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
-      telegram_id: number
+      telegram_id: string
       name: string
       gender: $Enums.Gender
       photo_url: string | null
@@ -3251,7 +3243,7 @@ export namespace Prisma {
    */ 
   interface ChildUserFieldRefs {
     readonly id: FieldRef<"ChildUser", 'Int'>
-    readonly telegram_id: FieldRef<"ChildUser", 'Int'>
+    readonly telegram_id: FieldRef<"ChildUser", 'String'>
     readonly name: FieldRef<"ChildUser", 'String'>
     readonly gender: FieldRef<"ChildUser", 'Gender'>
     readonly photo_url: FieldRef<"ChildUser", 'String'>
@@ -7321,7 +7313,7 @@ export namespace Prisma {
     OR?: ParentUserWhereInput[]
     NOT?: ParentUserWhereInput | ParentUserWhereInput[]
     id?: IntFilter<"ParentUser"> | number
-    telegram_id?: IntFilter<"ParentUser"> | number
+    telegram_id?: StringFilter<"ParentUser"> | string
     name?: StringFilter<"ParentUser"> | string
     gender?: EnumGenderFilter<"ParentUser"> | $Enums.Gender
     photo_url?: StringNullableFilter<"ParentUser"> | string | null
@@ -7345,7 +7337,7 @@ export namespace Prisma {
 
   export type ParentUserWhereUniqueInput = Prisma.AtLeast<{
     id?: number
-    telegram_id?: number
+    telegram_id?: string
     AND?: ParentUserWhereInput | ParentUserWhereInput[]
     OR?: ParentUserWhereInput[]
     NOT?: ParentUserWhereInput | ParentUserWhereInput[]
@@ -7378,7 +7370,7 @@ export namespace Prisma {
     OR?: ParentUserScalarWhereWithAggregatesInput[]
     NOT?: ParentUserScalarWhereWithAggregatesInput | ParentUserScalarWhereWithAggregatesInput[]
     id?: IntWithAggregatesFilter<"ParentUser"> | number
-    telegram_id?: IntWithAggregatesFilter<"ParentUser"> | number
+    telegram_id?: StringWithAggregatesFilter<"ParentUser"> | string
     name?: StringWithAggregatesFilter<"ParentUser"> | string
     gender?: EnumGenderWithAggregatesFilter<"ParentUser"> | $Enums.Gender
     photo_url?: StringNullableWithAggregatesFilter<"ParentUser"> | string | null
@@ -7391,7 +7383,7 @@ export namespace Prisma {
     OR?: ChildUserWhereInput[]
     NOT?: ChildUserWhereInput | ChildUserWhereInput[]
     id?: IntFilter<"ChildUser"> | number
-    telegram_id?: IntFilter<"ChildUser"> | number
+    telegram_id?: StringFilter<"ChildUser"> | string
     name?: StringFilter<"ChildUser"> | string
     gender?: EnumGenderFilter<"ChildUser"> | $Enums.Gender
     photo_url?: StringNullableFilter<"ChildUser"> | string | null
@@ -7417,7 +7409,7 @@ export namespace Prisma {
 
   export type ChildUserWhereUniqueInput = Prisma.AtLeast<{
     id?: number
-    telegram_id?: number
+    telegram_id?: string
     AND?: ChildUserWhereInput | ChildUserWhereInput[]
     OR?: ChildUserWhereInput[]
     NOT?: ChildUserWhereInput | ChildUserWhereInput[]
@@ -7451,7 +7443,7 @@ export namespace Prisma {
     OR?: ChildUserScalarWhereWithAggregatesInput[]
     NOT?: ChildUserScalarWhereWithAggregatesInput | ChildUserScalarWhereWithAggregatesInput[]
     id?: IntWithAggregatesFilter<"ChildUser"> | number
-    telegram_id?: IntWithAggregatesFilter<"ChildUser"> | number
+    telegram_id?: StringWithAggregatesFilter<"ChildUser"> | string
     name?: StringWithAggregatesFilter<"ChildUser"> | string
     gender?: EnumGenderWithAggregatesFilter<"ChildUser"> | $Enums.Gender
     photo_url?: StringNullableWithAggregatesFilter<"ChildUser"> | string | null
@@ -7658,7 +7650,7 @@ export namespace Prisma {
   }
 
   export type ParentUserCreateInput = {
-    telegram_id: number
+    telegram_id: string
     name: string
     gender: $Enums.Gender
     photo_url?: string | null
@@ -7670,7 +7662,7 @@ export namespace Prisma {
 
   export type ParentUserUncheckedCreateInput = {
     id?: number
-    telegram_id: number
+    telegram_id: string
     name: string
     gender: $Enums.Gender
     photo_url?: string | null
@@ -7681,7 +7673,7 @@ export namespace Prisma {
   }
 
   export type ParentUserUpdateInput = {
-    telegram_id?: IntFieldUpdateOperationsInput | number
+    telegram_id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     gender?: EnumGenderFieldUpdateOperationsInput | $Enums.Gender
     photo_url?: NullableStringFieldUpdateOperationsInput | string | null
@@ -7693,7 +7685,7 @@ export namespace Prisma {
 
   export type ParentUserUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
-    telegram_id?: IntFieldUpdateOperationsInput | number
+    telegram_id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     gender?: EnumGenderFieldUpdateOperationsInput | $Enums.Gender
     photo_url?: NullableStringFieldUpdateOperationsInput | string | null
@@ -7705,7 +7697,7 @@ export namespace Prisma {
 
   export type ParentUserCreateManyInput = {
     id?: number
-    telegram_id: number
+    telegram_id: string
     name: string
     gender: $Enums.Gender
     photo_url?: string | null
@@ -7714,7 +7706,7 @@ export namespace Prisma {
   }
 
   export type ParentUserUpdateManyMutationInput = {
-    telegram_id?: IntFieldUpdateOperationsInput | number
+    telegram_id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     gender?: EnumGenderFieldUpdateOperationsInput | $Enums.Gender
     photo_url?: NullableStringFieldUpdateOperationsInput | string | null
@@ -7724,7 +7716,7 @@ export namespace Prisma {
 
   export type ParentUserUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
-    telegram_id?: IntFieldUpdateOperationsInput | number
+    telegram_id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     gender?: EnumGenderFieldUpdateOperationsInput | $Enums.Gender
     photo_url?: NullableStringFieldUpdateOperationsInput | string | null
@@ -7733,7 +7725,7 @@ export namespace Prisma {
   }
 
   export type ChildUserCreateInput = {
-    telegram_id: number
+    telegram_id: string
     name: string
     gender: $Enums.Gender
     photo_url?: string | null
@@ -7746,7 +7738,7 @@ export namespace Prisma {
 
   export type ChildUserUncheckedCreateInput = {
     id?: number
-    telegram_id: number
+    telegram_id: string
     name: string
     gender: $Enums.Gender
     photo_url?: string | null
@@ -7758,7 +7750,7 @@ export namespace Prisma {
   }
 
   export type ChildUserUpdateInput = {
-    telegram_id?: IntFieldUpdateOperationsInput | number
+    telegram_id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     gender?: EnumGenderFieldUpdateOperationsInput | $Enums.Gender
     photo_url?: NullableStringFieldUpdateOperationsInput | string | null
@@ -7771,7 +7763,7 @@ export namespace Prisma {
 
   export type ChildUserUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
-    telegram_id?: IntFieldUpdateOperationsInput | number
+    telegram_id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     gender?: EnumGenderFieldUpdateOperationsInput | $Enums.Gender
     photo_url?: NullableStringFieldUpdateOperationsInput | string | null
@@ -7784,7 +7776,7 @@ export namespace Prisma {
 
   export type ChildUserCreateManyInput = {
     id?: number
-    telegram_id: number
+    telegram_id: string
     name: string
     gender: $Enums.Gender
     photo_url?: string | null
@@ -7793,7 +7785,7 @@ export namespace Prisma {
   }
 
   export type ChildUserUpdateManyMutationInput = {
-    telegram_id?: IntFieldUpdateOperationsInput | number
+    telegram_id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     gender?: EnumGenderFieldUpdateOperationsInput | $Enums.Gender
     photo_url?: NullableStringFieldUpdateOperationsInput | string | null
@@ -7803,7 +7795,7 @@ export namespace Prisma {
 
   export type ChildUserUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
-    telegram_id?: IntFieldUpdateOperationsInput | number
+    telegram_id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     gender?: EnumGenderFieldUpdateOperationsInput | $Enums.Gender
     photo_url?: NullableStringFieldUpdateOperationsInput | string | null
@@ -8086,7 +8078,6 @@ export namespace Prisma {
 
   export type ParentUserAvgOrderByAggregateInput = {
     id?: SortOrder
-    telegram_id?: SortOrder
   }
 
   export type ParentUserMaxOrderByAggregateInput = {
@@ -8111,7 +8102,6 @@ export namespace Prisma {
 
   export type ParentUserSumOrderByAggregateInput = {
     id?: SortOrder
-    telegram_id?: SortOrder
   }
 
   export type IntWithAggregatesFilter<$PrismaModel = never> = {
@@ -8212,7 +8202,6 @@ export namespace Prisma {
 
   export type ChildUserAvgOrderByAggregateInput = {
     id?: SortOrder
-    telegram_id?: SortOrder
   }
 
   export type ChildUserMaxOrderByAggregateInput = {
@@ -8237,7 +8226,6 @@ export namespace Prisma {
 
   export type ChildUserSumOrderByAggregateInput = {
     id?: SortOrder
-    telegram_id?: SortOrder
   }
 
   export type ParentUserScalarRelationFilter = {
@@ -8472,14 +8460,6 @@ export namespace Prisma {
     connect?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
   }
 
-  export type IntFieldUpdateOperationsInput = {
-    set?: number
-    increment?: number
-    decrement?: number
-    multiply?: number
-    divide?: number
-  }
-
   export type StringFieldUpdateOperationsInput = {
     set?: string
   }
@@ -8522,6 +8502,14 @@ export namespace Prisma {
     update?: TaskUpdateWithWhereUniqueWithoutUpdatedByInput | TaskUpdateWithWhereUniqueWithoutUpdatedByInput[]
     updateMany?: TaskUpdateManyWithWhereWithoutUpdatedByInput | TaskUpdateManyWithWhereWithoutUpdatedByInput[]
     deleteMany?: TaskScalarWhereInput | TaskScalarWhereInput[]
+  }
+
+  export type IntFieldUpdateOperationsInput = {
+    set?: number
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
   }
 
   export type ParentChildUncheckedUpdateManyWithoutParentNestedInput = {
@@ -9289,7 +9277,7 @@ export namespace Prisma {
   }
 
   export type ParentUserCreateWithoutChildrenInput = {
-    telegram_id: number
+    telegram_id: string
     name: string
     gender: $Enums.Gender
     photo_url?: string | null
@@ -9300,7 +9288,7 @@ export namespace Prisma {
 
   export type ParentUserUncheckedCreateWithoutChildrenInput = {
     id?: number
-    telegram_id: number
+    telegram_id: string
     name: string
     gender: $Enums.Gender
     photo_url?: string | null
@@ -9315,7 +9303,7 @@ export namespace Prisma {
   }
 
   export type ChildUserCreateWithoutParentsInput = {
-    telegram_id: number
+    telegram_id: string
     name: string
     gender: $Enums.Gender
     photo_url?: string | null
@@ -9327,7 +9315,7 @@ export namespace Prisma {
 
   export type ChildUserUncheckedCreateWithoutParentsInput = {
     id?: number
-    telegram_id: number
+    telegram_id: string
     name: string
     gender: $Enums.Gender
     photo_url?: string | null
@@ -9354,7 +9342,7 @@ export namespace Prisma {
   }
 
   export type ParentUserUpdateWithoutChildrenInput = {
-    telegram_id?: IntFieldUpdateOperationsInput | number
+    telegram_id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     gender?: EnumGenderFieldUpdateOperationsInput | $Enums.Gender
     photo_url?: NullableStringFieldUpdateOperationsInput | string | null
@@ -9365,7 +9353,7 @@ export namespace Prisma {
 
   export type ParentUserUncheckedUpdateWithoutChildrenInput = {
     id?: IntFieldUpdateOperationsInput | number
-    telegram_id?: IntFieldUpdateOperationsInput | number
+    telegram_id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     gender?: EnumGenderFieldUpdateOperationsInput | $Enums.Gender
     photo_url?: NullableStringFieldUpdateOperationsInput | string | null
@@ -9386,7 +9374,7 @@ export namespace Prisma {
   }
 
   export type ChildUserUpdateWithoutParentsInput = {
-    telegram_id?: IntFieldUpdateOperationsInput | number
+    telegram_id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     gender?: EnumGenderFieldUpdateOperationsInput | $Enums.Gender
     photo_url?: NullableStringFieldUpdateOperationsInput | string | null
@@ -9398,7 +9386,7 @@ export namespace Prisma {
 
   export type ChildUserUncheckedUpdateWithoutParentsInput = {
     id?: IntFieldUpdateOperationsInput | number
-    telegram_id?: IntFieldUpdateOperationsInput | number
+    telegram_id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     gender?: EnumGenderFieldUpdateOperationsInput | $Enums.Gender
     photo_url?: NullableStringFieldUpdateOperationsInput | string | null
@@ -9409,7 +9397,7 @@ export namespace Prisma {
   }
 
   export type ChildUserCreateWithoutTasksInput = {
-    telegram_id: number
+    telegram_id: string
     name: string
     gender: $Enums.Gender
     photo_url?: string | null
@@ -9421,7 +9409,7 @@ export namespace Prisma {
 
   export type ChildUserUncheckedCreateWithoutTasksInput = {
     id?: number
-    telegram_id: number
+    telegram_id: string
     name: string
     gender: $Enums.Gender
     photo_url?: string | null
@@ -9460,7 +9448,7 @@ export namespace Prisma {
   }
 
   export type ParentUserCreateWithoutUpdatedTasksInput = {
-    telegram_id: number
+    telegram_id: string
     name: string
     gender: $Enums.Gender
     photo_url?: string | null
@@ -9471,7 +9459,7 @@ export namespace Prisma {
 
   export type ParentUserUncheckedCreateWithoutUpdatedTasksInput = {
     id?: number
-    telegram_id: number
+    telegram_id: string
     name: string
     gender: $Enums.Gender
     photo_url?: string | null
@@ -9497,7 +9485,7 @@ export namespace Prisma {
   }
 
   export type ChildUserUpdateWithoutTasksInput = {
-    telegram_id?: IntFieldUpdateOperationsInput | number
+    telegram_id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     gender?: EnumGenderFieldUpdateOperationsInput | $Enums.Gender
     photo_url?: NullableStringFieldUpdateOperationsInput | string | null
@@ -9509,7 +9497,7 @@ export namespace Prisma {
 
   export type ChildUserUncheckedUpdateWithoutTasksInput = {
     id?: IntFieldUpdateOperationsInput | number
-    telegram_id?: IntFieldUpdateOperationsInput | number
+    telegram_id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     gender?: EnumGenderFieldUpdateOperationsInput | $Enums.Gender
     photo_url?: NullableStringFieldUpdateOperationsInput | string | null
@@ -9547,7 +9535,7 @@ export namespace Prisma {
   }
 
   export type ParentUserUpdateWithoutUpdatedTasksInput = {
-    telegram_id?: IntFieldUpdateOperationsInput | number
+    telegram_id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     gender?: EnumGenderFieldUpdateOperationsInput | $Enums.Gender
     photo_url?: NullableStringFieldUpdateOperationsInput | string | null
@@ -9558,7 +9546,7 @@ export namespace Prisma {
 
   export type ParentUserUncheckedUpdateWithoutUpdatedTasksInput = {
     id?: IntFieldUpdateOperationsInput | number
-    telegram_id?: IntFieldUpdateOperationsInput | number
+    telegram_id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     gender?: EnumGenderFieldUpdateOperationsInput | $Enums.Gender
     photo_url?: NullableStringFieldUpdateOperationsInput | string | null
@@ -9598,7 +9586,7 @@ export namespace Prisma {
   }
 
   export type ChildUserCreateWithoutTaskCompletionsInput = {
-    telegram_id: number
+    telegram_id: string
     name: string
     gender: $Enums.Gender
     photo_url?: string | null
@@ -9610,7 +9598,7 @@ export namespace Prisma {
 
   export type ChildUserUncheckedCreateWithoutTaskCompletionsInput = {
     id?: number
-    telegram_id: number
+    telegram_id: string
     name: string
     gender: $Enums.Gender
     photo_url?: string | null
@@ -9673,7 +9661,7 @@ export namespace Prisma {
   }
 
   export type ChildUserUpdateWithoutTaskCompletionsInput = {
-    telegram_id?: IntFieldUpdateOperationsInput | number
+    telegram_id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     gender?: EnumGenderFieldUpdateOperationsInput | $Enums.Gender
     photo_url?: NullableStringFieldUpdateOperationsInput | string | null
@@ -9685,7 +9673,7 @@ export namespace Prisma {
 
   export type ChildUserUncheckedUpdateWithoutTaskCompletionsInput = {
     id?: IntFieldUpdateOperationsInput | number
-    telegram_id?: IntFieldUpdateOperationsInput | number
+    telegram_id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     gender?: EnumGenderFieldUpdateOperationsInput | $Enums.Gender
     photo_url?: NullableStringFieldUpdateOperationsInput | string | null

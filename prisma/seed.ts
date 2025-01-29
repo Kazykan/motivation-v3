@@ -21,19 +21,19 @@ async function seed() {
   try {
     // Seed Parent Users
     const parent1 = await prisma.parentUser.upsert({
-      where: { telegram_id: 123456789 },
+      where: { telegram_id: "123456789" },
       update: {},
       create: {
-        telegram_id: 123456789,
+        telegram_id: "123456789",
         name: "Родитель 1",
         gender: "MALE",
       },
     });
     const parent2 = await prisma.parentUser.upsert({
-      where: { telegram_id: 987654321 },
+      where: { telegram_id: "987654321" },
       update: {},
       create: {
-        telegram_id: 987654321,
+        telegram_id: "987654321",
         name: "Родитель 2",
         gender: "FEMALE",
       },
@@ -41,28 +41,28 @@ async function seed() {
 
     // Seed Child Users
     const child1 = await prisma.childUser.upsert({
-      where: { telegram_id: 111111111 },
+      where: { telegram_id: "111111111" },
       update: {},
       create: {
-        telegram_id: 111111111,
+        telegram_id: "111111111",
         name: "Ребенок 1",
         gender: "MALE",
       },
     });
     const child2 = await prisma.childUser.upsert({
-      where: { telegram_id: 222222222 },
+      where: { telegram_id: "222222222" },
       update: {},
       create: {
-        telegram_id: 222222222,
+        telegram_id: "222222222",
         name: "Ребенок 2",
         gender: "FEMALE",
       },
     });
     const child3 = await prisma.childUser.upsert({
-      where: { telegram_id: 33333333 },
+      where: { telegram_id: "33333333" },
       update: {},
       create: {
-        telegram_id: 33333333,
+        telegram_id: "33333333",
         name: "Ребенок 3",
         gender: "MALE",
       },
@@ -166,3 +166,5 @@ main()
     console.error("Seed process failed:", e);
     process.exit(1);
   });
+
+  

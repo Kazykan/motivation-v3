@@ -52,7 +52,7 @@ export async function GET(request: NextRequest): Promise<NextResponse<TaskWithCo
 
     const childTasks = await prisma.childUser.findUnique({
       where: {
-        telegram_id: telegram_id,
+        telegram_id: String(telegram_id),
       },
       select: {
         tasks: true,
