@@ -58,6 +58,15 @@ async function seed() {
         gender: "FEMALE",
       },
     });
+    const child3 = await prisma.childUser.upsert({
+      where: { telegram_id: 33333333 },
+      update: {},
+      create: {
+        telegram_id: 33333333,
+        name: "Ребенок 3",
+        gender: "MALE",
+      },
+    });
 
     // Seed Parent-Child Relations
     const existingRelation1 = await prisma.parentChild.findFirst({
@@ -81,6 +90,17 @@ async function seed() {
     if (!existingRelation2) {
       await prisma.parentChild.create({
         data: { parentId: parent2.id, childId: child2.id },
+      });
+    }
+    const existingRelation3 = await prisma.parentChild.findFirst({
+      where: {
+        parentId: parent2.id,
+        childId: child3.id,
+      },
+    });
+    if (!existingRelation3) {
+      await prisma.parentChild.create({
+        data: { parentId: parent2.id, childId: child3.id },
       });
     }
 
