@@ -6,7 +6,7 @@ import React from "react";
 
 interface AuthLayoutProps {
   children: React.ReactNode;
-  requiredRole: payloadRole
+  requiredRole: payloadRole;
   redirectPath?: string;
 }
 

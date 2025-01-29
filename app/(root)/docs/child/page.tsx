@@ -28,6 +28,7 @@ export default function Register() {
       <Button>
         <Rocket /> Начать
       </Button>
+
     </main>
   );
 }

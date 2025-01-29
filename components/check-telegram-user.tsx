@@ -59,6 +59,7 @@ const CheckTelegramUser: React.FC = () => {
             </div>
           ) : (
             <div>
+              Вас пригласил {inviterTelegramId} на роль {getRoleName(role)}
               <AddChildForm
                 photo_url={photoUrl}
                 tgParentId={telegramId}

@@ -14,6 +14,17 @@ export interface ParentCheckResponse {
   status?: number;
 }
 
+export interface ParentResponseWithChildren {
+  exists: boolean;
+  parentUser?: ParentUserResponse | null;
+  message?: string;
+  status?: number;
+}
+
+export interface ParentUserResponse extends ParentUser {
+  children: ChildUser[];
+}
+
 export interface TaskResponse extends Task {
   taskCompletions: TaskCompletion[];
 }

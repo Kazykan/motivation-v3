@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { ParentCreateSchema } from "@/lib/types";
 import { FormInput, FormSelect } from "./form-components";
 import { toast } from "@/hooks/use-toast";
-import { useCreateTaskCompletion } from "@/hooks/useParent";
+import { useCreateParent } from "@/hooks/useParent";
 
 interface Props {
   tgParentId: number;
@@ -30,14 +30,11 @@ export const AddParentForm: React.FC<Props> = ({ tgParentId, tgUserName, photo_u
     },
   });
 
-  const createParentMutation = useCreateTaskCompletion(tgParentId);
+  const createParentMutation = useCreateParent(tgParentId);
 
   async function onSubmit(values: z.infer<typeof ParentCreateSchema>) {
     try {
       await createParentMutation.mutateAsync(values);
-      toast({
-        title: "Учетная запись создана",
-      });
     } catch (error) {
       console.error("Failed to create parent", error);
       toast({ title: "Ошибка при создании родителя" });
@@ -46,12 +43,13 @@ export const AddParentForm: React.FC<Props> = ({ tgParentId, tgUserName, photo_u
 
   return (
     <FormProvider {...form}>
+      родитель
       <form onSubmit={form.handleSubmit(onSubmit)}>
         <div className="flex flex-col gap-5 m-5">
           <FormInput name="name" className="text-base" placeholder="Имя" />
           <FormSelect name="gender" label="Пол" />
-          <Button type="submit" className={cn("w-full py-3", className)}>
-            Зарегистрироваться
+          <Button type="submit" className={cn("w-full py-3", className)} disabled={createParentMutation.isPending}>
+            {createParentMutation.isPending ? "Загрузка..." : "Зарегистрироваться"}
           </Button>
         </div>
       </form>

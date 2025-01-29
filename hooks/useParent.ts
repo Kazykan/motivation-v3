@@ -1,26 +1,41 @@
-import { ParentCheckResponse } from "@/lib/api/api-types";
+import { ParentCheckResponse, ParentResponseWithChildren } from "@/lib/api/api-types";
 import { ParentCreateSchema } from "@/lib/types";
-import { checkParentUser, createParent } from "@/utils/apiParent";
+import { checkParentUser, checkParentUserWitchChildren, createParent } from "@/utils/apiParent";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { z } from "zod";
+import { toast } from "./use-toast";
+import { useRouter } from "next/navigation";
 
 export const useParentCheck = (telegramId: number) => {
   return useQuery<ParentCheckResponse>({
-    queryKey: ["parentCheck", telegramId],
+    queryKey: ["parentCheck", String(telegramId)],
     queryFn: () => checkParentUser(telegramId),
     enabled: !!telegramId,
   });
 };
 
-export function useCreateTaskCompletion(telegramId: number) {
+export const useParentWithChildren = (telegramId: number | undefined) => {
+  return useQuery<ParentResponseWithChildren>({
+    queryKey: ["ParentResponseWithChildren", String(telegramId)],
+    queryFn: () => checkParentUserWitchChildren(telegramId!),
+    enabled: !!telegramId,
+  });
+};
+
+export function useCreateParent(telegramId: number) {
+  const router = useRouter();
   const queryClient = useQueryClient();
 
   return useMutation({
     mutationFn: (data: z.infer<typeof ParentCreateSchema>) => createParent(data),
-    onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: ["parentCheck", telegramId],
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({
+        queryKey: ["parentCheck", String(telegramId)],
       });
+      toast({
+        title: "Учетная запись создана",
+      });
+      router.push("/");
     },
   });
 }

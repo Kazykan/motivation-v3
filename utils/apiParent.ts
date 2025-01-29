@@ -1,4 +1,4 @@
-import { ParentCheckResponse } from "@/lib/api/api-types";
+import { ParentCheckResponse, ParentResponseWithChildren } from "@/lib/api/api-types";
 import { axiosInstanceWithoutAuth } from "./instance";
 import axios from "axios";
 import { z } from "zod";
@@ -17,12 +17,23 @@ export const checkParentUser = async (telegramId: number): Promise<ParentCheckRe
   }
 };
 
+export const checkParentUserWitchChildren = async (telegramId: number): Promise<ParentResponseWithChildren> => {
+  try {
+    const response = await axiosInstanceWithoutAuth.get<ParentResponseWithChildren>(`/parent/children?telegram_id=${telegramId}`);
+    return response.data;
+  } catch (error) {
+    if (axios.isAxiosError(error) && error.response) {
+      return error.response.data;
+    } else {
+      throw error;
+    }
+  }
+};
+
 export const createParent = async (data: z.infer<typeof ParentCreateSchema>): Promise<ParentCheckResponse> => {
   try {
     const validatedData = ParentCreateSchema.parse(data);
-    const parent = await axiosInstanceWithoutAuth.post<ParentCheckResponse>(`/parent`, {
-      validatedData,
-    });
+    const parent = await axiosInstanceWithoutAuth.post<ParentCheckResponse>(`/parent`, validatedData);
     return parent.data;
   } catch (error) {
     if (axios.isAxiosError(error) && error.response) {

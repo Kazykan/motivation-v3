@@ -39,6 +39,7 @@ export const AddChildForm: React.FC<Props> = ({ tgParentId, tgUserName, photo_ur
 
   return (
     <FormProvider {...form}>
+      ребенок
       <form onSubmit={form.handleSubmit(onSubmit)}>
         <div className="flex flex-col gap-5 m-5">
           <FormInput name="name" className="text-base" placeholder="Имя" />
