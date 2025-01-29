@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { ParentCreateSchema } from "@/lib/types";
 import { FormInput, FormSelect } from "./form-components";
 import { toast } from "@/hooks/use-toast";
+import { useCreateTaskCompletion } from "@/hooks/useParent";
 
 interface Props {
   tgParentId: number;
@@ -29,12 +30,18 @@ export const AddParentForm: React.FC<Props> = ({ tgParentId, tgUserName, photo_u
     },
   });
 
-  function onSubmit(values: z.infer<typeof ParentCreateSchema>) {
-    toast({
-      title: "Create parent",
-      description: JSON.stringify(values, null, 2),
-    });
-    console.log(JSON.stringify(values));
+  const createParentMutation = useCreateTaskCompletion(tgParentId);
+
+  async function onSubmit(values: z.infer<typeof ParentCreateSchema>) {
+    try {
+      await createParentMutation.mutateAsync(values);
+      toast({
+        title: "Учетная запись создана",
+      });
+    } catch (error) {
+      console.error("Failed to create parent", error);
+      toast({ title: "Ошибка при создании родителя" });
+    }
   }
 
   return (
