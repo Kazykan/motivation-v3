@@ -26,16 +26,7 @@ export const FormInput: React.FC<Props> = ({ className, name, label, required, t
     setValue(name, "", { shouldValidate: true });
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    let newValue: string | number = e.target.value;
-
-    // Преобразуем в число, если тип "number"
-    if (type === "number" && newValue !== "") {
-      newValue = Number(newValue);
-    }
-
-    register(name).onChange({ target: { value: newValue, name } });
-  };
+  const inputType = type === "number" ? "number" : "text"; // устанавливаем правильный тип для инпута
 
   return (
     <div className={className}>
@@ -45,7 +36,12 @@ export const FormInput: React.FC<Props> = ({ className, name, label, required, t
         </p>
       )}
       <div className="relative">
-        <Input className="text-md" {...register(name)} {...props} onChange={handleChange} />
+        <Input
+          className="text-md"
+          type={inputType}
+          {...register(name, { valueAsNumber: type === "number" })}
+          {...props}
+        />
         {value && <ClearButton onClick={onClickClear} />}
       </div>
 
