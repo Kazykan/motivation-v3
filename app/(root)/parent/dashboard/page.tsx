@@ -2,7 +2,9 @@
 
 import { AuthLayout } from "@/components/AuthLayout";
 import { ChildSelect } from "@/components/child-select";
+import { InviteLink } from "@/components/invite-link";
 import { TasksWithCompletions } from "@/components/tasks-with-completions";
+import { Button } from "@/components/ui/button";
 import { useAuthCheck } from "@/hooks/useAuthCheck";
 import { useParentWithChildren } from "@/hooks/useParent";
 import { payloadRole } from "@/lib/jwt";
@@ -19,8 +21,16 @@ const ParentDashboard = () => {
     <AuthLayout requiredRole={payloadRole.parent}>
       {data?.exists && data.parentUser && data.parentUser.children && data.parentUser.children.length > 0 ? (
         <>
-          <ChildSelect childrenData={data.parentUser.children} />
+          <ChildSelect className="m-3" childrenData={data.parentUser.children} />
           <TasksWithCompletions />
+          <Button> Добавить задание </Button>
+          <div className="m-3">
+            <div className="mt-6 font-bold">Добавить в ваш личный кабинет</div>
+            <div className="flex space-x-4">
+              <InviteLink parent={true} telegram_id={payload?.telegramId} name={data.parentUser.name} />
+              <InviteLink parent={false} telegram_id={payload?.telegramId} name={data.parentUser.name} />
+            </div>
+          </div>
         </>
       ) : (
         <div>нет детей</div>

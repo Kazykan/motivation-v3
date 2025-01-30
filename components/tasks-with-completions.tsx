@@ -41,7 +41,7 @@ export const TasksWithCompletions: React.FC = () => {
   }, [data]);
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <div className="m-3">Loading...</div>;
   }
   if (error) {
     return <div>Error</div>;

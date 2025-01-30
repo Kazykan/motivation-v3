@@ -70,7 +70,7 @@ const CheckTelegramId = ({ telegramId, telegramStartParams }: Props) => {
     };
 
     executeAuthFlow();
-  }, [childData, parentData, router, telegramId, telegramStartParams, allDataLoaded]);
+  }, [childData, parentData, router, telegramId, telegramStartParams, allDataLoaded, childLoading, parentLoading]);
 
   return (
     <div>
