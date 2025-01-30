@@ -3,6 +3,7 @@ import { cn } from "@/lib/utils";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
 import { ChildUser } from "@/prisma/prisma/client";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
+import { useChildProfile } from "@/lib/store/child";
 
 interface Props {
   className?: string;
@@ -10,9 +11,17 @@ interface Props {
 }
 
 export const ChildSelect: React.FC<Props> = ({ className, childrenData }) => {
+  const setChildTelegramId = useChildProfile((state) => state.setChildTelegramId);
   const [value, setValue] = React.useState<string | null>(
     childrenData.length > 0 ? childrenData[0].id.toString() : null
   );
+
+  React.useEffect(() => {
+    const selectChild = childrenData.find((child) => child.id.toString() === value);
+    if (selectChild) {
+      setChildTelegramId(selectChild.telegram_id);
+    }
+  }, [value, childrenData, setChildTelegramId]);
 
   if (childrenData.length === 0) {
     return <div className={cn(className)}>No childrenData found.</div>;

@@ -12,10 +12,6 @@ import { useChildProfile } from "@/lib/store/child";
 import { Progress } from "./ui/progress";
 import { calculateCompletionPercentage } from "@/lib/service/calculate_sum";
 
-interface Props {
-  telegramId: string;
-}
-
 interface TaskData {
   id: number;
   type: TaskType;
@@ -26,17 +22,15 @@ interface TaskData {
   frequency?: number | null;
 }
 
-export const TasksWithCompletions: React.FC<Props> = ({ telegramId }) => {
+export const TasksWithCompletions: React.FC = () => {
+  const childTelegramId = useChildProfile((state) => state.child_telegram_id);
   const [totalReward, setTotalReward] = React.useState(0);
   const [totalMaxReward, setTotalMaxReward] = React.useState(0);
   const [completionPercentage, setCompletionPercentage] = React.useState(0);
   const firstDayOfWeek = useWeek((state) => state.start_of_date);
   const lastDayOfWeek = useWeek((state) => state.end_of_week);
-  const setChildTelegramId = useChildProfile((state) => state.setChildTelegramId);
 
-  const { data, isLoading, error } = useTasksWithCompletions(telegramId, firstDayOfWeek, lastDayOfWeek);
-
-  setChildTelegramId(Number(telegramId));
+  const { data, isLoading, error } = useTasksWithCompletions(childTelegramId, firstDayOfWeek, lastDayOfWeek);
 
   React.useEffect(() => {
     if (data) {
@@ -79,7 +73,8 @@ export const TasksWithCompletions: React.FC<Props> = ({ telegramId }) => {
   return (
     <div>
       <div className="m-3 font-bold text-lg">
-        {currencyFormatMoney(totalReward)}<span className="text-muted-foreground font-normal text-sm">/{currencyFormatMoney(totalMaxReward)}</span>
+        {currencyFormatMoney(totalReward)}
+        <span className="text-muted-foreground font-normal text-sm">/{currencyFormatMoney(totalMaxReward)}</span>
         <Progress value={completionPercentage} />
       </div>
       <div className="grid gap-4 mt-5">

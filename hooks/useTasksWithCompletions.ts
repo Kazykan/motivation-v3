@@ -6,7 +6,7 @@ import { getTasksWithCompletions } from "@/utils/apiTasksWithCompletions";
 import { useQuery } from "@tanstack/react-query";
 
 export const useTasksWithCompletions = (
-  telegramId: string,
+  telegramId: string | undefined,
   firstDayOfWeek: Date | null,
   lastDayOfWeek: Date | null,
 ) => {
@@ -17,7 +17,7 @@ export const useTasksWithCompletions = (
       formatDateToYYYYMMDD(firstDayOfWeek!),
       formatDateToYYYYMMDD(lastDayOfWeek!),
     ],
-    queryFn: () => getTasksWithCompletions(telegramId, firstDayOfWeek!, lastDayOfWeek!),
+    queryFn: () => getTasksWithCompletions(telegramId!, firstDayOfWeek!, lastDayOfWeek!),
     enabled: !!telegramId && !!firstDayOfWeek && !!lastDayOfWeek,
   });
 };

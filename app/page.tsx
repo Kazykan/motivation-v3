@@ -11,10 +11,14 @@ const CheckTelegramUser: React.FC = () => {
   const setName = useTelegramUserState((state) => state.setName);
   const setPhotoUrl = useTelegramUserState((state) => state.setPhotoUrl);
 
-  const { telegramUser, telegramStartParams } = useTelegramUser();
+  const { telegramUser, telegramStartParams, isLoading } = useTelegramUser();
 
   if (!telegramUser) {
     return <p>Ошибка: Не удалось получить данные пользователя Telegram.</p>;
+  }
+
+  if (isLoading) {
+    return <p>Загрузка данных пользователя Telegram...</p>;
   }
 
   setTelegramId(telegramUser.id);

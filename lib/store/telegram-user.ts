@@ -2,6 +2,7 @@
 
 import { create } from "zustand";
 
+// здесь я храню все данные полученные от Web Telegram mini
 interface TelegramUserState {
   telegram_id: number | undefined;
   photo_url: string | undefined;

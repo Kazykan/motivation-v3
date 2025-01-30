@@ -2,6 +2,7 @@
 
 import { AuthLayout } from "@/components/AuthLayout";
 import { ChildSelect } from "@/components/child-select";
+import { TasksWithCompletions } from "@/components/tasks-with-completions";
 import { useAuthCheck } from "@/hooks/useAuthCheck";
 import { useParentWithChildren } from "@/hooks/useParent";
 import { payloadRole } from "@/lib/jwt";
@@ -17,7 +18,10 @@ const ParentDashboard = () => {
   return (
     <AuthLayout requiredRole={payloadRole.parent}>
       {data?.exists && data.parentUser && data.parentUser.children && data.parentUser.children.length > 0 ? (
-        <ChildSelect childrenData={data.parentUser.children} />
+        <>
+          <ChildSelect childrenData={data.parentUser.children} />
+          <TasksWithCompletions />
+        </>
       ) : (
         <div>нет детей</div>
       )}

@@ -75,7 +75,7 @@ export function ToggleGroupCalendar({ weekdays_need, task_id, child_id }: Props)
       queryClient.invalidateQueries({
         queryKey: [
           "TaskWithCompletions",
-          String(childTelegramId),
+          childTelegramId,
           firstDayOfWeek ? formatDateToYYYYMMDD(firstDayOfWeek) : "",
           lastDayOfWeek ? formatDateToYYYYMMDD(lastDayOfWeek) : "",
         ],
