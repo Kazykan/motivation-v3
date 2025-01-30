@@ -6,7 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 
 import { Button } from "@/components/ui/button";
 import { ParentCreateSchema } from "@/lib/types";
-import { FormInput, FormSelect } from "./form-components";
+import { FormInput, FormSelectGender } from "./form-components";
 import { toast } from "@/hooks/use-toast";
 
 interface Props {
@@ -43,7 +43,7 @@ export const AddChildForm: React.FC<Props> = ({ tgParentId, tgUserName, photo_ur
       <form onSubmit={form.handleSubmit(onSubmit)}>
         <div className="flex flex-col gap-5 m-5">
           <FormInput name="name" className="text-base" placeholder="Имя" />
-          <FormSelect name="gender" label="Пол" />
+          <FormSelectGender name="gender" label="Пол" />
           <Button type="submit" className={cn("w-full py-3", className)}>
             Зарегистрироваться
           </Button>

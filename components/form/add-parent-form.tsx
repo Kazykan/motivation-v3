@@ -6,7 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 
 import { Button } from "@/components/ui/button";
 import { ParentCreateSchema } from "@/lib/types";
-import { FormInput, FormSelect } from "./form-components";
+import { FormInput, FormSelectGender } from "./form-components";
 import { toast } from "@/hooks/use-toast";
 import { useCreateParent } from "@/hooks/useParent";
 
@@ -46,8 +46,8 @@ export const AddParentForm: React.FC<Props> = ({ tgParentId, tgUserName, photo_u
       родитель
       <form onSubmit={form.handleSubmit(onSubmit)}>
         <div className="flex flex-col gap-5 m-5">
-          <FormInput name="name" className="text-base" placeholder="Имя" />
-          <FormSelect name="gender" label="Пол" />
+          <FormInput name="name" className="text-base" placeholder="Имя" required />
+          <FormSelectGender name="gender" label="Пол"/>
           <Button type="submit" className={cn("w-full py-3", className)} disabled={createParentMutation.isPending}>
             {createParentMutation.isPending ? "Загрузка..." : "Зарегистрироваться"}
           </Button>

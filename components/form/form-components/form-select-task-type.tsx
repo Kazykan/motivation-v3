@@ -10,7 +10,7 @@ interface Props {
   className?: string;
 }
 
-export const FormSelect: React.FC<Props> = ({ name, label, className }) => {
+export const FormSelectTaskType: React.FC<Props> = ({ name, label, className }) => {
   const {
     register,
     formState: { errors },
@@ -24,11 +24,11 @@ export const FormSelect: React.FC<Props> = ({ name, label, className }) => {
       <FormControl>
         <Select onValueChange={(value) => register(name).onChange({ target: { value, name } })}>
           <SelectTrigger>
-            <SelectValue placeholder={"Выберите"} />
+            <SelectValue placeholder={"Выберите тип задания"} />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="MALE">Мужской</SelectItem>
-            <SelectItem value="FEMALE">Женский</SelectItem>
+            <SelectItem value="DAILY">регулярные</SelectItem>
+            <SelectItem value="FLEXIBLE">гибкие</SelectItem>
           </SelectContent>
         </Select>
       </FormControl>
