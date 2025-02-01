@@ -1,6 +1,7 @@
 "use client";
-import { formatDateToYYYYMMDD, useWeek } from "@/lib";
+import { formatDateToYYYYMMDD } from "@/lib";
 import { TaskCompletionResponse } from "@/lib/api/api-types";
+import { useDateRange } from "@/lib/service/date";
 import { createTaskCompletion, deleteTaskCompletion, getTaskCompletions } from "@/utils/apiTaskCompletion";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
@@ -10,17 +11,6 @@ export const useTaskCompletions = (task_id: string, firstDayOfWeek: Date | null,
     queryFn: () => getTaskCompletions(task_id, firstDayOfWeek!, lastDayOfWeek!),
     enabled: !!task_id && !!firstDayOfWeek && !!lastDayOfWeek,
   });
-};
-
-// Функция для получения startDate и endDate
-const useDateRange = () => {
-  const firstDayOfWeek = useWeek((state) => state.start_of_date);
-  const lastDayOfWeek = useWeek((state) => state.end_of_week);
-
-  const startDate = firstDayOfWeek ? formatDateToYYYYMMDD(firstDayOfWeek) : "";
-  const endDate = lastDayOfWeek ? formatDateToYYYYMMDD(lastDayOfWeek) : "";
-
-  return { startDate, endDate };
 };
 
 // Функция для генерации queryKey

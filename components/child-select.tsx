@@ -12,6 +12,7 @@ interface Props {
 
 export const ChildSelect: React.FC<Props> = ({ className, childrenData }) => {
   const setChildTelegramId = useChildProfile((state) => state.setChildTelegramId);
+  const setChildId = useChildProfile((state) => state.setChildId);
   const [value, setValue] = React.useState<string | null>(
     childrenData.length > 0 ? childrenData[0].id.toString() : null
   );
@@ -20,8 +21,9 @@ export const ChildSelect: React.FC<Props> = ({ className, childrenData }) => {
     const selectChild = childrenData.find((child) => child.id.toString() === value);
     if (selectChild) {
       setChildTelegramId(selectChild.telegram_id);
+      setChildId(selectChild.id);
     }
-  }, [value, childrenData, setChildTelegramId]);
+  }, [value, childrenData, setChildTelegramId, setChildId]);
 
   if (childrenData.length === 0) {
     return <div className={cn(className)}>No childrenData found.</div>;

@@ -25,13 +25,20 @@ export interface ParentUserResponse extends ParentUser {
   children: ChildUser[];
 }
 
-export interface TaskResponse extends Task {
+export interface TasksResponse extends Task {
   taskCompletions: TaskCompletion[];
 }
 
 export interface TaskWithCompletionsResponse {
   exists: boolean;
-  task?: TaskResponse[];
+  task?: TasksResponse[];
+  message?: string;
+  status?: number;
+}
+
+export interface TaskResponse {
+  exists: boolean;
+  task?: Task;
   message?: string;
   status?: number;
 }

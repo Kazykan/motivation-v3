@@ -1,4 +1,4 @@
-import { TaskResponse, TaskWithCompletionsResponse } from "../api/api-types";
+import { TasksResponse, TaskWithCompletionsResponse } from "../api/api-types";
 
 interface RewardInfo {
   earnedReward: number;
@@ -22,7 +22,7 @@ export const calculateTotalReward = (data: TaskWithCompletionsResponse): RewardI
   return { earnedReward: totalEarnedReward, maxReward: totalMaxReward };
 };
 
-export const calculateTaskReward = (task: TaskResponse): RewardInfo => {
+export const calculateTaskReward = (task: TasksResponse): RewardInfo => {
   const { type, reward, frequency, dayOfWeek, taskCompletions } = task;
   const completedCount = taskCompletions.length;
 

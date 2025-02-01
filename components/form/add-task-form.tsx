@@ -1,28 +1,36 @@
 import React from "react";
-import { cn } from "@/lib/utils";
 import { FormProvider, useForm } from "react-hook-form";
 import { z } from "zod";
-import { TaskCreateSchema } from "@/lib/types";
+import { TaskCreateSchema, TaskUpdateSchema } from "@/lib/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "@/hooks/use-toast";
 import { FormInput, FormSelectTaskType } from "./form-components";
 import { Button } from "../ui/button";
 import { MultipleSelector } from "../multipleselector";
+import { useChildProfile } from "@/lib/store/child";
+import { useCreateTask, useUpdateTask } from "@/hooks/useTask";
 
 interface Props {
-  className?: string;
-  childUserId: number;
+  onClose: () => void;
+  taskId?: number; // для обновления
+  initialValues?: z.infer<typeof TaskCreateSchema> | z.infer<typeof TaskUpdateSchema>; // данные для обновления
 }
 
-export const AddTaskForm: React.FC<Props> = ({ className, childUserId }) => {
+export const TaskModalForm: React.FC<Props> = ({ onClose, taskId, initialValues }) => {
+  const childId = useChildProfile((state) => state.child_id);
+
   const form = useForm<z.infer<typeof TaskCreateSchema>>({
     resolver: zodResolver(TaskCreateSchema),
     defaultValues: {
-      childUserId: childUserId,
+      childUserId: childId,
+      ...initialValues, // Предзаполнение значений при обновлении
     },
   });
 
-  const { watch, setValue  } = form;
+  const updateMutation = useUpdateTask();
+  const createMutation = useCreateTask();
+
+  const { watch, setValue } = form;
   const taskType = watch("type");
 
   React.useEffect(() => {
@@ -34,12 +42,27 @@ export const AddTaskForm: React.FC<Props> = ({ className, childUserId }) => {
     }
   }, [taskType, setValue]);
 
+  const isUpdateMode = !!taskId; // проверяем есть ли taskID, для определения режима создания/обновления
+
   async function onSubmit(values: z.infer<typeof TaskCreateSchema>) {
-    try {
-      toast({ title: "Задание создано", description: JSON.stringify(values, null, 2) });
-    } catch (error) {
-      console.error("Failed to create parent", error);
-      toast({ title: "Ошибка при создании родителя" });
+    if (isUpdateMode && taskId) {
+      try {
+        await updateMutation.mutateAsync({ taskId, taskData: values });
+        toast({ title: "Задание обновлено", description: JSON.stringify(values, null, 2) });
+        onClose();
+      } catch (error) {
+        console.error("Failed to update task", error);
+        toast({ title: "Ошибка при обновлении задания" });
+      }
+    } else {
+      try {
+        await createMutation.mutateAsync(values);
+        toast({ title: "Задание создано", description: JSON.stringify(values, null, 2) });
+        onClose();
+      } catch (error) {
+        console.error("Failed to create parent", error);
+        toast({ title: "Ошибка при создании родителя" });
+      }
     }
   }
 
@@ -55,7 +78,7 @@ export const AddTaskForm: React.FC<Props> = ({ className, childUserId }) => {
             <FormInput name="frequency" className="text-base" placeholder="кол-во повторений" type="number" />
           )}
           <FormInput name="reward" className="text-base" placeholder="Стоимость задания" type="number" required />
-          <Button type="submit" className={cn("w-full py-3", className)}>
+          <Button type="submit" className="w-full py-3">
             Добавить задание
           </Button>
         </div>

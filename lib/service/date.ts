@@ -1,6 +1,8 @@
 import { startOfWeek, lastDayOfWeek, lightFormat, getDay } from "date-fns";
 import { weekdays } from "../constants";
 import { IWeekdays } from "../types";
+import { useWeek } from "../store";
+import { useChildProfile } from "../store/child";
 
 export const WeekDay = {
   get_this_week(this_day: Date | undefined = undefined, start: boolean = true) {
@@ -46,9 +48,20 @@ export function ShortDate(date: Date): string {
   return shortDate;
 }
 
-
 export const getWeekdayFromCompletion = (completionDate: Date): IWeekdays => {
   const date = new Date(completionDate);
   const dayOfWeek = getDay(date);
   return weekdays[dayOfWeek === 0 ? 6 : dayOfWeek - 1];
+};
+
+// Функция для получения startDate и endDate
+export const useDateRange = () => {
+  const firstDayOfWeek = useWeek((state) => state.start_of_date);
+  const lastDayOfWeek = useWeek((state) => state.end_of_week);
+  const child_telegram_id = useChildProfile((state) => state.child_telegram_id);
+
+  const startDate = firstDayOfWeek ? formatDateToYYYYMMDD(firstDayOfWeek) : "";
+  const endDate = lastDayOfWeek ? formatDateToYYYYMMDD(lastDayOfWeek) : "";
+
+  return { startDate, endDate, child_telegram_id };
 };

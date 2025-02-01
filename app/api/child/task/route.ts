@@ -1,6 +1,7 @@
-import { TaskWithCompletionsResponse } from "@/lib/api/api-types";
+import { TaskResponse, TaskWithCompletionsResponse } from "@/lib/api/api-types";
+import { TaskCreateSchema, TaskUpdateSchema } from "@/lib/types";
 import { prisma } from "@/prisma/prisma-client";
-import { Task, TaskCompletion } from "@/prisma/prisma/client";
+import { DayOfWeek, Task, TaskCompletion, TaskType } from "@/prisma/prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 
 // Функция для проверки и преобразования параметров
@@ -81,6 +82,120 @@ export async function GET(request: NextRequest): Promise<NextResponse<TaskWithCo
     return NextResponse.json({ exists: true, task: tasksWithCompletions, status: 200 });
   } catch (error) {
     console.error("Error checking parent:", error);
+    return NextResponse.json({ exists: false, message: "Internal server error", status: 500 });
+  } finally {
+    await prisma.$disconnect();
+  }
+}
+
+export async function POST(req: NextRequest): Promise<NextResponse<TaskResponse>> {
+  try {
+    const body = await req.json();
+    const validationResult = TaskCreateSchema.safeParse(body);
+
+    if (!validationResult.success) {
+      return NextResponse.json({
+        exists: false,
+        errors: validationResult.error.issues,
+        message: "Ошибка валидации данных",
+        status: 400,
+      });
+    }
+
+    const taskData = validationResult.data;
+
+    const createdTask = await prisma.task.create({
+      data: {
+        title: taskData.title,
+        description: taskData.description,
+        type: taskData.type as TaskType,
+        dayOfWeek: taskData.type === "DAILY" ? (taskData.dayOfWeek as DayOfWeek[]) : [],
+        frequency: taskData.type === "FLEXIBLE" ? taskData.frequency : null,
+        reward: taskData.reward,
+        childUserId: taskData.childUserId,
+        updatedByUserId: taskData.updatedByUserId,
+      },
+    });
+
+    return NextResponse.json({ exists: true, message: "Задание создано", task: createdTask, status: 201 });
+  } catch (error) {
+    console.error("Error creating task:", error);
+    return NextResponse.json({ exists: false, message: "Internal server error", status: 500 });
+  } finally {
+    await prisma.$disconnect();
+  }
+}
+
+/**
+ * Обновление задания по id
+ *
+ * @example
+ * Пример использования функции для создания родителя без приглашения
+ * PATCH /api/child/task?id=1
+ * Content-Type: application/json
+ *
+ * {
+ *    "title": "Новое название задачи",
+ *    "description": "Новое описание задачи",
+ *    "reward": 150
+ * }
+ */
+export async function PATCH(req: NextRequest): Promise<NextResponse<TaskResponse>> {
+  try {
+    const body = await req.json();
+    const id = req.nextUrl.searchParams.get("id");
+
+    if (!id) {
+      return NextResponse.json({
+        exists: false,
+        message: "Необходимо указать ID задачи",
+        status: 400,
+      });
+    }
+    const taskId = Number(id);
+    if (isNaN(taskId)) {
+      return NextResponse.json({
+        exists: false,
+        message: "Некорректный ID задачи",
+        status: 400,
+      });
+    }
+
+    const validationResult = TaskUpdateSchema.safeParse(body);
+
+    if (!validationResult.success) {
+      return NextResponse.json({
+        exists: false,
+        errors: validationResult.error.issues,
+        message: "Ошибка валидации данных",
+        status: 400,
+      });
+    }
+
+    const taskData = validationResult.data;
+
+    const updatedTask = await prisma.task.update({
+      where: {
+        id: taskId,
+      },
+      data: {
+        title: taskData.title,
+        description: taskData.description,
+        type: taskData.type as TaskType,
+        dayOfWeek: taskData.type === "DAILY" ? (taskData.dayOfWeek as DayOfWeek[]) : undefined,
+        frequency: taskData.type === "FLEXIBLE" ? taskData.frequency : undefined,
+        reward: taskData.reward,
+        childUserId: taskData.childUserId,
+        updatedByUserId: taskData.updatedByUserId,
+      },
+    });
+
+    return NextResponse.json({ exists: true, message: "Задание обновлено", task: updatedTask, status: 200 });
+  } catch (error) {
+    console.error("Error updating task:", error);
+    if (error instanceof Error && error.message.includes("Record to update not found.")) {
+      return NextResponse.json({ exists: false, message: "Задание с указанным ID не найдено", status: 404 });
+    }
     return NextResponse.json({ exists: false, message: "Internal server error", status: 500 });
   } finally {
     await prisma.$disconnect();
