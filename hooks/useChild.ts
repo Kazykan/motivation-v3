@@ -1,5 +1,5 @@
 import { ChildCheckResponse } from "@/lib/api/api-types";
-import { checkChildUser } from "@/utils/apiChild";
+import { checkChildUser } from "@/lib/utils/apiChild";
 import { useQuery } from "@tanstack/react-query";
 
 export const useChildCheck = (telegramId: number) => {

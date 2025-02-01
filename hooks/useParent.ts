@@ -1,6 +1,6 @@
 import { ParentCheckResponse, ParentResponseWithChildren } from "@/lib/api/api-types";
 import { ParentCreateSchema } from "@/lib/types";
-import { checkParentUser, checkParentUserWitchChildren, createParent } from "@/utils/apiParent";
+import { checkParentUser, checkParentUserWitchChildren, createParent } from "@/lib/utils/apiParent";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { z } from "zod";
 import { toast } from "./use-toast";

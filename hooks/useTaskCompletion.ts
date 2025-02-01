@@ -2,7 +2,7 @@
 import { formatDateToYYYYMMDD } from "@/lib";
 import { TaskCompletionResponse } from "@/lib/api/api-types";
 import { useDateRange } from "@/lib/service/date";
-import { createTaskCompletion, deleteTaskCompletion, getTaskCompletions } from "@/utils/apiTaskCompletion";
+import { createTaskCompletion, deleteTaskCompletion, getTaskCompletions } from "@/lib/utils/apiTaskCompletion";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 export const useTaskCompletions = (task_id: string, firstDayOfWeek: Date | null, lastDayOfWeek: Date | null) => {
