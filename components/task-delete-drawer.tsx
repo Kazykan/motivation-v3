@@ -33,8 +33,8 @@ export function DrawerDeleteTask({ taskId, initialValues }: Props) {
 
   async function onSubmit() {
     try {
-      // await deleteTask.mutateAsync(taskId);
-      toast({ title: "Задание удалено", description: JSON.stringify(initialValues, null, 2) });
+      await deleteTask.mutateAsync(taskId);
+      toast({ title: "Задание удалено" });
       handleClose();
     } catch (error) {
       console.error("Failed to update task", error);

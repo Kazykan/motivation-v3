@@ -23,7 +23,9 @@ const ParentDashboard = () => {
         <>
           <ChildSelect className="m-3" childrenData={data.parentUser.children} />
           <TasksWithCompletions />
-          <DrawerAddTask />
+          <div className="m-3 flex w-full items-center justify-center">
+            <DrawerAddTask />
+          </div>
           <div className="m-3">
             <div className="mt-6 font-bold">Добавить в ваш личный кабинет</div>
             <div className="flex space-x-4">
