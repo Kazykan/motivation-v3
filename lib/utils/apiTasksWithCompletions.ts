@@ -63,3 +63,19 @@ export const updateTask = async (taskId: number, taskData: z.infer<typeof TaskUp
     }
   }
 };
+
+export const deleteTask = async (id: number): Promise<TaskResponse> => {
+  try {
+    const response = await axiosInstanceWithoutAuth.delete<TaskResponse>(`/child/task?id=${id}`);
+    if (response.status === 204) {
+      return { exists: true, status: 204 };
+    }
+    return { exists: false, message: "Unexpected response from API", status: response.status };
+  } catch (error) {
+    if (axios.isAxiosError(error) && error.response) {
+      return error.response.data;
+    } else {
+      throw error;
+    }
+  }
+};
