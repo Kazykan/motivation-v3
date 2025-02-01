@@ -201,3 +201,50 @@ export async function PATCH(req: NextRequest): Promise<NextResponse<TaskResponse
     await prisma.$disconnect();
   }
 }
+
+/**
+ * Удаление задания по id
+ *
+ * @example
+ * Пример использования функции для удаления задания
+ * DELETE /api/child/task?id=1
+ * Content-Type: application/json
+ */
+export async function DELETE(req: NextRequest): Promise<NextResponse<TaskResponse>> {
+  try {
+    const id = req.nextUrl.searchParams.get("id");
+
+    if (!id) {
+      return NextResponse.json({
+        exists: false,
+        message: "Необходимо указать ID задачи",
+        status: 400,
+      });
+    }
+    const taskId = Number(id);
+    if (isNaN(taskId)) {
+      return NextResponse.json({
+        exists: false,
+        message: "Некорректный ID задачи",
+        status: 400,
+      });
+    }
+
+    await prisma.task.delete({
+      where: {
+        id: taskId,
+      },
+    });
+
+    // Return 204 with an empty body
+    return new NextResponse(null, { status: 204 });
+  } catch (error) {
+    console.error("Error deleting task:", error);
+    if (error instanceof Error && error.message.includes("Record to delete not found.")) {
+      return NextResponse.json({ exists: false, message: "Задание с указанным ID не найдено", status: 404 });
+    }
+    return NextResponse.json({ exists: false, message: "Internal server error", status: 500 });
+  } finally {
+    await prisma.$disconnect();
+  }
+}

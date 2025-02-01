@@ -72,7 +72,7 @@ export const TaskModalForm: React.FC<Props> = ({ onClose, taskId, initialValues 
         <div className="flex flex-col gap-5 m-5">
           <FormInput name="title" className="text-base" placeholder="Название" required />
           <FormInput name="description" className="text-base" placeholder="Описание" />
-          <FormSelectTaskType name="type" label="Тип задания" />
+          {!taskId && <FormSelectTaskType name="type" label="Тип задания" />}
           {taskType === "DAILY" && <MultipleSelector />}
           {taskType === "FLEXIBLE" && (
             <FormInput name="frequency" className="text-base" placeholder="кол-во повторений" type="number" />

@@ -3,7 +3,7 @@
 import { useTasksWithCompletions } from "@/hooks/useTask";
 import { DayOfWeek, TaskType } from "@/prisma/prisma/client";
 import { useWeek } from "@/lib/store/week";
-import { FilePenLine, Minus, Trash2 } from "lucide-react";
+import { Minus } from "lucide-react";
 import { TaskCard } from "./task-card";
 import { IWeekdays } from "@/lib/types";
 import { calculateTaskReward, calculateTotalReward, currencyFormatMoney } from "@/lib";
@@ -11,6 +11,8 @@ import React from "react";
 import { useChildProfile } from "@/lib/store/child";
 import { Progress } from "./ui/progress";
 import { calculateCompletionPercentage } from "@/lib/service/calculate_sum";
+import { DrawerEditTask } from "./task-edit-drawer";
+import { DrawerDeleteTask } from "./task-delete-drawer";
 
 interface TaskData {
   id: number;
@@ -78,22 +80,15 @@ export const TasksWithCompletions: React.FC = () => {
         <Progress value={completionPercentage} />
       </div>
       <div className="grid gap-4 mt-5">
-        {/* <pre>{JSON.stringify(data, null, 2)}</pre> */}
         {data.task.length > 0 &&
           data.task.map((oneTask) => {
             return (
-              <div key={oneTask.id} className="mr-14">
-                <div className="relative top-[159px] mt-[-159px] h-[158px] left-[50px] -z-10 rounded-3xl w-full shadow-sm bg-primary/80 space-y-2 ">
-                  <div className="w-full h-full flex flex-col items-end justify-center space-y-5">
-                    <div className="mr-3.5">
-                      <FilePenLine className="w-5 h-5" />
-                    </div>
-                    <div className="mr-3.5">
-                      <Minus className="w-5 h-5 text-muted" />
-                    </div>
-                    <div className="mr-3.5">
-                      <Trash2 className="w-5 h-5" />
-                    </div>
+              <div key={oneTask.id} className="relative mx-1.5 min-w-[315px]">
+                <div className="w-full h-[158px] flex flex-col justify-center items-end rounded-3xl shadow-sm bg-primary/80">
+                  <div className="w-full h-full flex flex-col items-end justify-center space-y-6 px-2.5">
+                    <DrawerEditTask initialValues={oneTask} taskId={oneTask.id} />
+                    <Minus className="w-5 h-5 text-muted" />
+                    <DrawerDeleteTask taskId={oneTask.id} initialValues={oneTask} />
                   </div>
                 </div>
                 <TaskCard
@@ -115,7 +110,3 @@ export const TasksWithCompletions: React.FC = () => {
     </div>
   );
 };
-
-{
-  /* <pre>{JSON.stringify(data, null, 2)}</pre> */
-}

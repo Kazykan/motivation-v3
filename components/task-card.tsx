@@ -37,7 +37,7 @@ export const TaskCard: React.FC<Props> = ({
   const taskTypeToRu = taskType === TaskType.FLEXIBLE ? "гибкие" : "регулярные";
 
   return (
-    <Card className={cn(className, "ml-1.5  w-full h-[160px]  shadow-sm  rounded-3xl")}>
+    <Card className={cn(className, "absolute -top-[1px] left-0 w-[calc(100%-2.5rem)] h-[160px] rounded-3xl shadow-sm")}>
       <CardHeader>
         <CardTitle>
           <div className="flex justify-between items-center">

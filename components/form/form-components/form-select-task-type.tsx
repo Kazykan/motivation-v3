@@ -12,19 +12,21 @@ interface Props {
 
 export const FormSelectTaskType: React.FC<Props> = ({ name, label, className }) => {
   const {
-    register,
+    setValue,
+    watch,
     formState: { errors },
   } = useFormContext();
 
   const errorText = errors[name]?.message as string;
+  const taskType = watch("type");
 
   return (
     <FormItem className={cn(className)}>
       {label && <FormLabel>{label}</FormLabel>}
       <FormControl>
-        <Select onValueChange={(value) => register(name).onChange({ target: { value, name } })}>
+        <Select onValueChange={(value) => setValue(name, value)}>
           <SelectTrigger>
-            <SelectValue placeholder={"Выберите тип задания"} />
+            <SelectValue placeholder={"Выберите тип задания"} defaultValue={taskType} />
           </SelectTrigger>
           <SelectContent>
             <SelectItem value="DAILY">регулярные</SelectItem>

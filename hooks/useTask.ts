@@ -1,10 +1,10 @@
 "use client";
 
 import { formatDateToYYYYMMDD } from "@/lib";
-import { TaskResponse, TaskWithCompletionsResponse } from "@/lib/api/api-types";
+import { TaskWithCompletionsResponse } from "@/lib/api/api-types";
 import { useDateRange } from "@/lib/service/date";
 import { TaskCreateSchema, TaskUpdateSchema } from "@/lib/types";
-import { createTask, getTasksWithCompletions, updateTask } from "@/utils/apiTasksWithCompletions";
+import { createTask, deleteTask, getTasksWithCompletions, updateTask } from "@/lib/utils/apiTasksWithCompletions";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { z } from "zod";
 
@@ -50,6 +50,23 @@ export function useUpdateTask() {
       queryClient.invalidateQueries({
         queryKey: ["TaskWithCompletions", child_telegram_id, startDate, endDate],
       });
+    },
+  });
+}
+
+export function useDeleteTask() {
+  const queryClient = useQueryClient();
+  const { startDate, endDate, child_telegram_id } = useDateRange();
+
+  return useMutation({
+    mutationFn: (id: number) => deleteTask(id),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["TaskWithCompletions", child_telegram_id, startDate, endDate],
+      });
+    },
+    onError: (error: any) => {
+      console.error("Error deleting task completion:", error);
     },
   });
 }

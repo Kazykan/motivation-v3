@@ -1,6 +1,6 @@
 "use client";
 
-import { DrawerAddTask } from "@/components/add-task-drawer";
+import { DrawerAddTask } from "@/components/task-add-drawer";
 import { AuthLayout } from "@/components/AuthLayout";
 import { ChildSelect } from "@/components/child-select";
 import { InviteLink } from "@/components/invite-link";
@@ -23,7 +23,7 @@ const ParentDashboard = () => {
         <>
           <ChildSelect className="m-3" childrenData={data.parentUser.children} />
           <TasksWithCompletions />
-          <DrawerAddTask  />
+          <DrawerAddTask />
           <div className="m-3">
             <div className="mt-6 font-bold">Добавить в ваш личный кабинет</div>
             <div className="flex space-x-4">
