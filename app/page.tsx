@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import CheckTelegramId from "@/components/checkTelegramId";
+// import CheckTelegramId from "@/components/checkTelegramId";
 import { useTelegramUserState } from "@/lib/store/telegram-user";
 import useTelegramUser from "@/hooks/useTelegramUser";
 import { getDisplayName } from "@/lib";
@@ -27,7 +27,9 @@ const CheckTelegramUser: React.FC = () => {
 
   return (
     <div>
-      <CheckTelegramId telegramStartParams={telegramStartParams} telegramId={telegramUser.id} />
+      <pre>{JSON.stringify(telegramStartParams, null, 2)}</pre>
+      <pre>{JSON.stringify(telegramUser, null, 2)}</pre>
+      {/* <CheckTelegramId telegramStartParams={telegramStartParams} telegramId={telegramUser.id} /> */}
     </div>
   );
 };
