@@ -1,7 +1,6 @@
 import { ParentCheckResponse, ParentResponseWithChildren } from "@/lib/api/api-types";
 import { axiosInstanceWithoutAuth } from "./instance";
 import axios from "axios";
-import { z } from "zod";
 import { ParentCreateSchema, ParentCreateType } from "@/lib/types";
 
 export const checkParentUser = async (telegramId: number): Promise<ParentCheckResponse> => {

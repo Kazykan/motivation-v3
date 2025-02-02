@@ -13,6 +13,16 @@ export const ParentCreateSchema = z.object({
 
 export type ParentCreateType = z.infer<typeof ParentCreateSchema>;
 
+export const ChildCreateSchema = z.object({
+  name: z.string().min(1, "Имя обязательно"),
+  telegram_id: z.number(),
+  photo_url: z.string().nullable().optional(),
+  gender: z.nativeEnum(Gender),
+  invite_id: z.number().nullable().optional(),
+});
+
+export type ChildCreateType = z.infer<typeof ChildCreateSchema>;
+
 export const baseTaskCreateSchema = z.object({
   title: z.string().min(1, "Название задания обязательно"),
   description: z.string().nullable().optional(),
