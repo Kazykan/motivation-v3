@@ -56,7 +56,7 @@ const CheckTelegramId = ({ telegramId, telegramStartParams }: Props) => {
         await generateTokenAndRedirect(payloadRole.parent);
       } else {
         const registerUrl = `/register${
-          telegramStartParams ? `?telegramStartParams=${encodeURIComponent(telegramStartParams)}` : ""
+          telegramStartParams ? `?telegramStartParams=${telegramStartParams}` : ""
         }`;
         router.push(registerUrl);
       }

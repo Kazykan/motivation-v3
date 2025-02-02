@@ -27,7 +27,7 @@ const CheckTelegramUser: React.FC = () => {
 
     if (telegramStartParams) {
       try {
-        const [role, inviterTelegramId] = telegramStartParams.split("_");
+        const [inviterTelegramId, role] = telegramStartParams.split("_");
         if (role && inviterTelegramId) {
           setRole(role === "child" ? payloadRole.child : payloadRole.parent);
           setInviterTelegramId(Number(inviterTelegramId));
