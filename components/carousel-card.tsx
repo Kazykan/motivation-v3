@@ -11,13 +11,16 @@ import {
   type CarouselApi,
 } from "@/components/ui/carousel";
 import Image from "next/image";
+import { Button } from "./ui/button";
+import { Rocket } from "lucide-react";
 
 interface Props {
   images: string[];
   descriptions: string[];
+  setWelcome: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export function CarouselCard({ images, descriptions }: Props) {
+export function CarouselCard({ images, descriptions, setWelcome }: Props) {
   const [api, setApi] = React.useState<CarouselApi>();
   const [current, setCurrent] = React.useState(0);
   const [count, setCount] = React.useState(0);
@@ -43,7 +46,13 @@ export function CarouselCard({ images, descriptions }: Props) {
             <CarouselItem key={index}>
               <Card>
                 <CardContent className="flex aspect-square items-center justify-center p-0">
-                  <Image className="rounded-2xl" src={image} alt={`Carousel Image ${index + 1}`} width={350} height={350} />
+                  <Image
+                    className="rounded-2xl"
+                    src={image}
+                    alt={`Carousel Image ${index + 1}`}
+                    width={350}
+                    height={350}
+                  />
                 </CardContent>
               </Card>
             </CarouselItem>
@@ -55,9 +64,14 @@ export function CarouselCard({ images, descriptions }: Props) {
       <div className="py-2 text-center text-sm text-muted-foreground">
         Slide {current} of {count}
       </div>
-      <div className="py-2 text-center text-sm text-muted-foreground">
-        {descriptions[current - 1]}
-      </div>
+      <div className="py-2 text-center text-sm text-muted-foreground">{descriptions[current - 1]}</div>
+      {count - current === 0 && (
+        <div className="flex justify-center py-2">
+          <Button onClick={() => setWelcome(false)}>
+            <Rocket /> Начать
+          </Button>
+        </div>
+      )}
     </div>
   );
 }

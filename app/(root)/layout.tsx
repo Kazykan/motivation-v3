@@ -1,7 +1,6 @@
 "use client";
 
 import { Header } from "@/components/header";
-import { PaginationWeeks } from "@/components/paginator-week";
 import { QueryProvider } from "../queryProvider";
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -9,7 +8,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <main>
       <Header />
       <QueryProvider>
-        <PaginationWeeks />
         {children}
       </QueryProvider>
     </main>

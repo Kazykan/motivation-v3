@@ -46,9 +46,6 @@ export const Header: React.FC<Props> = ({ className }) => {
               <Link className="transition-colors hover:text-foreground/80 text-foreground" href="/docs/parent">
                 Parent
               </Link>
-              <Link className="transition-colors hover:text-foreground/80 text-foreground" href="/user">
-                User
-              </Link>
             </nav>
           </div>
 

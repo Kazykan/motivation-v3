@@ -3,7 +3,7 @@
 import { useTasksWithCompletions } from "@/hooks/useTask";
 import { DayOfWeek, TaskType } from "@/prisma/prisma/client";
 import { useWeek } from "@/lib/store/week";
-import { Minus } from "lucide-react";
+import { FilePenLine, Minus, Trash2 } from "lucide-react";
 import { TaskCard } from "./task-card";
 import { IWeekdays } from "@/lib/types";
 import { calculateTaskReward, calculateTotalReward, currencyFormatMoney } from "@/lib";
@@ -24,7 +24,11 @@ interface TaskData {
   frequency?: number | null;
 }
 
-export const TasksWithCompletions: React.FC = () => {
+interface Props {
+  edit: boolean;
+}
+
+export const TasksWithCompletions: React.FC<Props> = ({ edit }) => {
   const childTelegramId = useChildProfile((state) => state.child_telegram_id);
   const [totalReward, setTotalReward] = React.useState(0);
   const [totalMaxReward, setTotalMaxReward] = React.useState(0);
@@ -86,9 +90,17 @@ export const TasksWithCompletions: React.FC = () => {
               <div key={oneTask.id} className="relative mx-1.5 min-w-[315px]">
                 <div className="w-full h-[158px] flex flex-col justify-center items-end rounded-3xl shadow-sm bg-primary/80">
                   <div className="w-full h-full flex flex-col items-end justify-center space-y-6 px-2.5">
-                    <DrawerEditTask initialValues={oneTask} taskId={oneTask.id} />
+                    {edit ? (
+                      <DrawerEditTask initialValues={oneTask} taskId={oneTask.id} />
+                    ) : (
+                      <FilePenLine className="w-5 h-5" />
+                    )}
                     <Minus className="w-5 h-5 text-muted" />
-                    <DrawerDeleteTask taskId={oneTask.id} initialValues={oneTask} />
+                    {edit ? (
+                      <DrawerDeleteTask initialValues={oneTask} taskId={oneTask.id} />
+                    ) : (
+                      <Trash2 className="w-5 h-5" />
+                    )}
                   </div>
                 </div>
                 <TaskCard

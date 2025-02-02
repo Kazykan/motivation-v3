@@ -22,20 +22,22 @@ const ParentDashboard = () => {
       {data?.exists && data.parentUser && data.parentUser.children && data.parentUser.children.length > 0 ? (
         <>
           <ChildSelect className="m-3" childrenData={data.parentUser.children} />
-          <TasksWithCompletions />
+          <TasksWithCompletions edit={true} />
           <div className="m-3 flex w-full items-center justify-center">
             <DrawerAddTask />
-          </div>
-          <div className="m-3">
-            <div className="mt-6 font-bold">Добавить в ваш личный кабинет</div>
-            <div className="flex space-x-4">
-              <InviteLink parent={true} telegram_id={payload?.telegramId} name={data.parentUser.name} />
-              <InviteLink parent={false} telegram_id={payload?.telegramId} name={data.parentUser.name} />
-            </div>
           </div>
         </>
       ) : (
         <div>нет детей</div>
+      )}
+      {data?.exists && data.parentUser && (
+        <div className="m-3">
+          <div className="mt-6 font-bold">Добавить в ваш личный кабинет</div>
+          <div className="flex space-x-4">
+            <InviteLink parent={true} telegram_id={payload?.telegramId} name={data.parentUser.name} />
+            <InviteLink parent={false} telegram_id={payload?.telegramId} name={data.parentUser.name} />
+          </div>
+        </div>
       )}
     </AuthLayout>
   );

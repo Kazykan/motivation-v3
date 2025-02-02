@@ -8,6 +8,8 @@ import { AddChildForm } from "./form/add-child-form";
 import { RadioGroup, RadioGroupItem } from "./ui/radio-group";
 import { Label } from "./ui/label";
 import { useTelegramUserState } from "@/lib/store/telegram-user";
+import { CarouselCard } from "./carousel-card";
+import { ChildDescriptions, ChildImages, ParentDescriptions, ParentImages } from "@/lib/constants";
 
 const CheckTelegramUser: React.FC = () => {
   const searchParams = useSearchParams();
@@ -18,6 +20,7 @@ const CheckTelegramUser: React.FC = () => {
   const telegramId = useTelegramUserState((state) => state.telegram_id);
   const name = useTelegramUserState((state) => state.name);
   const photoUrl = useTelegramUserState((state) => state.photo_url);
+  const [welcome, setWelcome] = React.useState(true);
 
   React.useEffect(() => {
     const telegramStartParams = searchParams.get("telegramStartParams");
@@ -49,23 +52,35 @@ const CheckTelegramUser: React.FC = () => {
         {showRegistration && inviterTelegramId ? (
           role === payloadRole.parent ? (
             <div>
-              Вас пригласил {inviterTelegramId} на роль {getRoleName(role)}
-              <AddParentForm
-                photo_url={photoUrl}
-                tgParentId={telegramId}
-                tgUserName={name}
-                tgInviteId={inviterTelegramId}
-              />
+              {welcome ? (
+                <CarouselCard images={ParentImages} descriptions={ParentDescriptions} setWelcome={setWelcome} />
+              ) : (
+                <>
+                  Вас пригласил {inviterTelegramId} на роль {getRoleName(role)}
+                  <AddParentForm
+                    photo_url={photoUrl}
+                    tgParentId={telegramId}
+                    tgUserName={name}
+                    tgInviteId={inviterTelegramId}
+                  />
+                </>
+              )}
             </div>
           ) : (
             <div>
-              Вас пригласил {inviterTelegramId} на роль {getRoleName(role)}
-              <AddChildForm
-                photo_url={photoUrl}
-                tgParentId={telegramId}
-                tgUserName={name}
-                tgInviteId={inviterTelegramId}
-              />
+              {welcome ? (
+                <CarouselCard images={ChildImages} descriptions={ChildDescriptions} setWelcome={setWelcome} />
+              ) : (
+                <>
+                  Вас пригласил {inviterTelegramId} на роль {getRoleName(role)}
+                  <AddChildForm
+                    photo_url={photoUrl}
+                    tgParentId={telegramId}
+                    tgUserName={name}
+                    tgInviteId={inviterTelegramId}
+                  />
+                </>
+              )}
             </div>
           )
         ) : (
@@ -80,12 +95,18 @@ const CheckTelegramUser: React.FC = () => {
                 <Label htmlFor="child">Ребенок</Label>
               </div>
             </RadioGroup>
-            {useRole === payloadRole.parent && (
-              <AddParentForm photo_url={photoUrl} tgParentId={telegramId} tgUserName={name} />
-            )}
-            {useRole === payloadRole.child && (
-              <AddChildForm photo_url={photoUrl} tgParentId={telegramId} tgUserName={name} />
-            )}
+            {useRole === payloadRole.parent &&
+              (welcome ? (
+                <CarouselCard images={ParentImages} descriptions={ParentDescriptions} setWelcome={setWelcome} />
+              ) : (
+                <AddParentForm photo_url={photoUrl} tgParentId={telegramId} tgUserName={name} />
+              ))}
+            {useRole === payloadRole.child &&
+              (welcome ? (
+                <CarouselCard images={ChildImages} descriptions={ChildDescriptions} setWelcome={setWelcome} />
+              ) : (
+                <AddChildForm photo_url={photoUrl} tgParentId={telegramId} tgUserName={name} />
+              ))}
           </div>
         )}
       </div>
