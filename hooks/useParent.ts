@@ -1,5 +1,5 @@
 import { ParentCheckResponse, ParentResponseWithChildren } from "@/lib/api/api-types";
-import { ParentCreateSchema } from "@/lib/types";
+import { ParentCreateSchema, ParentCreateType } from "@/lib/types";
 import { checkParentUser, checkParentUserWitchChildren, createParent } from "@/lib/utils/apiParent";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { z } from "zod";
@@ -27,7 +27,7 @@ export function useCreateParent(telegramId: number) {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (data: z.infer<typeof ParentCreateSchema>) => createParent(data),
+    mutationFn: (data: ParentCreateType) => createParent(data),
     onSuccess: async () => {
       await queryClient.invalidateQueries({
         queryKey: ["parentCheck", String(telegramId)],

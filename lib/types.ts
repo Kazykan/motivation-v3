@@ -11,6 +11,8 @@ export const ParentCreateSchema = z.object({
   invite_id: z.number().nullable().optional(),
 });
 
+export type ParentCreateType = z.infer<typeof ParentCreateSchema>;
+
 export const baseTaskCreateSchema = z.object({
   title: z.string().min(1, "Название задания обязательно"),
   description: z.string().nullable().optional(),
@@ -39,4 +41,4 @@ export const TaskCreateSchema = baseTaskCreateSchema.superRefine((data, ctx) => 
   }
 });
 
-export const TaskUpdateSchema = baseTaskCreateSchema.partial()
+export const TaskUpdateSchema = baseTaskCreateSchema.partial();

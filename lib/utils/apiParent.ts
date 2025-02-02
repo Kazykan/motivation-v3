@@ -2,7 +2,7 @@ import { ParentCheckResponse, ParentResponseWithChildren } from "@/lib/api/api-t
 import { axiosInstanceWithoutAuth } from "./instance";
 import axios from "axios";
 import { z } from "zod";
-import { ParentCreateSchema } from "@/lib/types";
+import { ParentCreateSchema, ParentCreateType } from "@/lib/types";
 
 export const checkParentUser = async (telegramId: number): Promise<ParentCheckResponse> => {
   try {
@@ -30,7 +30,7 @@ export const checkParentUserWitchChildren = async (telegramId: number): Promise<
   }
 };
 
-export const createParent = async (data: z.infer<typeof ParentCreateSchema>): Promise<ParentCheckResponse> => {
+export const createParent = async (data: ParentCreateType): Promise<ParentCheckResponse> => {
   try {
     const validatedData = ParentCreateSchema.parse(data);
     const parent = await axiosInstanceWithoutAuth.post<ParentCheckResponse>(`/parent`, validatedData);

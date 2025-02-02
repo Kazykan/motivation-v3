@@ -5,7 +5,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { Button } from "@/components/ui/button";
-import { ParentCreateSchema } from "@/lib/types";
+import { ParentCreateSchema, ParentCreateType } from "@/lib/types";
 import { FormInput, FormSelectGender } from "./form-components";
 import { toast } from "@/hooks/use-toast";
 import { useCreateParent } from "@/hooks/useParent";
@@ -19,7 +19,7 @@ interface Props {
 }
 
 export const AddParentForm: React.FC<Props> = ({ tgParentId, tgUserName, photo_url, tgInviteId, className }) => {
-  const form = useForm<z.infer<typeof ParentCreateSchema>>({
+  const form = useForm<ParentCreateType>({
     resolver: zodResolver(ParentCreateSchema),
     defaultValues: {
       name: tgUserName,
@@ -32,7 +32,7 @@ export const AddParentForm: React.FC<Props> = ({ tgParentId, tgUserName, photo_u
 
   const createParentMutation = useCreateParent(tgParentId);
 
-  async function onSubmit(values: z.infer<typeof ParentCreateSchema>) {
+  async function onSubmit(values: ParentCreateType) {
     try {
       await createParentMutation.mutateAsync(values);
     } catch (error) {
