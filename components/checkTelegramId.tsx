@@ -14,7 +14,7 @@ const CheckTelegramId = ({ telegramId, telegramStartParams }: Props) => {
   const { data: parentData, isLoading: parentLoading, error: parentError } = useParentCheck(telegramId);
   const router = useRouter();
 
-  const allDataLoaded = childLoading && parentLoading;
+  const allDataLoaded = !childLoading && !parentLoading;
 
   React.useEffect(() => {
     //проверяем токен, если валидный делаем редирект
@@ -55,6 +55,7 @@ const CheckTelegramId = ({ telegramId, telegramStartParams }: Props) => {
       } else if (parentData?.exists && parentData.parentUser) {
         await generateTokenAndRedirect(payloadRole.parent);
       } else {
+        localStorage.removeItem("token")
         const registerUrl = `/register${
           telegramStartParams ? `?telegramStartParams=${telegramStartParams}` : ""
         }`;
@@ -64,7 +65,7 @@ const CheckTelegramId = ({ telegramId, telegramStartParams }: Props) => {
 
     const executeAuthFlow = async () => {
       await checkTokenAndRedirect(); // Проверка токена и перенаправление, если токен действителен
-      if (!childLoading && !parentLoading) {
+      if (allDataLoaded) {
         handleAuth(); // Если токен недействителен, запускаем существующую логику генерации токена
       }
     };

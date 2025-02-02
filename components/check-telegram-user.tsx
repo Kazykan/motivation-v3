@@ -10,6 +10,7 @@ import { Label } from "./ui/label";
 import { useTelegramUserState } from "@/lib/store/telegram-user";
 import { CarouselCard } from "./carousel-card";
 import { ChildDescriptions, ChildImages, ParentDescriptions, ParentImages } from "@/lib/constants";
+import { ParentInfo } from "./parent-info";
 
 const CheckTelegramUser: React.FC = () => {
   const searchParams = useSearchParams();
@@ -56,7 +57,7 @@ const CheckTelegramUser: React.FC = () => {
                 <CarouselCard images={ParentImages} descriptions={ParentDescriptions} setWelcome={setWelcome} />
               ) : (
                 <>
-                  Вас пригласил {inviterTelegramId} на роль {getRoleName(role)}
+                  Вас пригласил <ParentInfo inviterTelegramId={inviterTelegramId} /> на роль {getRoleName(role)}
                   <AddParentForm
                     photo_url={photoUrl}
                     tgParentId={telegramId}
@@ -72,7 +73,7 @@ const CheckTelegramUser: React.FC = () => {
                 <CarouselCard images={ChildImages} descriptions={ChildDescriptions} setWelcome={setWelcome} />
               ) : (
                 <>
-                  Вас пригласил {inviterTelegramId} на роль {getRoleName(role)}
+                  Вас пригласил <ParentInfo inviterTelegramId={inviterTelegramId} /> на роль {getRoleName(role)}
                   <AddChildForm
                     photo_url={photoUrl}
                     tgChildId={telegramId}

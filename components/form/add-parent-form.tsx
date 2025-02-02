@@ -42,7 +42,6 @@ export const AddParentForm: React.FC<Props> = ({ tgParentId, tgUserName, photo_u
 
   return (
     <FormProvider {...form}>
-      родитель
       <form onSubmit={form.handleSubmit(onSubmit)}>
         <div className="flex flex-col gap-5 m-5">
           <FormInput name="name" className="text-base" placeholder="Имя" required />

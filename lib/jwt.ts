@@ -13,9 +13,9 @@ export interface Payload {
 export function getRoleName(role: payloadRole | null): string {
   switch (role) {
     case payloadRole.child:
-      return "child";
+      return "ребенка";
     case payloadRole.parent:
-      return "parent";
+      return "родителя";
     default:
       return "unknown"; // Handle unexpected cases
   }
