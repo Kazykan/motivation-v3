@@ -75,7 +75,7 @@ const CheckTelegramUser: React.FC = () => {
                   Вас пригласил {inviterTelegramId} на роль {getRoleName(role)}
                   <AddChildForm
                     photo_url={photoUrl}
-                    tgParentId={telegramId}
+                    tgChildId={telegramId}
                     tgUserName={name}
                     tgInviteId={inviterTelegramId}
                   />
@@ -105,7 +105,7 @@ const CheckTelegramUser: React.FC = () => {
               (welcome ? (
                 <CarouselCard images={ChildImages} descriptions={ChildDescriptions} setWelcome={setWelcome} />
               ) : (
-                <AddChildForm photo_url={photoUrl} tgParentId={telegramId} tgUserName={name} />
+                <AddChildForm photo_url={photoUrl} tgChildId={telegramId} tgUserName={name} />
               ))}
           </div>
         )}
