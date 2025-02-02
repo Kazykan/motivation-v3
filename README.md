@@ -1,58 +1,49 @@
-# Progress Tracker & Motivation App for Kids - Based on Margulan Sesenbaev's System
+# ✨ Motivation V3 - Приложение для Мотивации Ребенка ✨
 
-This application helps children track their progress and stay motivated, leveraging the principles of Margulan Sesenbaev's motivation system. It's designed for use by both children and their parents.
+## 🚀 Введение
 
-## Technologies
+Это Telegram Mini App, созданное для того, чтобы мотивировать детей брать ответственность за свои действия, развивать самодисциплину и учиться управлять своим временем.  Вместо скучных уроков и нотаций мы предлагаем игровую систему, где ребенок сам устанавливает правила и получает денежные награды за свои достижения. 
 
-- **Frontend:** React
-- **Backend:** Prisma
+## 🎯 Основная Идея
 
-## Project Structure
+### Для Ребенка:
 
-The project:
+*   **"Привет, юный лидер! Готов взять свою жизнь в свои руки?"**
+*   **"Здесь ты сам решаешь, как и когда тебе учиться, заниматься спортом и следить за порядком."**
+*   **"Это не скучные уроки и нотации, это игра, где ты сам устанавливаешь правила и сам получаешь награды."**
+*   **"Нет криков и ругани, есть понятные “цены” на каждый вид деятельности. Твои усилия не останутся незамеченными: ты получишь честное вознаграждение за свою работу."**
+*   **"Ты сам контролируешь свой успех: чем больше ты делаешь, тем больше получаешь. Ты сам учишься быть ответственным и самостоятельным, как настоящий взрослый. Ты сам решаешь, что для тебя важнее: учиться, заниматься спортом или что-то еще."**
+*   **"Ты — главный герой своей истории, и только от тебя зависит, какой будет ее концовка. Готов стать хозяином своей жизни? Тогда начни играть!"**
 
-Handles the user interface, allowing children to track their progress, view rewards, and engage with motivational elements based on Sesenbaev's system. Parents can monitor progress, adjust settings, and interact with the system to support their child's motivation.
+### Для Родителя:
 
-## Features (Planned or Implemented)
+*   **"Ребенок сам решает, учиться или нет."** -  Приложение предоставляет ребенку выбор и возможность самостоятельно принимать решения.
+*   **"Понятные цены и правила, как в реальном мире."** - Каждая активность имеет четкую "цену" и награду, что имитирует реальные жизненные ситуации.
+*  **"Дети учатся выбирать, как распределить свои усилия."** - Ребенок учится планировать свое время и ресурсы, принимая во внимание свои цели.
+*   **"Оценка работы — объективная, не зависит от настроения."** - Система вознаграждения основана на выполненных задачах, что делает ее честной и прозрачной.
+*   **"Система стимулирует дисциплину и активность."** - Регулярное выполнение задач приводит к получению наград, что мотивирует ребенка быть активным.
+*  **"Фокус на результат: Сделал - получил, не сделал - не получил."** - Простое и понятное правило, устанавливающее причинно-следственную связь.
 
-- **Progress Tracking:** Allows children to track their progress on various tasks and goals. This could include daily/weekly checklists, habit trackers, or progress bars.
-- **Reward System:** Integrates a reward system aligned with Sesenbaev's principles. This might involve points, badges, or virtual rewards redeemable for real-world rewards.
-- **Motivational Elements:** Incorporates motivational elements inspired by Sesenbaev's methods to encourage consistent effort and goal attainment.
-- **Parental Controls:** Provides parental controls allowing parents to set goals, monitor progress, adjust reward systems, and communicate with their children within the app.
-- **Gamification:** Uses game-like elements to make progress tracking engaging and fun.
-- **Reporting/Analytics:** Offers reports and analytics to track progress over time.
+## ⚙️ Используемые Библиотеки
 
-## Getting Started
+*   **Frontend:**
+    *   `@tanstack/react-query`: Управление и кеширование данных.
+    *   `axios`: Для осуществления HTTP-запросов.
+    *   `date-fns`:  Работа с датами и временем.
+    *   `react-hook-form`: Для управления формами.
+    *   `zod`:  Для валидации данных.
+    *   `zustand`:  Управление состоянием приложения.
+*   **Backend:**
+    *   `@prisma/client`:  ORM для работы с базой данных.
+    *   `anchor-pki`:  Работа с ключами и криптографией.
+    *   `jose`: Работа с JWT токенами.
+    *   `prisma`: Инструмент для работы с Prisma.
 
-First, run the development server:
+## 🛠️ Технологии
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+*   **Frontend:** React, Next.js, Tailwind CSS
+*   **Backend:** Node.js, Prisma, PostgreSQL
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 📝 Заключение
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Это мини-приложение – это отличный инструмент для того, чтобы мотивировать детей к саморазвитию, самостоятельности и ответственности.  Мы надеемся, что оно принесет пользу и радость как детям, так и их родителям!
