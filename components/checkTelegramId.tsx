@@ -23,10 +23,12 @@ const CheckTelegramId = ({ telegramId, telegramStartParams }: Props) => {
       if (token) {
         try {
           const payload = await verifyToken(token);
-          if (payload.role === payloadRole.child) {
+          if (payload.role === payloadRole.child && childData?.exists) {
             router.push("/child/dashboard");
-          } else if (payload.role === payloadRole.parent) {
+          } else if (payload.role === payloadRole.parent && parentData?.exists) {
             router.push("/parent/dashboard");
+          } else {
+            localStorage.removeItem("token")
           }
         } catch (error) {
           console.error("Ошибка проверки токена:", error);
