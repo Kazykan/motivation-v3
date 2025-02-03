@@ -4,7 +4,7 @@ import { useForm, FormProvider } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { Button } from "@/components/ui/button";
-import { ParentCreateSchema, ParentCreateType } from "@/lib/types";
+import { ChildCreateSchema, ChildCreateType } from "@/lib/types";
 import { FormInput, FormSelectGender } from "./form-components";
 import { toast } from "@/hooks/use-toast";
 import { useCreateChild } from "@/hooks/useChild";
@@ -18,20 +18,20 @@ interface Props {
 }
 
 export const AddChildForm: React.FC<Props> = ({ tgChildId, tgUserName, photo_url, tgInviteId, className }) => {
-  const form = useForm<ParentCreateType>({
-    resolver: zodResolver(ParentCreateSchema),
+  const form = useForm<ChildCreateType>({
+    resolver: zodResolver(ChildCreateSchema),
     defaultValues: {
       name: tgUserName,
       telegram_id: tgChildId,
       photo_url: photo_url,
-      invite_id: tgInviteId,
+      invite_telegram_id: tgInviteId,
       gender: undefined,
     },
   });
 
   const createChildMutation = useCreateChild(tgChildId);
 
-  async function onSubmit(values: ParentCreateType) {
+  async function onSubmit(values: ChildCreateType) {
     try {
       await createChildMutation.mutateAsync(values);
     } catch (error) {
