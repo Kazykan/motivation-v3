@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/drawer";
 import { TaskCreateSchema, TaskUpdateSchema } from "@/lib/types";
 import { z } from "zod";
-import { Trash2 } from "lucide-react";
+import { Loader2, Trash2 } from "lucide-react";
 import { useDeleteTask } from "@/hooks/useTask";
 import { toast } from "@/hooks/use-toast";
 
@@ -61,7 +61,13 @@ export function DrawerDeleteTask({ taskId, initialValues }: Props) {
                 восстановления все выплаты по ней будут удаленны и пересчитаны без нее за все время
               </div>
               <Button className="mt-3 w-full" onClick={onSubmit} variant="destructive" disabled={deleteTask.isPending}>
-                <Trash2 className="ml-1" /> Удалить
+                {deleteTask.isPending ? (
+                  <Loader2 className="animate-spin" />
+                ) : (
+                  <>
+                    <Trash2 className="ml-1" /> Удалить
+                  </>
+                )}
               </Button>
             </div>
           </div>

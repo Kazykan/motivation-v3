@@ -9,6 +9,7 @@ import { Button } from "../ui/button";
 import { MultipleSelector } from "../multipleselector";
 import { useChildProfile } from "@/lib/store/child";
 import { useCreateTask, useUpdateTask } from "@/hooks/useTask";
+import { Loader2 } from "lucide-react";
 
 interface Props {
   onClose: () => void;
@@ -78,8 +79,17 @@ export const TaskModalForm: React.FC<Props> = ({ onClose, taskId, initialValues 
             <FormInput name="frequency" className="text-base" placeholder="кол-во повторений" type="number" />
           )}
           <FormInput name="reward" className="text-base" placeholder="Стоимость задания" type="number" required />
-          <Button type="submit" className="w-full py-3">
-            Добавить задание
+          <Button type="submit" className="w-full py-3" disabled={updateMutation.isPending && createMutation.isPending}>
+            {updateMutation.isPending || createMutation.isPending ? (
+              <>
+                <Loader2 className="animate-spin" />
+                выполнение...
+              </>
+            ) : taskId ? (
+              "Сохранить изменения"
+            ) : (
+              "Добавить задание"
+            )}
           </Button>
         </div>
       </form>
