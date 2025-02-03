@@ -32,6 +32,10 @@ export function useCreateParent(telegramId: number) {
       await queryClient.invalidateQueries({
         queryKey: ["parentCheck", String(telegramId)],
       });
+      // убеждаемся что данные обновлены и только после этого продолжаем
+      await queryClient.refetchQueries({
+        queryKey: ["parentCheck", String(telegramId)]
+      })
       toast({
         title: "Учетная запись создана",
       });

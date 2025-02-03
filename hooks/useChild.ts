@@ -23,6 +23,9 @@ export function useCreateChild(telegramId: number) {
       await queryClient.invalidateQueries({
         queryKey: ["childCheck", String(telegramId)],
       });
+      await queryClient.refetchQueries({
+        queryKey: ["childCheck", String(telegramId)],
+      });
       toast({
         title: "Учетная запись создана",
       });

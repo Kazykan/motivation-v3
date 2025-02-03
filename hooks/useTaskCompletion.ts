@@ -33,8 +33,11 @@ export function useCreateTaskCompletion(data: CreateTaskCompletionVariables) {
 
   return useMutation({
     mutationFn: (completionDate: string) => createTaskCompletion(completionDate, data.taskId, data.userId),
-    onSuccess: () => {
-      queryClient.invalidateQueries({
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({
+        queryKey: getTaskCompletionsQueryKey(data.taskId, startDate, endDate),
+      });
+      await queryClient.refetchQueries({
         queryKey: getTaskCompletionsQueryKey(data.taskId, startDate, endDate),
       });
     },
@@ -47,8 +50,11 @@ export function useDeleteTaskCompletion(data: DeleteTaskCompletionVariables) {
 
   return useMutation({
     mutationFn: (id: number) => deleteTaskCompletion(id),
-    onSuccess: () => {
-      queryClient.invalidateQueries({
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({
+        queryKey: getTaskCompletionsQueryKey(data.taskId, startDate, endDate),
+      });
+      await queryClient.refetchQueries({
         queryKey: getTaskCompletionsQueryKey(data.taskId, startDate, endDate),
       });
     },
