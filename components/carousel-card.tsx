@@ -64,7 +64,10 @@ export function CarouselCard({ images, descriptions, setWelcome }: Props) {
       <div className="py-2 text-center text-sm text-muted-foreground">
         Slide {current} of {count}
       </div>
-      <div className="py-2 text-center text-sm text-muted-foreground">{descriptions[current - 1]}</div>
+      <div
+        className="py-2 text-sm text-muted-foreground text-justify"
+        dangerouslySetInnerHTML={{ __html: descriptions[current - 1] }}
+      />
       {count - current === 0 && (
         <div className="flex justify-center py-2">
           <Button onClick={() => setWelcome(false)}>
