@@ -86,9 +86,9 @@ export async function POST(req: NextRequest): Promise<NextResponse<ChildCheckRes
     });
 
     // Если есть invite_id, обрабатываем его
-    if (childData.invite_id !== undefined && childData.invite_id !== null) {
+    if (childData.invite_telegram_id !== undefined && childData.invite_telegram_id !== null) {
       await prisma.$transaction(async (tx) => {
-        await handleInviteChild(tx, child.id, childData.invite_id!);
+        await handleInviteChild(tx, child.id, childData.invite_telegram_id!);
       });
     }
 

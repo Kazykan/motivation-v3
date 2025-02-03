@@ -18,7 +18,7 @@ export const ChildCreateSchema = z.object({
   telegram_id: z.number(),
   photo_url: z.string().nullable().optional(),
   gender: z.nativeEnum(Gender),
-  invite_id: z.number().nullable().optional(),
+  invite_telegram_id: z.number().nullable().optional(),
 });
 
 export type ChildCreateType = z.infer<typeof ChildCreateSchema>;
