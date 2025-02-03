@@ -1,6 +1,8 @@
 "use client";
 
 import React from "react";
+import Image from "next/image";
+import { ParentImages } from "@/lib/constants";
 
 export default function TestChildTask() {
   return (
@@ -66,8 +68,13 @@ export default function TestChildTask() {
         </div>
 
         <div className="bg-[hsl(var(--card))] text-[hsl(var(--card-foreground))] p-3 rounded-lg shadow-md mb-6 flex justify-center items-center">
-          {/* Добавьте сюда картинку */}
-          <img src="/path/to/your/image.jpg" alt="Ваше изображение" className="w-32 h-32 object-cover rounded-lg" />
+          <Image
+            width={200}
+            height={200}
+            src={ParentImages[0]}
+            alt="Ваше изображение"
+            className="object-cover rounded-lg"
+          />
         </div>
       </section>
 
